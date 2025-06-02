@@ -1,0 +1,24 @@
+%% AttributeChange [4mcontiki-ng/contiki-ng[0m to [4m4.7[0m for node [4msoc-door-lock[0m
+%%  VOID -[1,00]->  soc-gate -[0,98]->  iot-controller -[1,00]->  soc-door-lock -[0,08]-> soc-door-lock-software 31,14 0,08
+flowchart LR
+	soc-door-lock[soc-door-lock]
+	soc-door-lock-software[soc-door-lock-software]
+	iot-controller[iot-controller]
+	soc-gate[soc-gate]
+	VOID[VOID]
+	soc-door-lock -->|!CVE-2022-25666 0,08| soc-door-lock-software
+	iot-controller -->|!firewall-risk 0,80| soc-door-lock
+	iot-controller -->|!physically-secured-risk 0,80| soc-door-lock
+	iot-controller -->|!software-encrypted-risk 0,80| soc-door-lock
+	iot-controller -->|!CVE-2022-25666 0,08| soc-door-lock
+	iot-controller -->|!CVE-2022-35927 0,39| soc-door-lock
+	soc-gate -->|hasFirewall 0,20| iot-controller
+	soc-gate -->|!physically-secured-risk 0,80| iot-controller
+	soc-gate -->|!software-encrypted-risk 0,80| iot-controller
+	soc-gate -->|!CVE-2022-25666 0,08| iot-controller
+	soc-gate -->|!CVE-2022-35927 0,39| iot-controller
+	VOID -->|!uncertainty-entry 0,08| soc-gate
+	VOID -->|!firewall-risk 0,80| soc-gate
+	VOID -->|!physically-secured-risk 0,80| soc-gate
+	VOID -->|!software-encrypted-risk 0,80| soc-gate
+	VOID -->|!CVE-2022-35927 0,39| soc-gate

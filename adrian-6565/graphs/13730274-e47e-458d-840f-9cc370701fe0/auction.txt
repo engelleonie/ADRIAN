@@ -1,0 +1,5 @@
+Host: soc-gate
+Risk:  VOID -[0,53]->  soc-gate -[0,71]->  iot-controller -[0,08]-> database 30,16 0,03
+Joined: iot-controller, soc-gate
+Proposals:
+- proposal from iot-controller: reducing to 22,38 by AttributeChange [4mqualcom/apq8096[0m to [4m2.1[0m for node [4miot-controller[0m- proposal from soc-gate: nothing

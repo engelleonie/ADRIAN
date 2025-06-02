@@ -1,0 +1,6 @@
+Host: iot-controller
+Risk:  VOID -[0,71]->  iot-controller -[0,53]->  soc-gate -[0,08]-> soc-gate-software 9,05 0,03
+Joined: iot-controller, soc-smoke, desktop, soc-light
+Proposals:
+- proposal from iot-controller: reducing to 6,72 by AttributeChange [4mcontiki-ng/contiki-ng[0m to [4m4.7[0m for node [4miot-controller[0m- proposal from soc-smoke: nothing
+- proposal from desktop: reducing to 0,00 by Migrating soc-gate-software from soc-gate to desktop- proposal from soc-light: nothing

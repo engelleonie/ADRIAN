@@ -1,0 +1,5 @@
+Host: soc-alarm
+Risk:  VOID -[1,00]->  soc-gate -[1,00]->  iot-controller -[0,98]->  soc-alarm -[0,08]-> soc-alarm-software 15,57 0,08
+Joined: soc-alarm
+Proposals:
+- proposal from soc-alarm: reducing to 14,72 by AttributeChange [4misPhysicallySecured[0m to [4mtrue[0m for node [4msoc-alarm[0m

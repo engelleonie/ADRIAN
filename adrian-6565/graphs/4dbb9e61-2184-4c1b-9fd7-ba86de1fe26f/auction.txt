@@ -1,0 +1,5 @@
+Host: soc-gate
+Risk:  VOID -[0,53]->  soc-gate -[0,08]-> soc-gate-software 12,70 0,04
+Joined: iot-controller, soc-gate
+Proposals:
+- proposal from iot-controller: reducing to 11,78 by Migrating soc-gate-software from soc-gate to iot-controller- proposal from soc-gate: nothing

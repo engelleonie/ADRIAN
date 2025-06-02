@@ -1,0 +1,9 @@
+Host: iot-controller
+Risk:  VOID -[1,00]->  soc-gate -[1,00]->  iot-controller -[0,08]-> database 79,28 0,08
+Joined: soc-temperature, iot-controller, soc-smoke, desktop, soc-gate, soc-light
+Proposals:
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing

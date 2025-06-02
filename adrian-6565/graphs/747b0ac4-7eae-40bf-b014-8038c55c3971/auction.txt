@@ -1,0 +1,5 @@
+Host: soc-humidity
+Risk:  VOID -[1,00]->  iot-controller -[1,00]->  soc-humidity -[0,08]-> soc-humidity-software 3,96 0,08
+Joined: iot-controller, soc-humidity
+Proposals:
+- proposal from unknown: nothing

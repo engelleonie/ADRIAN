@@ -1,0 +1,196 @@
+%% 200000
+flowchart LR
+	soc-temperature[soc-temperature]
+	printer[printer]
+	cloud-printer[cloud-printer]
+	soc-door-lock-software[soc-door-lock-software]
+	soc-motion[soc-motion]
+	soc-humidity-software[soc-humidity-software]
+	soc-alarm[soc-alarm]
+	cloud-notification-software[cloud-notification-software]
+	soc-humidity[soc-humidity]
+	soc-alarm-software[soc-alarm-software]
+	iot-controller-software[iot-controller-software]
+	VOID[VOID]
+	server[server]
+	soc-door-lock[soc-door-lock]
+	cloud-notification[cloud-notification]
+	iot-controller[iot-controller]
+	soc-motion-software[soc-motion-software]
+	soc-temperature-software[soc-temperature-software]
+	soc-gate[soc-gate]
+	cloud-weather[cloud-weather]
+	soc-light-software[soc-light-software]
+	desktop-software[desktop-software]
+	soc-smoke[soc-smoke]
+	router[router]
+	database[database]
+	soc-gate-software[soc-gate-software]
+	desktop[desktop]
+	cloud-printer-software[cloud-printer-software]
+	server-software[server-software]
+	soc-light[soc-light]
+	cloud-weather-software[cloud-weather-software]
+	printer-software[printer-software]
+	soc-smoke-software[soc-smoke-software]
+	soc-temperature -->|hasFirewall 0,20| iot-controller
+	soc-temperature -->|!physically-secured-risk 0,80| iot-controller
+	soc-temperature -->|!software-encrypted-risk 0,80| iot-controller
+	soc-temperature -->|!CVE-2022-25666 0,08| soc-temperature-software
+	soc-temperature -->|!CVE-2022-25666 0,08| iot-controller
+	soc-temperature -->|!CVE-2022-35927 0,39| iot-controller
+	printer -->|!firewall-risk 0,80| router
+	printer -->|!physically-secured-risk 0,80| router
+	printer -->|!software-encrypted-risk 0,80| router
+	printer -->|!CVE-2022-25666 0,08| printer-software
+	printer -->|!CVE-2022-25666 0,08| router
+	cloud-printer -->|!firewall-risk 0,80| router
+	cloud-printer -->|!physically-secured-risk 0,80| router
+	cloud-printer -->|!software-encrypted-risk 0,80| router
+	soc-motion -->|hasFirewall 0,20| iot-controller
+	soc-motion -->|!physically-secured-risk 0,80| iot-controller
+	soc-motion -->|!software-encrypted-risk 0,80| iot-controller
+	soc-motion -->|!CVE-2022-25666 0,08| soc-motion-software
+	soc-motion -->|!CVE-2022-25666 0,08| iot-controller
+	soc-motion -->|!CVE-2022-35927 0,39| iot-controller
+	soc-humidity-software -->|!CVE-2022-35927 0,39| soc-humidity
+	soc-alarm -->|hasFirewall 0,20| iot-controller
+	soc-alarm -->|!physically-secured-risk 0,80| iot-controller
+	soc-alarm -->|!software-encrypted-risk 0,80| iot-controller
+	soc-alarm -->|!CVE-2022-25666 0,08| soc-alarm-software
+	soc-alarm -->|!CVE-2022-25666 0,08| iot-controller
+	soc-alarm -->|!CVE-2022-35927 0,39| iot-controller
+	soc-humidity -->|hasFirewall 0,20| iot-controller
+	soc-humidity -->|!physically-secured-risk 0,80| iot-controller
+	soc-humidity -->|!software-encrypted-risk 0,80| iot-controller
+	soc-humidity -->|!CVE-2022-25666 0,08| soc-humidity-software
+	soc-humidity -->|!CVE-2022-25666 0,08| iot-controller
+	soc-humidity -->|!CVE-2022-35927 0,39| iot-controller
+	iot-controller-software -->|!CVE-2022-35927 0,39| iot-controller
+	VOID -->|!uncertainty-entry 0,08| printer
+	VOID -->|!uncertainty-entry 0,08| server
+	VOID -->|!uncertainty-entry 0,08| iot-controller
+	VOID -->|!uncertainty-entry 0,08| soc-gate
+	VOID -->|!uncertainty-entry 0,08| router
+	VOID -->|!firewall-risk 0,80| printer
+	VOID -->|!firewall-risk 0,80| server
+	VOID -->|hasFirewall 0,20| iot-controller
+	VOID -->|hasFirewall 0,20| soc-gate
+	VOID -->|!firewall-risk 0,80| router
+	VOID -->|!physically-secured-risk 0,80| printer
+	VOID -->|!physically-secured-risk 0,80| server
+	VOID -->|!physically-secured-risk 0,80| iot-controller
+	VOID -->|isPhysicallySecured 0,20| soc-gate
+	VOID -->|!physically-secured-risk 0,80| router
+	VOID -->|!software-encrypted-risk 0,80| printer
+	VOID -->|!software-encrypted-risk 0,80| server
+	VOID -->|!software-encrypted-risk 0,80| iot-controller
+	VOID -->|softwareComponentIsEncrypted 0,20| soc-gate
+	VOID -->|!software-encrypted-risk 0,80| router
+	VOID -->|!CVE-2022-35927 0,39| printer
+	VOID -->|!CVE-2022-35927 0,39| server
+	VOID -->|!CVE-2022-35927 0,39| iot-controller
+	server -->|!CVE-2022-25666 0,08| server-software
+	soc-door-lock -->|hasFirewall 0,20| iot-controller
+	soc-door-lock -->|!physically-secured-risk 0,80| iot-controller
+	soc-door-lock -->|!software-encrypted-risk 0,80| iot-controller
+	soc-door-lock -->|!CVE-2022-25666 0,08| soc-door-lock-software
+	soc-door-lock -->|!CVE-2022-25666 0,08| iot-controller
+	soc-door-lock -->|!CVE-2022-35927 0,39| iot-controller
+	cloud-notification -->|!firewall-risk 0,80| router
+	cloud-notification -->|!physically-secured-risk 0,80| router
+	cloud-notification -->|!software-encrypted-risk 0,80| router
+	iot-controller -->|!firewall-risk 0,80| soc-temperature
+	iot-controller -->|!firewall-risk 0,80| soc-motion
+	iot-controller -->|hasFirewall 0,20| soc-alarm
+	iot-controller -->|!firewall-risk 0,80| soc-humidity
+	iot-controller -->|hasFirewall 0,20| soc-door-lock
+	iot-controller -->|hasFirewall 0,20| soc-gate
+	iot-controller -->|!firewall-risk 0,80| soc-smoke
+	iot-controller -->|!firewall-risk 0,80| router
+	iot-controller -->|!firewall-risk 0,80| desktop
+	iot-controller -->|!firewall-risk 0,80| soc-light
+	iot-controller -->|!physically-secured-risk 0,80| soc-temperature
+	iot-controller -->|!physically-secured-risk 0,80| soc-motion
+	iot-controller -->|isPhysicallySecured 0,20| soc-alarm
+	iot-controller -->|!physically-secured-risk 0,80| soc-humidity
+	iot-controller -->|isPhysicallySecured 0,20| soc-door-lock
+	iot-controller -->|isPhysicallySecured 0,20| soc-gate
+	iot-controller -->|!physically-secured-risk 0,80| soc-smoke
+	iot-controller -->|!physically-secured-risk 0,80| router
+	iot-controller -->|!physically-secured-risk 0,80| desktop
+	iot-controller -->|!physically-secured-risk 0,80| soc-light
+	iot-controller -->|!software-encrypted-risk 0,80| soc-temperature
+	iot-controller -->|!software-encrypted-risk 0,80| soc-motion
+	iot-controller -->|softwareComponentIsEncrypted 0,20| soc-alarm
+	iot-controller -->|!software-encrypted-risk 0,80| soc-humidity
+	iot-controller -->|softwareComponentIsEncrypted 0,20| soc-door-lock
+	iot-controller -->|softwareComponentIsEncrypted 0,20| soc-gate
+	iot-controller -->|!software-encrypted-risk 0,80| soc-smoke
+	iot-controller -->|!software-encrypted-risk 0,80| router
+	iot-controller -->|!software-encrypted-risk 0,80| desktop
+	iot-controller -->|!software-encrypted-risk 0,80| soc-light
+	iot-controller -->|!CVE-2022-25666 0,08| iot-controller-software
+	iot-controller -->|!CVE-2022-25666 0,08| soc-motion
+	iot-controller -->|!CVE-2022-25666 0,08| soc-humidity
+	iot-controller -->|!CVE-2022-25666 0,08| soc-door-lock
+	iot-controller -->|!CVE-2022-25666 0,08| soc-gate
+	iot-controller -->|!CVE-2022-25666 0,08| soc-alarm
+	iot-controller -->|!CVE-2022-25666 0,08| soc-smoke
+	iot-controller -->|!CVE-2022-25666 0,08| soc-temperature
+	iot-controller -->|!CVE-2022-25666 0,08| soc-light
+	iot-controller -->|!CVE-2022-25666 0,08| router
+	iot-controller -->|!CVE-2022-25666 0,08| desktop
+	iot-controller -->|!CVE-2022-35927 0,39| soc-temperature
+	iot-controller -->|!CVE-2022-35927 0,39| soc-motion
+	iot-controller -->|!CVE-2022-35927 0,39| soc-humidity
+	iot-controller -->|!CVE-2022-35927 0,39| soc-smoke
+	iot-controller -->|!CVE-2022-35927 0,39| soc-light
+	soc-motion-software -->|!CVE-2022-35927 0,39| soc-motion
+	soc-temperature-software -->|!CVE-2022-35927 0,39| soc-temperature
+	soc-gate -->|hasFirewall 0,20| iot-controller
+	soc-gate -->|!physically-secured-risk 0,80| iot-controller
+	soc-gate -->|!software-encrypted-risk 0,80| iot-controller
+	soc-gate -->|!CVE-2022-25666 0,08| soc-gate-software
+	soc-gate -->|!CVE-2022-25666 0,08| iot-controller
+	soc-gate -->|!CVE-2022-35927 0,39| iot-controller
+	cloud-weather -->|!firewall-risk 0,80| router
+	cloud-weather -->|!physically-secured-risk 0,80| router
+	cloud-weather -->|!software-encrypted-risk 0,80| router
+	soc-light-software -->|!CVE-2022-35927 0,39| soc-light
+	soc-smoke -->|hasFirewall 0,20| iot-controller
+	soc-smoke -->|!physically-secured-risk 0,80| iot-controller
+	soc-smoke -->|!software-encrypted-risk 0,80| iot-controller
+	soc-smoke -->|!CVE-2022-25666 0,08| soc-smoke-software
+	soc-smoke -->|!CVE-2022-25666 0,08| iot-controller
+	soc-smoke -->|!CVE-2022-35927 0,39| iot-controller
+	router -->|!firewall-risk 0,80| cloud-printer
+	router -->|!firewall-risk 0,80| printer
+	router -->|!firewall-risk 0,80| cloud-notification
+	router -->|hasFirewall 0,20| iot-controller
+	router -->|!firewall-risk 0,80| cloud-weather
+	router -->|!physically-secured-risk 0,80| cloud-printer
+	router -->|!physically-secured-risk 0,80| printer
+	router -->|!physically-secured-risk 0,80| cloud-notification
+	router -->|!physically-secured-risk 0,80| iot-controller
+	router -->|!physically-secured-risk 0,80| cloud-weather
+	router -->|!software-encrypted-risk 0,80| cloud-printer
+	router -->|!software-encrypted-risk 0,80| printer
+	router -->|!software-encrypted-risk 0,80| cloud-notification
+	router -->|!software-encrypted-risk 0,80| iot-controller
+	router -->|!software-encrypted-risk 0,80| cloud-weather
+	router -->|!CVE-2022-35927 0,39| printer
+	router -->|!CVE-2022-35927 0,39| iot-controller
+	desktop -->|hasFirewall 0,20| iot-controller
+	desktop -->|!physically-secured-risk 0,80| iot-controller
+	desktop -->|!software-encrypted-risk 0,80| iot-controller
+	desktop -->|!CVE-2022-35927 0,39| iot-controller
+	server-software -->|!CVE-2022-35927 0,39| server
+	soc-light -->|hasFirewall 0,20| iot-controller
+	soc-light -->|!physically-secured-risk 0,80| iot-controller
+	soc-light -->|!software-encrypted-risk 0,80| iot-controller
+	soc-light -->|!CVE-2022-25666 0,08| soc-light-software
+	soc-light -->|!CVE-2022-25666 0,08| iot-controller
+	soc-light -->|!CVE-2022-35927 0,39| iot-controller
+	printer-software -->|!CVE-2022-35927 0,39| printer
+	soc-smoke-software -->|!CVE-2022-35927 0,39| soc-smoke

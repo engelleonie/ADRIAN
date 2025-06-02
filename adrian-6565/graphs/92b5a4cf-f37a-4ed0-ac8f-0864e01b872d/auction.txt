@@ -1,0 +1,56 @@
+Host: iot-controller
+Risk:  VOID -[1,00]->  iot-controller -[1,00]->  soc-alarm -[0,08]-> soc-alarm-software 15,86 0,08
+Joined: soc-custom-600, soc-custom-562, soc-custom-555, soc-custom-556, soc-custom-591, soc-custom-592, soc-custom-590, soc-custom-625, soc-custom-549, soc-custom-626, soc-custom-623, soc-custom-624, soc-custom-621, soc-custom-588, soc-custom-589, soc-custom-622, soc-custom-586, soc-custom-587, soc-custom-620, soc-custom-584, soc-custom-585, soc-custom-582, soc-custom-583, soc-custom-580, soc-custom-581, soc-custom-618, soc-custom-619, soc-custom-616, soc-custom-617, soc-custom-614, soc-custom-615, soc-custom-538, soc-custom-579, soc-custom-612, soc-custom-613, soc-custom-577, soc-custom-610, soc-custom-611, soc-custom-578, soc-custom-576, soc-custom-297, soc-custom-609, soc-custom-607, soc-custom-608, soc-custom-605, soc-custom-606, soc-custom-526, soc-custom-603, soc-custom-604, soc-custom-601, soc-custom-525, soc-custom-602
+Proposals:
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing

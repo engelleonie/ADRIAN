@@ -1,0 +1,12 @@
+%% 200000
+flowchart LR
+	node-a[node-a]
+	node-b[node-b]
+	node-c[node-c]
+	software-1[software-1]
+	node-a --> node-b
+	node-a --> node-c
+	node-b --> software-1
+	node-b --> node-a
+	node-c --> node-a
+	software-1 --> node-b

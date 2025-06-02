@@ -1,0 +1,120 @@
+%% 170000
+flowchart LR
+	soc-temperature[soc-temperature]
+	printer[printer]
+	cloud-printer[cloud-printer]
+	soc-door-lock-software[soc-door-lock-software]
+	soc-motion[soc-motion]
+	soc-humidity-software[soc-humidity-software]
+	cloud-notification-software[cloud-notification-software]
+	soc-alarm[soc-alarm]
+	soc-humidity[soc-humidity]
+	soc-alarm-software[soc-alarm-software]
+	iot-controller-software[iot-controller-software]
+	server[server]
+	soc-door-lock[soc-door-lock]
+	cloud-notification[cloud-notification]
+	soc-motion-software[soc-motion-software]
+	iot-controller[iot-controller]
+	soc-temperature-software[soc-temperature-software]
+	soc-gate[soc-gate]
+	cloud-weather[cloud-weather]
+	soc-light-software[soc-light-software]
+	desktop-software[desktop-software]
+	database[database]
+	router[router]
+	soc-smoke[soc-smoke]
+	soc-gate-software[soc-gate-software]
+	desktop[desktop]
+	cloud-printer-software[cloud-printer-software]
+	server-software[server-software]
+	soc-light[soc-light]
+	cloud-weather-software[cloud-weather-software]
+	printer-software[printer-software]
+	soc-smoke-software[soc-smoke-software]
+	soc-temperature --> soc-temperature-software
+	soc-temperature --> iot-controller
+	printer --> printer-software
+	printer --> router
+	cloud-printer --> cloud-printer-software
+	cloud-printer --> router
+	soc-door-lock-software --> soc-door-lock
+	soc-door-lock-software --> database
+	soc-motion --> soc-motion-software
+	soc-motion --> iot-controller
+	soc-humidity-software --> soc-humidity
+	soc-humidity-software --> database
+	cloud-notification-software --> cloud-notification
+	cloud-notification-software --> iot-controller-software
+	soc-alarm --> soc-alarm-software
+	soc-alarm --> iot-controller
+	soc-humidity --> soc-humidity-software
+	soc-humidity --> iot-controller
+	soc-alarm-software --> soc-alarm
+	soc-alarm-software --> database
+	iot-controller-software --> iot-controller
+	iot-controller-software --> database
+	iot-controller-software --> cloud-weather-software
+	iot-controller-software --> cloud-notification-software
+	server --> server-software
+	soc-door-lock --> soc-door-lock-software
+	soc-door-lock --> iot-controller
+	cloud-notification --> cloud-notification-software
+	cloud-notification --> router
+	soc-motion-software --> soc-motion
+	soc-motion-software --> database
+	iot-controller --> iot-controller-software
+	iot-controller --> database
+	iot-controller --> soc-motion
+	iot-controller --> soc-humidity
+	iot-controller --> soc-door-lock
+	iot-controller --> soc-gate
+	iot-controller --> soc-alarm
+	iot-controller --> soc-smoke
+	iot-controller --> soc-temperature
+	iot-controller --> soc-light
+	iot-controller --> router
+	iot-controller --> desktop
+	soc-temperature-software --> soc-temperature
+	soc-temperature-software --> database
+	soc-gate --> soc-gate-software
+	soc-gate --> iot-controller
+	cloud-weather --> cloud-weather-software
+	cloud-weather --> router
+	soc-light-software --> soc-light
+	soc-light-software --> database
+	desktop-software --> desktop
+	database --> iot-controller
+	database --> iot-controller-software
+	database --> soc-motion-software
+	database --> soc-humidity-software
+	database --> soc-door-lock-software
+	database --> soc-gate-software
+	database --> soc-alarm-software
+	database --> soc-smoke-software
+	database --> soc-temperature-software
+	database --> soc-light-software
+	database --> server-software
+	router --> iot-controller
+	router --> printer
+	router --> cloud-printer
+	router --> cloud-weather
+	router --> cloud-notification
+	soc-smoke --> soc-smoke-software
+	soc-smoke --> iot-controller
+	soc-gate-software --> soc-gate
+	soc-gate-software --> database
+	desktop --> desktop-software
+	desktop --> iot-controller
+	cloud-printer-software --> cloud-printer
+	cloud-printer-software --> printer-software
+	server-software --> server
+	server-software --> database
+	soc-light --> soc-light-software
+	soc-light --> iot-controller
+	cloud-weather-software --> cloud-weather
+	cloud-weather-software --> iot-controller-software
+	printer-software --> printer
+	printer-software --> cloud-printer-software
+	soc-smoke-software --> soc-smoke
+	soc-smoke-software --> database

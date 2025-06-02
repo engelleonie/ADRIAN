@@ -1,0 +1,5 @@
+Host: soc-gate
+Risk:  VOID -[0,53]->  soc-gate -[0,98]->  iot-controller -[0,08]-> database 41,56 0,04
+Joined: iot-controller, soc-gate
+Proposals:
+- proposal from iot-controller: reducing to 39,28 by AttributeChange [4misPhysicallySecured[0m to [4mtrue[0m for node [4miot-controller[0m- proposal from soc-gate: nothing

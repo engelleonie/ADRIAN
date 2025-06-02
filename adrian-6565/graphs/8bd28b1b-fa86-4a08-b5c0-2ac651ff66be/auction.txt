@@ -1,0 +1,4 @@
+Host: soc-door-lock
+Risk:  VOID -[1,00]->  iot-controller -[0,93]->  soc-door-lock -[0,08]-> soc-door-lock-software 29,57 0,07
+Joined: 
+Proposals:

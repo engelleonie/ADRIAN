@@ -1,0 +1,5 @@
+Host: soc-humidity
+Risk:  VOID -[1,00]->  soc-gate -[0,93]->  iot-controller -[1,00]->  soc-humidity -[0,08]-> soc-humidity-software 3,68 0,07
+Joined: iot-controller, soc-gate, soc-humidity
+Proposals:
+- proposal from iot-controller: reducing to 2,83 by AttributeChange [4msoftwareComponentIsEncrypted[0m to [4mtrue[0m for node [4miot-controller[0m- proposal from soc-gate: reducing to 3,63 by AttributeChange [4mhasFirewall[0m to [4mtrue[0m for node [4msoc-gate[0m- proposal from soc-humidity: reducing to 3,63 by AttributeChange [4mhasFirewall[0m to [4mtrue[0m for node [4msoc-humidity[0m

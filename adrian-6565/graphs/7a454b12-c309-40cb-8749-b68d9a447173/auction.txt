@@ -1,0 +1,5 @@
+Host: soc-alarm
+Risk:  VOID -[0,71]->  soc-gate -[1,00]->  iot-controller -[0,53]->  soc-alarm -[0,08]-> soc-alarm-software 6,00 0,03
+Joined: soc-gate, soc-alarm
+Proposals:
+- proposal from soc-gate: reducing to 4,46 by AttributeChange [4mqualcom/apq8096[0m to [4m2.1[0m for node [4msoc-gate[0m- proposal from soc-alarm: reducing to 4,46 by AttributeChange [4mqualcom/apq8096[0m to [4m2.1[0m for node [4msoc-alarm[0m

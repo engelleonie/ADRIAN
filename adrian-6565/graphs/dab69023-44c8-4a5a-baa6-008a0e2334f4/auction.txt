@@ -1,0 +1,6 @@
+Host: soc-motion
+Risk:  VOID -[0,53]->  iot-controller -[0,53]->  soc-motion -[0,08]-> soc-motion-software 1,12 0,02
+Joined: iot-controller, soc-motion
+Proposals:
+- proposal from unknown: nothing
+- proposal from soc-motion: nothing

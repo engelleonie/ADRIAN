@@ -1,0 +1,49 @@
+nodes:
+  - id: node-a
+    name: Node A
+    trustedExecutionEnvironment: true
+    hasAgent: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+  - id: node-b
+    name: Node B
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+  - id: node-c
+    name: Node C
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+  - id: node-d
+    name: Node D
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    hasFirewall: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+
+
+links:
+  - source: node-a
+    target: node-d
+  - source: node-a
+    target: node-c
+  - source: node-b
+    target: node-d
+
+assets:
+  - id: software-1
+    name: Software Component 1
+    type: software
+    isCritical: true
+    damageValue: 100.5
+    host: node-b
+  - id: software-2
+    name: Software Component 2
+    type: software
+    isCritical: true
+    damageValue: 45.5
+    host: node-a
+
+connectors:
+  - source: software-1
+    target: software-2

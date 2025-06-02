@@ -1,0 +1,5 @@
+Host: soc-gate
+Risk:  VOID -[0,93]->  soc-gate -[0,71]->  iot-controller -[0,08]-> database 52,92 0,05
+Joined: soc-gate
+Proposals:
+- proposal from soc-gate: reducing to 40,63 by AttributeChange [4msoftwareComponentIsEncrypted[0m to [4mtrue[0m for node [4msoc-gate[0m

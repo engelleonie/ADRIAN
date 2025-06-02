@@ -1,0 +1,4229 @@
+nodes:
+- id: iot-controller
+  name: IoT Controller
+  hasAgent: true
+  exposed: true
+  canMigrate: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-motion
+  name: Motion Sensor
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-humidity
+  name: Humidity Controller
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-door-lock
+  name: Door Lock
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-gate
+  name: Gate Controller
+  hasAgent: true
+  exposed: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-alarm
+  name: Alarm System
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-smoke
+  name: Smoke Detector
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-temperature
+  name: Temperature Controller
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-light
+  name: Lighting Controller
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: desktop
+  name: Desktop
+  hasAgent: true
+  canMigrate: true
+- id: printer
+  name: Printer
+  hasAgent: true
+  exposed: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: server
+  name: Server
+  exposed: true
+  canMigrate: true
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: router
+  name: Router
+  exposed: true
+- id: cloud-printer
+  name: Cloud Printer Service
+- id: cloud-weather
+  name: Cloud Weather Service
+- id: cloud-notification
+  name: Cloud Notification Service
+- id: soc-custom-1
+  name: Custom Sensor 1
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-2
+  name: Custom Sensor 2
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-3
+  name: Custom Sensor 3
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-4
+  name: Custom Sensor 4
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-5
+  name: Custom Sensor 5
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-6
+  name: Custom Sensor 6
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-7
+  name: Custom Sensor 7
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-8
+  name: Custom Sensor 8
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-9
+  name: Custom Sensor 9
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-10
+  name: Custom Sensor 10
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-11
+  name: Custom Sensor 11
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-12
+  name: Custom Sensor 12
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-13
+  name: Custom Sensor 13
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-14
+  name: Custom Sensor 14
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-15
+  name: Custom Sensor 15
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-16
+  name: Custom Sensor 16
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-17
+  name: Custom Sensor 17
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-18
+  name: Custom Sensor 18
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-19
+  name: Custom Sensor 19
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-20
+  name: Custom Sensor 20
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-21
+  name: Custom Sensor 21
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-22
+  name: Custom Sensor 22
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-23
+  name: Custom Sensor 23
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-24
+  name: Custom Sensor 24
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-25
+  name: Custom Sensor 25
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-26
+  name: Custom Sensor 26
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-27
+  name: Custom Sensor 27
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-28
+  name: Custom Sensor 28
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-29
+  name: Custom Sensor 29
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-30
+  name: Custom Sensor 30
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-31
+  name: Custom Sensor 31
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-32
+  name: Custom Sensor 32
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-33
+  name: Custom Sensor 33
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-34
+  name: Custom Sensor 34
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-35
+  name: Custom Sensor 35
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-36
+  name: Custom Sensor 36
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-37
+  name: Custom Sensor 37
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-38
+  name: Custom Sensor 38
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-39
+  name: Custom Sensor 39
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-40
+  name: Custom Sensor 40
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-41
+  name: Custom Sensor 41
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-42
+  name: Custom Sensor 42
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-43
+  name: Custom Sensor 43
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-44
+  name: Custom Sensor 44
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-45
+  name: Custom Sensor 45
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-46
+  name: Custom Sensor 46
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-47
+  name: Custom Sensor 47
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-48
+  name: Custom Sensor 48
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-49
+  name: Custom Sensor 49
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-50
+  name: Custom Sensor 50
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-51
+  name: Custom Sensor 51
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-52
+  name: Custom Sensor 52
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-53
+  name: Custom Sensor 53
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-54
+  name: Custom Sensor 54
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-55
+  name: Custom Sensor 55
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-56
+  name: Custom Sensor 56
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-57
+  name: Custom Sensor 57
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-58
+  name: Custom Sensor 58
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-59
+  name: Custom Sensor 59
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-60
+  name: Custom Sensor 60
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-61
+  name: Custom Sensor 61
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-62
+  name: Custom Sensor 62
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-63
+  name: Custom Sensor 63
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-64
+  name: Custom Sensor 64
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-65
+  name: Custom Sensor 65
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-66
+  name: Custom Sensor 66
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-67
+  name: Custom Sensor 67
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-68
+  name: Custom Sensor 68
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-69
+  name: Custom Sensor 69
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-70
+  name: Custom Sensor 70
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-71
+  name: Custom Sensor 71
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-72
+  name: Custom Sensor 72
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-73
+  name: Custom Sensor 73
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-74
+  name: Custom Sensor 74
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-75
+  name: Custom Sensor 75
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-76
+  name: Custom Sensor 76
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-77
+  name: Custom Sensor 77
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-78
+  name: Custom Sensor 78
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-79
+  name: Custom Sensor 79
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-80
+  name: Custom Sensor 80
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-81
+  name: Custom Sensor 81
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-82
+  name: Custom Sensor 82
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-83
+  name: Custom Sensor 83
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-84
+  name: Custom Sensor 84
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-85
+  name: Custom Sensor 85
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-86
+  name: Custom Sensor 86
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-87
+  name: Custom Sensor 87
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-88
+  name: Custom Sensor 88
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-89
+  name: Custom Sensor 89
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-90
+  name: Custom Sensor 90
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-91
+  name: Custom Sensor 91
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-92
+  name: Custom Sensor 92
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-93
+  name: Custom Sensor 93
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-94
+  name: Custom Sensor 94
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-95
+  name: Custom Sensor 95
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-96
+  name: Custom Sensor 96
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-97
+  name: Custom Sensor 97
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-98
+  name: Custom Sensor 98
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-99
+  name: Custom Sensor 99
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-100
+  name: Custom Sensor 100
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-101
+  name: Custom Sensor 101
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-102
+  name: Custom Sensor 102
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-103
+  name: Custom Sensor 103
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-104
+  name: Custom Sensor 104
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-105
+  name: Custom Sensor 105
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-106
+  name: Custom Sensor 106
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-107
+  name: Custom Sensor 107
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-108
+  name: Custom Sensor 108
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-109
+  name: Custom Sensor 109
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-110
+  name: Custom Sensor 110
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-111
+  name: Custom Sensor 111
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-112
+  name: Custom Sensor 112
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-113
+  name: Custom Sensor 113
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-114
+  name: Custom Sensor 114
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-115
+  name: Custom Sensor 115
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-116
+  name: Custom Sensor 116
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-117
+  name: Custom Sensor 117
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-118
+  name: Custom Sensor 118
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-119
+  name: Custom Sensor 119
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-120
+  name: Custom Sensor 120
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-121
+  name: Custom Sensor 121
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-122
+  name: Custom Sensor 122
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-123
+  name: Custom Sensor 123
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-124
+  name: Custom Sensor 124
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-125
+  name: Custom Sensor 125
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-126
+  name: Custom Sensor 126
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-127
+  name: Custom Sensor 127
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-128
+  name: Custom Sensor 128
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-129
+  name: Custom Sensor 129
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-130
+  name: Custom Sensor 130
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-131
+  name: Custom Sensor 131
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-132
+  name: Custom Sensor 132
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-133
+  name: Custom Sensor 133
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-134
+  name: Custom Sensor 134
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-135
+  name: Custom Sensor 135
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-136
+  name: Custom Sensor 136
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-137
+  name: Custom Sensor 137
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-138
+  name: Custom Sensor 138
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-139
+  name: Custom Sensor 139
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-140
+  name: Custom Sensor 140
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-141
+  name: Custom Sensor 141
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-142
+  name: Custom Sensor 142
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-143
+  name: Custom Sensor 143
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-144
+  name: Custom Sensor 144
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-145
+  name: Custom Sensor 145
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-146
+  name: Custom Sensor 146
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-147
+  name: Custom Sensor 147
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-148
+  name: Custom Sensor 148
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-149
+  name: Custom Sensor 149
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-150
+  name: Custom Sensor 150
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-151
+  name: Custom Sensor 151
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-152
+  name: Custom Sensor 152
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-153
+  name: Custom Sensor 153
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-154
+  name: Custom Sensor 154
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-155
+  name: Custom Sensor 155
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-156
+  name: Custom Sensor 156
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-157
+  name: Custom Sensor 157
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-158
+  name: Custom Sensor 158
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-159
+  name: Custom Sensor 159
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-160
+  name: Custom Sensor 160
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-161
+  name: Custom Sensor 161
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-162
+  name: Custom Sensor 162
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-163
+  name: Custom Sensor 163
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-164
+  name: Custom Sensor 164
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-165
+  name: Custom Sensor 165
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-166
+  name: Custom Sensor 166
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-167
+  name: Custom Sensor 167
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-168
+  name: Custom Sensor 168
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-169
+  name: Custom Sensor 169
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-170
+  name: Custom Sensor 170
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-171
+  name: Custom Sensor 171
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-172
+  name: Custom Sensor 172
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-173
+  name: Custom Sensor 173
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-174
+  name: Custom Sensor 174
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-175
+  name: Custom Sensor 175
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-176
+  name: Custom Sensor 176
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-177
+  name: Custom Sensor 177
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-178
+  name: Custom Sensor 178
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-179
+  name: Custom Sensor 179
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-180
+  name: Custom Sensor 180
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-181
+  name: Custom Sensor 181
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-182
+  name: Custom Sensor 182
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-183
+  name: Custom Sensor 183
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-184
+  name: Custom Sensor 184
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-185
+  name: Custom Sensor 185
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-186
+  name: Custom Sensor 186
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-187
+  name: Custom Sensor 187
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-188
+  name: Custom Sensor 188
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-189
+  name: Custom Sensor 189
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-190
+  name: Custom Sensor 190
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-191
+  name: Custom Sensor 191
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-192
+  name: Custom Sensor 192
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-193
+  name: Custom Sensor 193
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-194
+  name: Custom Sensor 194
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-195
+  name: Custom Sensor 195
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-196
+  name: Custom Sensor 196
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-197
+  name: Custom Sensor 197
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-198
+  name: Custom Sensor 198
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-199
+  name: Custom Sensor 199
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-200
+  name: Custom Sensor 200
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-201
+  name: Custom Sensor 201
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-202
+  name: Custom Sensor 202
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-203
+  name: Custom Sensor 203
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-204
+  name: Custom Sensor 204
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-205
+  name: Custom Sensor 205
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-206
+  name: Custom Sensor 206
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-207
+  name: Custom Sensor 207
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-208
+  name: Custom Sensor 208
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-209
+  name: Custom Sensor 209
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-210
+  name: Custom Sensor 210
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-211
+  name: Custom Sensor 211
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-212
+  name: Custom Sensor 212
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-213
+  name: Custom Sensor 213
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-214
+  name: Custom Sensor 214
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-215
+  name: Custom Sensor 215
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-216
+  name: Custom Sensor 216
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-217
+  name: Custom Sensor 217
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-218
+  name: Custom Sensor 218
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-219
+  name: Custom Sensor 219
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-220
+  name: Custom Sensor 220
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-221
+  name: Custom Sensor 221
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-222
+  name: Custom Sensor 222
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-223
+  name: Custom Sensor 223
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-224
+  name: Custom Sensor 224
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-225
+  name: Custom Sensor 225
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-226
+  name: Custom Sensor 226
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-227
+  name: Custom Sensor 227
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-228
+  name: Custom Sensor 228
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-229
+  name: Custom Sensor 229
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-230
+  name: Custom Sensor 230
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-231
+  name: Custom Sensor 231
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-232
+  name: Custom Sensor 232
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-233
+  name: Custom Sensor 233
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-234
+  name: Custom Sensor 234
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-235
+  name: Custom Sensor 235
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-236
+  name: Custom Sensor 236
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-237
+  name: Custom Sensor 237
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-238
+  name: Custom Sensor 238
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-239
+  name: Custom Sensor 239
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-240
+  name: Custom Sensor 240
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-241
+  name: Custom Sensor 241
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-242
+  name: Custom Sensor 242
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-243
+  name: Custom Sensor 243
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-244
+  name: Custom Sensor 244
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-245
+  name: Custom Sensor 245
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-246
+  name: Custom Sensor 246
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-247
+  name: Custom Sensor 247
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-248
+  name: Custom Sensor 248
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-249
+  name: Custom Sensor 249
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+- id: soc-custom-250
+  name: Custom Sensor 250
+  hasAgent: true
+  contiki-ng/contiki-ng: 4.3.1
+  qualcomm/apq8096: 1.0.5
+links:
+- source: iot-controller
+  target: soc-motion
+- source: iot-controller
+  target: soc-humidity
+- source: iot-controller
+  target: soc-door-lock
+- source: iot-controller
+  target: soc-gate
+- source: iot-controller
+  target: soc-alarm
+- source: iot-controller
+  target: soc-smoke
+- source: iot-controller
+  target: soc-temperature
+- source: iot-controller
+  target: soc-light
+- source: router
+  target: iot-controller
+- source: iot-controller
+  target: desktop
+- source: router
+  target: printer
+- source: mobile
+  target: router
+- source: cloud-printer
+  target: router
+- source: cloud-weather
+  target: router
+- source: cloud-notification
+  target: router
+- source: iot-controller
+  target: soc-custom-1
+- source: iot-controller
+  target: soc-custom-2
+- source: iot-controller
+  target: soc-custom-3
+- source: iot-controller
+  target: soc-custom-4
+- source: iot-controller
+  target: soc-custom-5
+- source: iot-controller
+  target: soc-custom-6
+- source: iot-controller
+  target: soc-custom-7
+- source: iot-controller
+  target: soc-custom-8
+- source: iot-controller
+  target: soc-custom-9
+- source: iot-controller
+  target: soc-custom-10
+- source: iot-controller
+  target: soc-custom-11
+- source: iot-controller
+  target: soc-custom-12
+- source: iot-controller
+  target: soc-custom-13
+- source: iot-controller
+  target: soc-custom-14
+- source: iot-controller
+  target: soc-custom-15
+- source: iot-controller
+  target: soc-custom-16
+- source: iot-controller
+  target: soc-custom-17
+- source: iot-controller
+  target: soc-custom-18
+- source: iot-controller
+  target: soc-custom-19
+- source: iot-controller
+  target: soc-custom-20
+- source: iot-controller
+  target: soc-custom-21
+- source: iot-controller
+  target: soc-custom-22
+- source: iot-controller
+  target: soc-custom-23
+- source: iot-controller
+  target: soc-custom-24
+- source: iot-controller
+  target: soc-custom-25
+- source: iot-controller
+  target: soc-custom-26
+- source: iot-controller
+  target: soc-custom-27
+- source: iot-controller
+  target: soc-custom-28
+- source: iot-controller
+  target: soc-custom-29
+- source: iot-controller
+  target: soc-custom-30
+- source: iot-controller
+  target: soc-custom-31
+- source: iot-controller
+  target: soc-custom-32
+- source: iot-controller
+  target: soc-custom-33
+- source: iot-controller
+  target: soc-custom-34
+- source: iot-controller
+  target: soc-custom-35
+- source: iot-controller
+  target: soc-custom-36
+- source: iot-controller
+  target: soc-custom-37
+- source: iot-controller
+  target: soc-custom-38
+- source: iot-controller
+  target: soc-custom-39
+- source: iot-controller
+  target: soc-custom-40
+- source: iot-controller
+  target: soc-custom-41
+- source: iot-controller
+  target: soc-custom-42
+- source: iot-controller
+  target: soc-custom-43
+- source: iot-controller
+  target: soc-custom-44
+- source: iot-controller
+  target: soc-custom-45
+- source: iot-controller
+  target: soc-custom-46
+- source: iot-controller
+  target: soc-custom-47
+- source: iot-controller
+  target: soc-custom-48
+- source: iot-controller
+  target: soc-custom-49
+- source: iot-controller
+  target: soc-custom-50
+- source: iot-controller
+  target: soc-custom-51
+- source: iot-controller
+  target: soc-custom-52
+- source: iot-controller
+  target: soc-custom-53
+- source: iot-controller
+  target: soc-custom-54
+- source: iot-controller
+  target: soc-custom-55
+- source: iot-controller
+  target: soc-custom-56
+- source: iot-controller
+  target: soc-custom-57
+- source: iot-controller
+  target: soc-custom-58
+- source: iot-controller
+  target: soc-custom-59
+- source: iot-controller
+  target: soc-custom-60
+- source: iot-controller
+  target: soc-custom-61
+- source: iot-controller
+  target: soc-custom-62
+- source: iot-controller
+  target: soc-custom-63
+- source: iot-controller
+  target: soc-custom-64
+- source: iot-controller
+  target: soc-custom-65
+- source: iot-controller
+  target: soc-custom-66
+- source: iot-controller
+  target: soc-custom-67
+- source: iot-controller
+  target: soc-custom-68
+- source: iot-controller
+  target: soc-custom-69
+- source: iot-controller
+  target: soc-custom-70
+- source: iot-controller
+  target: soc-custom-71
+- source: iot-controller
+  target: soc-custom-72
+- source: iot-controller
+  target: soc-custom-73
+- source: iot-controller
+  target: soc-custom-74
+- source: iot-controller
+  target: soc-custom-75
+- source: iot-controller
+  target: soc-custom-76
+- source: iot-controller
+  target: soc-custom-77
+- source: iot-controller
+  target: soc-custom-78
+- source: iot-controller
+  target: soc-custom-79
+- source: iot-controller
+  target: soc-custom-80
+- source: iot-controller
+  target: soc-custom-81
+- source: iot-controller
+  target: soc-custom-82
+- source: iot-controller
+  target: soc-custom-83
+- source: iot-controller
+  target: soc-custom-84
+- source: iot-controller
+  target: soc-custom-85
+- source: iot-controller
+  target: soc-custom-86
+- source: iot-controller
+  target: soc-custom-87
+- source: iot-controller
+  target: soc-custom-88
+- source: iot-controller
+  target: soc-custom-89
+- source: iot-controller
+  target: soc-custom-90
+- source: iot-controller
+  target: soc-custom-91
+- source: iot-controller
+  target: soc-custom-92
+- source: iot-controller
+  target: soc-custom-93
+- source: iot-controller
+  target: soc-custom-94
+- source: iot-controller
+  target: soc-custom-95
+- source: iot-controller
+  target: soc-custom-96
+- source: iot-controller
+  target: soc-custom-97
+- source: iot-controller
+  target: soc-custom-98
+- source: iot-controller
+  target: soc-custom-99
+- source: iot-controller
+  target: soc-custom-100
+- source: iot-controller
+  target: soc-custom-101
+- source: iot-controller
+  target: soc-custom-102
+- source: iot-controller
+  target: soc-custom-103
+- source: iot-controller
+  target: soc-custom-104
+- source: iot-controller
+  target: soc-custom-105
+- source: iot-controller
+  target: soc-custom-106
+- source: iot-controller
+  target: soc-custom-107
+- source: iot-controller
+  target: soc-custom-108
+- source: iot-controller
+  target: soc-custom-109
+- source: iot-controller
+  target: soc-custom-110
+- source: iot-controller
+  target: soc-custom-111
+- source: iot-controller
+  target: soc-custom-112
+- source: iot-controller
+  target: soc-custom-113
+- source: iot-controller
+  target: soc-custom-114
+- source: iot-controller
+  target: soc-custom-115
+- source: iot-controller
+  target: soc-custom-116
+- source: iot-controller
+  target: soc-custom-117
+- source: iot-controller
+  target: soc-custom-118
+- source: iot-controller
+  target: soc-custom-119
+- source: iot-controller
+  target: soc-custom-120
+- source: iot-controller
+  target: soc-custom-121
+- source: iot-controller
+  target: soc-custom-122
+- source: iot-controller
+  target: soc-custom-123
+- source: iot-controller
+  target: soc-custom-124
+- source: iot-controller
+  target: soc-custom-125
+- source: iot-controller
+  target: soc-custom-126
+- source: iot-controller
+  target: soc-custom-127
+- source: iot-controller
+  target: soc-custom-128
+- source: iot-controller
+  target: soc-custom-129
+- source: iot-controller
+  target: soc-custom-130
+- source: iot-controller
+  target: soc-custom-131
+- source: iot-controller
+  target: soc-custom-132
+- source: iot-controller
+  target: soc-custom-133
+- source: iot-controller
+  target: soc-custom-134
+- source: iot-controller
+  target: soc-custom-135
+- source: iot-controller
+  target: soc-custom-136
+- source: iot-controller
+  target: soc-custom-137
+- source: iot-controller
+  target: soc-custom-138
+- source: iot-controller
+  target: soc-custom-139
+- source: iot-controller
+  target: soc-custom-140
+- source: iot-controller
+  target: soc-custom-141
+- source: iot-controller
+  target: soc-custom-142
+- source: iot-controller
+  target: soc-custom-143
+- source: iot-controller
+  target: soc-custom-144
+- source: iot-controller
+  target: soc-custom-145
+- source: iot-controller
+  target: soc-custom-146
+- source: iot-controller
+  target: soc-custom-147
+- source: iot-controller
+  target: soc-custom-148
+- source: iot-controller
+  target: soc-custom-149
+- source: iot-controller
+  target: soc-custom-150
+- source: iot-controller
+  target: soc-custom-151
+- source: iot-controller
+  target: soc-custom-152
+- source: iot-controller
+  target: soc-custom-153
+- source: iot-controller
+  target: soc-custom-154
+- source: iot-controller
+  target: soc-custom-155
+- source: iot-controller
+  target: soc-custom-156
+- source: iot-controller
+  target: soc-custom-157
+- source: iot-controller
+  target: soc-custom-158
+- source: iot-controller
+  target: soc-custom-159
+- source: iot-controller
+  target: soc-custom-160
+- source: iot-controller
+  target: soc-custom-161
+- source: iot-controller
+  target: soc-custom-162
+- source: iot-controller
+  target: soc-custom-163
+- source: iot-controller
+  target: soc-custom-164
+- source: iot-controller
+  target: soc-custom-165
+- source: iot-controller
+  target: soc-custom-166
+- source: iot-controller
+  target: soc-custom-167
+- source: iot-controller
+  target: soc-custom-168
+- source: iot-controller
+  target: soc-custom-169
+- source: iot-controller
+  target: soc-custom-170
+- source: iot-controller
+  target: soc-custom-171
+- source: iot-controller
+  target: soc-custom-172
+- source: iot-controller
+  target: soc-custom-173
+- source: iot-controller
+  target: soc-custom-174
+- source: iot-controller
+  target: soc-custom-175
+- source: iot-controller
+  target: soc-custom-176
+- source: iot-controller
+  target: soc-custom-177
+- source: iot-controller
+  target: soc-custom-178
+- source: iot-controller
+  target: soc-custom-179
+- source: iot-controller
+  target: soc-custom-180
+- source: iot-controller
+  target: soc-custom-181
+- source: iot-controller
+  target: soc-custom-182
+- source: iot-controller
+  target: soc-custom-183
+- source: iot-controller
+  target: soc-custom-184
+- source: iot-controller
+  target: soc-custom-185
+- source: iot-controller
+  target: soc-custom-186
+- source: iot-controller
+  target: soc-custom-187
+- source: iot-controller
+  target: soc-custom-188
+- source: iot-controller
+  target: soc-custom-189
+- source: iot-controller
+  target: soc-custom-190
+- source: iot-controller
+  target: soc-custom-191
+- source: iot-controller
+  target: soc-custom-192
+- source: iot-controller
+  target: soc-custom-193
+- source: iot-controller
+  target: soc-custom-194
+- source: iot-controller
+  target: soc-custom-195
+- source: iot-controller
+  target: soc-custom-196
+- source: iot-controller
+  target: soc-custom-197
+- source: iot-controller
+  target: soc-custom-198
+- source: iot-controller
+  target: soc-custom-199
+- source: iot-controller
+  target: soc-custom-200
+- source: iot-controller
+  target: soc-custom-201
+- source: iot-controller
+  target: soc-custom-202
+- source: iot-controller
+  target: soc-custom-203
+- source: iot-controller
+  target: soc-custom-204
+- source: iot-controller
+  target: soc-custom-205
+- source: iot-controller
+  target: soc-custom-206
+- source: iot-controller
+  target: soc-custom-207
+- source: iot-controller
+  target: soc-custom-208
+- source: iot-controller
+  target: soc-custom-209
+- source: iot-controller
+  target: soc-custom-210
+- source: iot-controller
+  target: soc-custom-211
+- source: iot-controller
+  target: soc-custom-212
+- source: iot-controller
+  target: soc-custom-213
+- source: iot-controller
+  target: soc-custom-214
+- source: iot-controller
+  target: soc-custom-215
+- source: iot-controller
+  target: soc-custom-216
+- source: iot-controller
+  target: soc-custom-217
+- source: iot-controller
+  target: soc-custom-218
+- source: iot-controller
+  target: soc-custom-219
+- source: iot-controller
+  target: soc-custom-220
+- source: iot-controller
+  target: soc-custom-221
+- source: iot-controller
+  target: soc-custom-222
+- source: iot-controller
+  target: soc-custom-223
+- source: iot-controller
+  target: soc-custom-224
+- source: iot-controller
+  target: soc-custom-225
+- source: iot-controller
+  target: soc-custom-226
+- source: iot-controller
+  target: soc-custom-227
+- source: iot-controller
+  target: soc-custom-228
+- source: iot-controller
+  target: soc-custom-229
+- source: iot-controller
+  target: soc-custom-230
+- source: iot-controller
+  target: soc-custom-231
+- source: iot-controller
+  target: soc-custom-232
+- source: iot-controller
+  target: soc-custom-233
+- source: iot-controller
+  target: soc-custom-234
+- source: iot-controller
+  target: soc-custom-235
+- source: iot-controller
+  target: soc-custom-236
+- source: iot-controller
+  target: soc-custom-237
+- source: iot-controller
+  target: soc-custom-238
+- source: iot-controller
+  target: soc-custom-239
+- source: iot-controller
+  target: soc-custom-240
+- source: iot-controller
+  target: soc-custom-241
+- source: iot-controller
+  target: soc-custom-242
+- source: iot-controller
+  target: soc-custom-243
+- source: iot-controller
+  target: soc-custom-244
+- source: iot-controller
+  target: soc-custom-245
+- source: iot-controller
+  target: soc-custom-246
+- source: iot-controller
+  target: soc-custom-247
+- source: iot-controller
+  target: soc-custom-248
+- source: iot-controller
+  target: soc-custom-249
+- source: iot-controller
+  target: soc-custom-250
+assets:
+- id: iot-controller-software
+  name: IoT Controller Software
+  host: iot-controller
+- id: database
+  name: Database
+  host: iot-controller
+  isCritical: true
+  damageValue: 1000.0
+- id: soc-motion-software
+  name: Motion Sensor Software
+  host: soc-motion
+  isCritical: true
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-humidity-software
+  name: Humidity Controller Software
+  host: soc-humidity
+  isCritical: true
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-door-lock-software
+  name: Door Lock Software
+  host: soc-door-lock
+  isCritical: true
+  damageValue: 400.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-gate-software
+  name: Gate Controller Software
+  host: soc-gate
+  isCritical: true
+  damageValue: 300.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-alarm-software
+  name: Alarm System Software
+  host: soc-alarm
+  isCritical: true
+  damageValue: 200.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-smoke-software
+  name: Smoke Detector Software
+  host: soc-smoke
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-temperature-software
+  name: Temperature Controller Software
+  host: soc-temperature
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-light-software
+  name: Lighting Controller Software
+  host: soc-light
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: desktop-software
+  name: Desktop Software
+  host: desktop
+  isCritical: true
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+- id: server-software
+  name: Server Software
+  host: server
+  isCritical: true
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+- id: printer-software
+  name: Printer Software
+  host: printer
+- id: cloud-printer-software
+  name: Cloud Printer Software
+  host: cloud-printer
+- id: cloud-weather-software
+  name: Cloud Weather Software
+  host: cloud-weather
+- id: cloud-notification-software
+  name: Cloud Notification Software
+  host: cloud-notification
+- id: soc-custom-1-software
+  name: Custom Sensor 1 Software
+  host: soc-custom-1
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-2-software
+  name: Custom Sensor 2 Software
+  host: soc-custom-2
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-3-software
+  name: Custom Sensor 3 Software
+  host: soc-custom-3
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-4-software
+  name: Custom Sensor 4 Software
+  host: soc-custom-4
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-5-software
+  name: Custom Sensor 5 Software
+  host: soc-custom-5
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-6-software
+  name: Custom Sensor 6 Software
+  host: soc-custom-6
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-7-software
+  name: Custom Sensor 7 Software
+  host: soc-custom-7
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-8-software
+  name: Custom Sensor 8 Software
+  host: soc-custom-8
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-9-software
+  name: Custom Sensor 9 Software
+  host: soc-custom-9
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-10-software
+  name: Custom Sensor 10 Software
+  host: soc-custom-10
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-11-software
+  name: Custom Sensor 11 Software
+  host: soc-custom-11
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-12-software
+  name: Custom Sensor 12 Software
+  host: soc-custom-12
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-13-software
+  name: Custom Sensor 13 Software
+  host: soc-custom-13
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-14-software
+  name: Custom Sensor 14 Software
+  host: soc-custom-14
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-15-software
+  name: Custom Sensor 15 Software
+  host: soc-custom-15
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-16-software
+  name: Custom Sensor 16 Software
+  host: soc-custom-16
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-17-software
+  name: Custom Sensor 17 Software
+  host: soc-custom-17
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-18-software
+  name: Custom Sensor 18 Software
+  host: soc-custom-18
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-19-software
+  name: Custom Sensor 19 Software
+  host: soc-custom-19
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-20-software
+  name: Custom Sensor 20 Software
+  host: soc-custom-20
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-21-software
+  name: Custom Sensor 21 Software
+  host: soc-custom-21
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-22-software
+  name: Custom Sensor 22 Software
+  host: soc-custom-22
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-23-software
+  name: Custom Sensor 23 Software
+  host: soc-custom-23
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-24-software
+  name: Custom Sensor 24 Software
+  host: soc-custom-24
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-25-software
+  name: Custom Sensor 25 Software
+  host: soc-custom-25
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-26-software
+  name: Custom Sensor 26 Software
+  host: soc-custom-26
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-27-software
+  name: Custom Sensor 27 Software
+  host: soc-custom-27
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-28-software
+  name: Custom Sensor 28 Software
+  host: soc-custom-28
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-29-software
+  name: Custom Sensor 29 Software
+  host: soc-custom-29
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-30-software
+  name: Custom Sensor 30 Software
+  host: soc-custom-30
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-31-software
+  name: Custom Sensor 31 Software
+  host: soc-custom-31
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-32-software
+  name: Custom Sensor 32 Software
+  host: soc-custom-32
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-33-software
+  name: Custom Sensor 33 Software
+  host: soc-custom-33
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-34-software
+  name: Custom Sensor 34 Software
+  host: soc-custom-34
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-35-software
+  name: Custom Sensor 35 Software
+  host: soc-custom-35
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-36-software
+  name: Custom Sensor 36 Software
+  host: soc-custom-36
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-37-software
+  name: Custom Sensor 37 Software
+  host: soc-custom-37
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-38-software
+  name: Custom Sensor 38 Software
+  host: soc-custom-38
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-39-software
+  name: Custom Sensor 39 Software
+  host: soc-custom-39
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-40-software
+  name: Custom Sensor 40 Software
+  host: soc-custom-40
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-41-software
+  name: Custom Sensor 41 Software
+  host: soc-custom-41
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-42-software
+  name: Custom Sensor 42 Software
+  host: soc-custom-42
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-43-software
+  name: Custom Sensor 43 Software
+  host: soc-custom-43
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-44-software
+  name: Custom Sensor 44 Software
+  host: soc-custom-44
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-45-software
+  name: Custom Sensor 45 Software
+  host: soc-custom-45
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-46-software
+  name: Custom Sensor 46 Software
+  host: soc-custom-46
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-47-software
+  name: Custom Sensor 47 Software
+  host: soc-custom-47
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-48-software
+  name: Custom Sensor 48 Software
+  host: soc-custom-48
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-49-software
+  name: Custom Sensor 49 Software
+  host: soc-custom-49
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-50-software
+  name: Custom Sensor 50 Software
+  host: soc-custom-50
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-51-software
+  name: Custom Sensor 51 Software
+  host: soc-custom-51
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-52-software
+  name: Custom Sensor 52 Software
+  host: soc-custom-52
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-53-software
+  name: Custom Sensor 53 Software
+  host: soc-custom-53
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-54-software
+  name: Custom Sensor 54 Software
+  host: soc-custom-54
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-55-software
+  name: Custom Sensor 55 Software
+  host: soc-custom-55
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-56-software
+  name: Custom Sensor 56 Software
+  host: soc-custom-56
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-57-software
+  name: Custom Sensor 57 Software
+  host: soc-custom-57
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-58-software
+  name: Custom Sensor 58 Software
+  host: soc-custom-58
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-59-software
+  name: Custom Sensor 59 Software
+  host: soc-custom-59
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-60-software
+  name: Custom Sensor 60 Software
+  host: soc-custom-60
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-61-software
+  name: Custom Sensor 61 Software
+  host: soc-custom-61
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-62-software
+  name: Custom Sensor 62 Software
+  host: soc-custom-62
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-63-software
+  name: Custom Sensor 63 Software
+  host: soc-custom-63
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-64-software
+  name: Custom Sensor 64 Software
+  host: soc-custom-64
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-65-software
+  name: Custom Sensor 65 Software
+  host: soc-custom-65
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-66-software
+  name: Custom Sensor 66 Software
+  host: soc-custom-66
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-67-software
+  name: Custom Sensor 67 Software
+  host: soc-custom-67
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-68-software
+  name: Custom Sensor 68 Software
+  host: soc-custom-68
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-69-software
+  name: Custom Sensor 69 Software
+  host: soc-custom-69
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-70-software
+  name: Custom Sensor 70 Software
+  host: soc-custom-70
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-71-software
+  name: Custom Sensor 71 Software
+  host: soc-custom-71
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-72-software
+  name: Custom Sensor 72 Software
+  host: soc-custom-72
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-73-software
+  name: Custom Sensor 73 Software
+  host: soc-custom-73
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-74-software
+  name: Custom Sensor 74 Software
+  host: soc-custom-74
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-75-software
+  name: Custom Sensor 75 Software
+  host: soc-custom-75
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-76-software
+  name: Custom Sensor 76 Software
+  host: soc-custom-76
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-77-software
+  name: Custom Sensor 77 Software
+  host: soc-custom-77
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-78-software
+  name: Custom Sensor 78 Software
+  host: soc-custom-78
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-79-software
+  name: Custom Sensor 79 Software
+  host: soc-custom-79
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-80-software
+  name: Custom Sensor 80 Software
+  host: soc-custom-80
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-81-software
+  name: Custom Sensor 81 Software
+  host: soc-custom-81
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-82-software
+  name: Custom Sensor 82 Software
+  host: soc-custom-82
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-83-software
+  name: Custom Sensor 83 Software
+  host: soc-custom-83
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-84-software
+  name: Custom Sensor 84 Software
+  host: soc-custom-84
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-85-software
+  name: Custom Sensor 85 Software
+  host: soc-custom-85
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-86-software
+  name: Custom Sensor 86 Software
+  host: soc-custom-86
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-87-software
+  name: Custom Sensor 87 Software
+  host: soc-custom-87
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-88-software
+  name: Custom Sensor 88 Software
+  host: soc-custom-88
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-89-software
+  name: Custom Sensor 89 Software
+  host: soc-custom-89
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-90-software
+  name: Custom Sensor 90 Software
+  host: soc-custom-90
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-91-software
+  name: Custom Sensor 91 Software
+  host: soc-custom-91
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-92-software
+  name: Custom Sensor 92 Software
+  host: soc-custom-92
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-93-software
+  name: Custom Sensor 93 Software
+  host: soc-custom-93
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-94-software
+  name: Custom Sensor 94 Software
+  host: soc-custom-94
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-95-software
+  name: Custom Sensor 95 Software
+  host: soc-custom-95
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-96-software
+  name: Custom Sensor 96 Software
+  host: soc-custom-96
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-97-software
+  name: Custom Sensor 97 Software
+  host: soc-custom-97
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-98-software
+  name: Custom Sensor 98 Software
+  host: soc-custom-98
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-99-software
+  name: Custom Sensor 99 Software
+  host: soc-custom-99
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-100-software
+  name: Custom Sensor 100 Software
+  host: soc-custom-100
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-101-software
+  name: Custom Sensor 101 Software
+  host: soc-custom-101
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-102-software
+  name: Custom Sensor 102 Software
+  host: soc-custom-102
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-103-software
+  name: Custom Sensor 103 Software
+  host: soc-custom-103
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-104-software
+  name: Custom Sensor 104 Software
+  host: soc-custom-104
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-105-software
+  name: Custom Sensor 105 Software
+  host: soc-custom-105
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-106-software
+  name: Custom Sensor 106 Software
+  host: soc-custom-106
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-107-software
+  name: Custom Sensor 107 Software
+  host: soc-custom-107
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-108-software
+  name: Custom Sensor 108 Software
+  host: soc-custom-108
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-109-software
+  name: Custom Sensor 109 Software
+  host: soc-custom-109
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-110-software
+  name: Custom Sensor 110 Software
+  host: soc-custom-110
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-111-software
+  name: Custom Sensor 111 Software
+  host: soc-custom-111
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-112-software
+  name: Custom Sensor 112 Software
+  host: soc-custom-112
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-113-software
+  name: Custom Sensor 113 Software
+  host: soc-custom-113
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-114-software
+  name: Custom Sensor 114 Software
+  host: soc-custom-114
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-115-software
+  name: Custom Sensor 115 Software
+  host: soc-custom-115
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-116-software
+  name: Custom Sensor 116 Software
+  host: soc-custom-116
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-117-software
+  name: Custom Sensor 117 Software
+  host: soc-custom-117
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-118-software
+  name: Custom Sensor 118 Software
+  host: soc-custom-118
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-119-software
+  name: Custom Sensor 119 Software
+  host: soc-custom-119
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-120-software
+  name: Custom Sensor 120 Software
+  host: soc-custom-120
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-121-software
+  name: Custom Sensor 121 Software
+  host: soc-custom-121
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-122-software
+  name: Custom Sensor 122 Software
+  host: soc-custom-122
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-123-software
+  name: Custom Sensor 123 Software
+  host: soc-custom-123
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-124-software
+  name: Custom Sensor 124 Software
+  host: soc-custom-124
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-125-software
+  name: Custom Sensor 125 Software
+  host: soc-custom-125
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-126-software
+  name: Custom Sensor 126 Software
+  host: soc-custom-126
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-127-software
+  name: Custom Sensor 127 Software
+  host: soc-custom-127
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-128-software
+  name: Custom Sensor 128 Software
+  host: soc-custom-128
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-129-software
+  name: Custom Sensor 129 Software
+  host: soc-custom-129
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-130-software
+  name: Custom Sensor 130 Software
+  host: soc-custom-130
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-131-software
+  name: Custom Sensor 131 Software
+  host: soc-custom-131
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-132-software
+  name: Custom Sensor 132 Software
+  host: soc-custom-132
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-133-software
+  name: Custom Sensor 133 Software
+  host: soc-custom-133
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-134-software
+  name: Custom Sensor 134 Software
+  host: soc-custom-134
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-135-software
+  name: Custom Sensor 135 Software
+  host: soc-custom-135
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-136-software
+  name: Custom Sensor 136 Software
+  host: soc-custom-136
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-137-software
+  name: Custom Sensor 137 Software
+  host: soc-custom-137
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-138-software
+  name: Custom Sensor 138 Software
+  host: soc-custom-138
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-139-software
+  name: Custom Sensor 139 Software
+  host: soc-custom-139
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-140-software
+  name: Custom Sensor 140 Software
+  host: soc-custom-140
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-141-software
+  name: Custom Sensor 141 Software
+  host: soc-custom-141
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-142-software
+  name: Custom Sensor 142 Software
+  host: soc-custom-142
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-143-software
+  name: Custom Sensor 143 Software
+  host: soc-custom-143
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-144-software
+  name: Custom Sensor 144 Software
+  host: soc-custom-144
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-145-software
+  name: Custom Sensor 145 Software
+  host: soc-custom-145
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-146-software
+  name: Custom Sensor 146 Software
+  host: soc-custom-146
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-147-software
+  name: Custom Sensor 147 Software
+  host: soc-custom-147
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-148-software
+  name: Custom Sensor 148 Software
+  host: soc-custom-148
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-149-software
+  name: Custom Sensor 149 Software
+  host: soc-custom-149
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-150-software
+  name: Custom Sensor 150 Software
+  host: soc-custom-150
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-151-software
+  name: Custom Sensor 151 Software
+  host: soc-custom-151
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-152-software
+  name: Custom Sensor 152 Software
+  host: soc-custom-152
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-153-software
+  name: Custom Sensor 153 Software
+  host: soc-custom-153
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-154-software
+  name: Custom Sensor 154 Software
+  host: soc-custom-154
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-155-software
+  name: Custom Sensor 155 Software
+  host: soc-custom-155
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-156-software
+  name: Custom Sensor 156 Software
+  host: soc-custom-156
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-157-software
+  name: Custom Sensor 157 Software
+  host: soc-custom-157
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-158-software
+  name: Custom Sensor 158 Software
+  host: soc-custom-158
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-159-software
+  name: Custom Sensor 159 Software
+  host: soc-custom-159
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-160-software
+  name: Custom Sensor 160 Software
+  host: soc-custom-160
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-161-software
+  name: Custom Sensor 161 Software
+  host: soc-custom-161
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-162-software
+  name: Custom Sensor 162 Software
+  host: soc-custom-162
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-163-software
+  name: Custom Sensor 163 Software
+  host: soc-custom-163
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-164-software
+  name: Custom Sensor 164 Software
+  host: soc-custom-164
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-165-software
+  name: Custom Sensor 165 Software
+  host: soc-custom-165
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-166-software
+  name: Custom Sensor 166 Software
+  host: soc-custom-166
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-167-software
+  name: Custom Sensor 167 Software
+  host: soc-custom-167
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-168-software
+  name: Custom Sensor 168 Software
+  host: soc-custom-168
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-169-software
+  name: Custom Sensor 169 Software
+  host: soc-custom-169
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-170-software
+  name: Custom Sensor 170 Software
+  host: soc-custom-170
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-171-software
+  name: Custom Sensor 171 Software
+  host: soc-custom-171
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-172-software
+  name: Custom Sensor 172 Software
+  host: soc-custom-172
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-173-software
+  name: Custom Sensor 173 Software
+  host: soc-custom-173
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-174-software
+  name: Custom Sensor 174 Software
+  host: soc-custom-174
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-175-software
+  name: Custom Sensor 175 Software
+  host: soc-custom-175
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-176-software
+  name: Custom Sensor 176 Software
+  host: soc-custom-176
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-177-software
+  name: Custom Sensor 177 Software
+  host: soc-custom-177
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-178-software
+  name: Custom Sensor 178 Software
+  host: soc-custom-178
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-179-software
+  name: Custom Sensor 179 Software
+  host: soc-custom-179
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-180-software
+  name: Custom Sensor 180 Software
+  host: soc-custom-180
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-181-software
+  name: Custom Sensor 181 Software
+  host: soc-custom-181
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-182-software
+  name: Custom Sensor 182 Software
+  host: soc-custom-182
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-183-software
+  name: Custom Sensor 183 Software
+  host: soc-custom-183
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-184-software
+  name: Custom Sensor 184 Software
+  host: soc-custom-184
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-185-software
+  name: Custom Sensor 185 Software
+  host: soc-custom-185
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-186-software
+  name: Custom Sensor 186 Software
+  host: soc-custom-186
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-187-software
+  name: Custom Sensor 187 Software
+  host: soc-custom-187
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-188-software
+  name: Custom Sensor 188 Software
+  host: soc-custom-188
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-189-software
+  name: Custom Sensor 189 Software
+  host: soc-custom-189
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-190-software
+  name: Custom Sensor 190 Software
+  host: soc-custom-190
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-191-software
+  name: Custom Sensor 191 Software
+  host: soc-custom-191
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-192-software
+  name: Custom Sensor 192 Software
+  host: soc-custom-192
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-193-software
+  name: Custom Sensor 193 Software
+  host: soc-custom-193
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-194-software
+  name: Custom Sensor 194 Software
+  host: soc-custom-194
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-195-software
+  name: Custom Sensor 195 Software
+  host: soc-custom-195
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-196-software
+  name: Custom Sensor 196 Software
+  host: soc-custom-196
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-197-software
+  name: Custom Sensor 197 Software
+  host: soc-custom-197
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-198-software
+  name: Custom Sensor 198 Software
+  host: soc-custom-198
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-199-software
+  name: Custom Sensor 199 Software
+  host: soc-custom-199
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-200-software
+  name: Custom Sensor 200 Software
+  host: soc-custom-200
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-201-software
+  name: Custom Sensor 201 Software
+  host: soc-custom-201
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-202-software
+  name: Custom Sensor 202 Software
+  host: soc-custom-202
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-203-software
+  name: Custom Sensor 203 Software
+  host: soc-custom-203
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-204-software
+  name: Custom Sensor 204 Software
+  host: soc-custom-204
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-205-software
+  name: Custom Sensor 205 Software
+  host: soc-custom-205
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-206-software
+  name: Custom Sensor 206 Software
+  host: soc-custom-206
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-207-software
+  name: Custom Sensor 207 Software
+  host: soc-custom-207
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-208-software
+  name: Custom Sensor 208 Software
+  host: soc-custom-208
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-209-software
+  name: Custom Sensor 209 Software
+  host: soc-custom-209
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-210-software
+  name: Custom Sensor 210 Software
+  host: soc-custom-210
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-211-software
+  name: Custom Sensor 211 Software
+  host: soc-custom-211
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-212-software
+  name: Custom Sensor 212 Software
+  host: soc-custom-212
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-213-software
+  name: Custom Sensor 213 Software
+  host: soc-custom-213
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-214-software
+  name: Custom Sensor 214 Software
+  host: soc-custom-214
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-215-software
+  name: Custom Sensor 215 Software
+  host: soc-custom-215
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-216-software
+  name: Custom Sensor 216 Software
+  host: soc-custom-216
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-217-software
+  name: Custom Sensor 217 Software
+  host: soc-custom-217
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-218-software
+  name: Custom Sensor 218 Software
+  host: soc-custom-218
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-219-software
+  name: Custom Sensor 219 Software
+  host: soc-custom-219
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-220-software
+  name: Custom Sensor 220 Software
+  host: soc-custom-220
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-221-software
+  name: Custom Sensor 221 Software
+  host: soc-custom-221
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-222-software
+  name: Custom Sensor 222 Software
+  host: soc-custom-222
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-223-software
+  name: Custom Sensor 223 Software
+  host: soc-custom-223
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-224-software
+  name: Custom Sensor 224 Software
+  host: soc-custom-224
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-225-software
+  name: Custom Sensor 225 Software
+  host: soc-custom-225
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-226-software
+  name: Custom Sensor 226 Software
+  host: soc-custom-226
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-227-software
+  name: Custom Sensor 227 Software
+  host: soc-custom-227
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-228-software
+  name: Custom Sensor 228 Software
+  host: soc-custom-228
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-229-software
+  name: Custom Sensor 229 Software
+  host: soc-custom-229
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-230-software
+  name: Custom Sensor 230 Software
+  host: soc-custom-230
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-231-software
+  name: Custom Sensor 231 Software
+  host: soc-custom-231
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-232-software
+  name: Custom Sensor 232 Software
+  host: soc-custom-232
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-233-software
+  name: Custom Sensor 233 Software
+  host: soc-custom-233
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-234-software
+  name: Custom Sensor 234 Software
+  host: soc-custom-234
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-235-software
+  name: Custom Sensor 235 Software
+  host: soc-custom-235
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-236-software
+  name: Custom Sensor 236 Software
+  host: soc-custom-236
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-237-software
+  name: Custom Sensor 237 Software
+  host: soc-custom-237
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-238-software
+  name: Custom Sensor 238 Software
+  host: soc-custom-238
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-239-software
+  name: Custom Sensor 239 Software
+  host: soc-custom-239
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-240-software
+  name: Custom Sensor 240 Software
+  host: soc-custom-240
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-241-software
+  name: Custom Sensor 241 Software
+  host: soc-custom-241
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-242-software
+  name: Custom Sensor 242 Software
+  host: soc-custom-242
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-243-software
+  name: Custom Sensor 243 Software
+  host: soc-custom-243
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-244-software
+  name: Custom Sensor 244 Software
+  host: soc-custom-244
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-245-software
+  name: Custom Sensor 245 Software
+  host: soc-custom-245
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-246-software
+  name: Custom Sensor 246 Software
+  host: soc-custom-246
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-247-software
+  name: Custom Sensor 247 Software
+  host: soc-custom-247
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-248-software
+  name: Custom Sensor 248 Software
+  host: soc-custom-248
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-249-software
+  name: Custom Sensor 249 Software
+  host: soc-custom-249
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+- id: soc-custom-250-software
+  name: Custom Sensor 250 Software
+  host: soc-custom-250
+  damageValue: 50.0
+  qualcomm/apq8096: 1.0.5
+  google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+  amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+connectors:
+- source: iot-controller-software
+  target: database
+- source: soc-motion-software
+  target: database
+- source: soc-humidity-software
+  target: database
+- source: soc-door-lock-software
+  target: database
+- source: soc-gate-software
+  target: database
+- source: soc-alarm-software
+  target: database
+- source: soc-smoke-software
+  target: database
+- source: soc-temperature-software
+  target: database
+- source: soc-light-software
+  target: database
+- source: server-software
+  target: database
+- source: io-controller-software
+  target: server-software
+- source: cloud-printer-software
+  target: printer-software
+- source: cloud-weather-software
+  target: iot-controller-software
+- source: cloud-notification-software
+  target: iot-controller-software
+- source: soc-custom-1-software
+  target: database
+- source: soc-custom-2-software
+  target: database
+- source: soc-custom-3-software
+  target: database
+- source: soc-custom-4-software
+  target: database
+- source: soc-custom-5-software
+  target: database
+- source: soc-custom-6-software
+  target: database
+- source: soc-custom-7-software
+  target: database
+- source: soc-custom-8-software
+  target: database
+- source: soc-custom-9-software
+  target: database
+- source: soc-custom-10-software
+  target: database
+- source: soc-custom-11-software
+  target: database
+- source: soc-custom-12-software
+  target: database
+- source: soc-custom-13-software
+  target: database
+- source: soc-custom-14-software
+  target: database
+- source: soc-custom-15-software
+  target: database
+- source: soc-custom-16-software
+  target: database
+- source: soc-custom-17-software
+  target: database
+- source: soc-custom-18-software
+  target: database
+- source: soc-custom-19-software
+  target: database
+- source: soc-custom-20-software
+  target: database
+- source: soc-custom-21-software
+  target: database
+- source: soc-custom-22-software
+  target: database
+- source: soc-custom-23-software
+  target: database
+- source: soc-custom-24-software
+  target: database
+- source: soc-custom-25-software
+  target: database
+- source: soc-custom-26-software
+  target: database
+- source: soc-custom-27-software
+  target: database
+- source: soc-custom-28-software
+  target: database
+- source: soc-custom-29-software
+  target: database
+- source: soc-custom-30-software
+  target: database
+- source: soc-custom-31-software
+  target: database
+- source: soc-custom-32-software
+  target: database
+- source: soc-custom-33-software
+  target: database
+- source: soc-custom-34-software
+  target: database
+- source: soc-custom-35-software
+  target: database
+- source: soc-custom-36-software
+  target: database
+- source: soc-custom-37-software
+  target: database
+- source: soc-custom-38-software
+  target: database
+- source: soc-custom-39-software
+  target: database
+- source: soc-custom-40-software
+  target: database
+- source: soc-custom-41-software
+  target: database
+- source: soc-custom-42-software
+  target: database
+- source: soc-custom-43-software
+  target: database
+- source: soc-custom-44-software
+  target: database
+- source: soc-custom-45-software
+  target: database
+- source: soc-custom-46-software
+  target: database
+- source: soc-custom-47-software
+  target: database
+- source: soc-custom-48-software
+  target: database
+- source: soc-custom-49-software
+  target: database
+- source: soc-custom-50-software
+  target: database
+- source: soc-custom-51-software
+  target: database
+- source: soc-custom-52-software
+  target: database
+- source: soc-custom-53-software
+  target: database
+- source: soc-custom-54-software
+  target: database
+- source: soc-custom-55-software
+  target: database
+- source: soc-custom-56-software
+  target: database
+- source: soc-custom-57-software
+  target: database
+- source: soc-custom-58-software
+  target: database
+- source: soc-custom-59-software
+  target: database
+- source: soc-custom-60-software
+  target: database
+- source: soc-custom-61-software
+  target: database
+- source: soc-custom-62-software
+  target: database
+- source: soc-custom-63-software
+  target: database
+- source: soc-custom-64-software
+  target: database
+- source: soc-custom-65-software
+  target: database
+- source: soc-custom-66-software
+  target: database
+- source: soc-custom-67-software
+  target: database
+- source: soc-custom-68-software
+  target: database
+- source: soc-custom-69-software
+  target: database
+- source: soc-custom-70-software
+  target: database
+- source: soc-custom-71-software
+  target: database
+- source: soc-custom-72-software
+  target: database
+- source: soc-custom-73-software
+  target: database
+- source: soc-custom-74-software
+  target: database
+- source: soc-custom-75-software
+  target: database
+- source: soc-custom-76-software
+  target: database
+- source: soc-custom-77-software
+  target: database
+- source: soc-custom-78-software
+  target: database
+- source: soc-custom-79-software
+  target: database
+- source: soc-custom-80-software
+  target: database
+- source: soc-custom-81-software
+  target: database
+- source: soc-custom-82-software
+  target: database
+- source: soc-custom-83-software
+  target: database
+- source: soc-custom-84-software
+  target: database
+- source: soc-custom-85-software
+  target: database
+- source: soc-custom-86-software
+  target: database
+- source: soc-custom-87-software
+  target: database
+- source: soc-custom-88-software
+  target: database
+- source: soc-custom-89-software
+  target: database
+- source: soc-custom-90-software
+  target: database
+- source: soc-custom-91-software
+  target: database
+- source: soc-custom-92-software
+  target: database
+- source: soc-custom-93-software
+  target: database
+- source: soc-custom-94-software
+  target: database
+- source: soc-custom-95-software
+  target: database
+- source: soc-custom-96-software
+  target: database
+- source: soc-custom-97-software
+  target: database
+- source: soc-custom-98-software
+  target: database
+- source: soc-custom-99-software
+  target: database
+- source: soc-custom-100-software
+  target: database
+- source: soc-custom-101-software
+  target: database
+- source: soc-custom-102-software
+  target: database
+- source: soc-custom-103-software
+  target: database
+- source: soc-custom-104-software
+  target: database
+- source: soc-custom-105-software
+  target: database
+- source: soc-custom-106-software
+  target: database
+- source: soc-custom-107-software
+  target: database
+- source: soc-custom-108-software
+  target: database
+- source: soc-custom-109-software
+  target: database
+- source: soc-custom-110-software
+  target: database
+- source: soc-custom-111-software
+  target: database
+- source: soc-custom-112-software
+  target: database
+- source: soc-custom-113-software
+  target: database
+- source: soc-custom-114-software
+  target: database
+- source: soc-custom-115-software
+  target: database
+- source: soc-custom-116-software
+  target: database
+- source: soc-custom-117-software
+  target: database
+- source: soc-custom-118-software
+  target: database
+- source: soc-custom-119-software
+  target: database
+- source: soc-custom-120-software
+  target: database
+- source: soc-custom-121-software
+  target: database
+- source: soc-custom-122-software
+  target: database
+- source: soc-custom-123-software
+  target: database
+- source: soc-custom-124-software
+  target: database
+- source: soc-custom-125-software
+  target: database
+- source: soc-custom-126-software
+  target: database
+- source: soc-custom-127-software
+  target: database
+- source: soc-custom-128-software
+  target: database
+- source: soc-custom-129-software
+  target: database
+- source: soc-custom-130-software
+  target: database
+- source: soc-custom-131-software
+  target: database
+- source: soc-custom-132-software
+  target: database
+- source: soc-custom-133-software
+  target: database
+- source: soc-custom-134-software
+  target: database
+- source: soc-custom-135-software
+  target: database
+- source: soc-custom-136-software
+  target: database
+- source: soc-custom-137-software
+  target: database
+- source: soc-custom-138-software
+  target: database
+- source: soc-custom-139-software
+  target: database
+- source: soc-custom-140-software
+  target: database
+- source: soc-custom-141-software
+  target: database
+- source: soc-custom-142-software
+  target: database
+- source: soc-custom-143-software
+  target: database
+- source: soc-custom-144-software
+  target: database
+- source: soc-custom-145-software
+  target: database
+- source: soc-custom-146-software
+  target: database
+- source: soc-custom-147-software
+  target: database
+- source: soc-custom-148-software
+  target: database
+- source: soc-custom-149-software
+  target: database
+- source: soc-custom-150-software
+  target: database
+- source: soc-custom-151-software
+  target: database
+- source: soc-custom-152-software
+  target: database
+- source: soc-custom-153-software
+  target: database
+- source: soc-custom-154-software
+  target: database
+- source: soc-custom-155-software
+  target: database
+- source: soc-custom-156-software
+  target: database
+- source: soc-custom-157-software
+  target: database
+- source: soc-custom-158-software
+  target: database
+- source: soc-custom-159-software
+  target: database
+- source: soc-custom-160-software
+  target: database
+- source: soc-custom-161-software
+  target: database
+- source: soc-custom-162-software
+  target: database
+- source: soc-custom-163-software
+  target: database
+- source: soc-custom-164-software
+  target: database
+- source: soc-custom-165-software
+  target: database
+- source: soc-custom-166-software
+  target: database
+- source: soc-custom-167-software
+  target: database
+- source: soc-custom-168-software
+  target: database
+- source: soc-custom-169-software
+  target: database
+- source: soc-custom-170-software
+  target: database
+- source: soc-custom-171-software
+  target: database
+- source: soc-custom-172-software
+  target: database
+- source: soc-custom-173-software
+  target: database
+- source: soc-custom-174-software
+  target: database
+- source: soc-custom-175-software
+  target: database
+- source: soc-custom-176-software
+  target: database
+- source: soc-custom-177-software
+  target: database
+- source: soc-custom-178-software
+  target: database
+- source: soc-custom-179-software
+  target: database
+- source: soc-custom-180-software
+  target: database
+- source: soc-custom-181-software
+  target: database
+- source: soc-custom-182-software
+  target: database
+- source: soc-custom-183-software
+  target: database
+- source: soc-custom-184-software
+  target: database
+- source: soc-custom-185-software
+  target: database
+- source: soc-custom-186-software
+  target: database
+- source: soc-custom-187-software
+  target: database
+- source: soc-custom-188-software
+  target: database
+- source: soc-custom-189-software
+  target: database
+- source: soc-custom-190-software
+  target: database
+- source: soc-custom-191-software
+  target: database
+- source: soc-custom-192-software
+  target: database
+- source: soc-custom-193-software
+  target: database
+- source: soc-custom-194-software
+  target: database
+- source: soc-custom-195-software
+  target: database
+- source: soc-custom-196-software
+  target: database
+- source: soc-custom-197-software
+  target: database
+- source: soc-custom-198-software
+  target: database
+- source: soc-custom-199-software
+  target: database
+- source: soc-custom-200-software
+  target: database
+- source: soc-custom-201-software
+  target: database
+- source: soc-custom-202-software
+  target: database
+- source: soc-custom-203-software
+  target: database
+- source: soc-custom-204-software
+  target: database
+- source: soc-custom-205-software
+  target: database
+- source: soc-custom-206-software
+  target: database
+- source: soc-custom-207-software
+  target: database
+- source: soc-custom-208-software
+  target: database
+- source: soc-custom-209-software
+  target: database
+- source: soc-custom-210-software
+  target: database
+- source: soc-custom-211-software
+  target: database
+- source: soc-custom-212-software
+  target: database
+- source: soc-custom-213-software
+  target: database
+- source: soc-custom-214-software
+  target: database
+- source: soc-custom-215-software
+  target: database
+- source: soc-custom-216-software
+  target: database
+- source: soc-custom-217-software
+  target: database
+- source: soc-custom-218-software
+  target: database
+- source: soc-custom-219-software
+  target: database
+- source: soc-custom-220-software
+  target: database
+- source: soc-custom-221-software
+  target: database
+- source: soc-custom-222-software
+  target: database
+- source: soc-custom-223-software
+  target: database
+- source: soc-custom-224-software
+  target: database
+- source: soc-custom-225-software
+  target: database
+- source: soc-custom-226-software
+  target: database
+- source: soc-custom-227-software
+  target: database
+- source: soc-custom-228-software
+  target: database
+- source: soc-custom-229-software
+  target: database
+- source: soc-custom-230-software
+  target: database
+- source: soc-custom-231-software
+  target: database
+- source: soc-custom-232-software
+  target: database
+- source: soc-custom-233-software
+  target: database
+- source: soc-custom-234-software
+  target: database
+- source: soc-custom-235-software
+  target: database
+- source: soc-custom-236-software
+  target: database
+- source: soc-custom-237-software
+  target: database
+- source: soc-custom-238-software
+  target: database
+- source: soc-custom-239-software
+  target: database
+- source: soc-custom-240-software
+  target: database
+- source: soc-custom-241-software
+  target: database
+- source: soc-custom-242-software
+  target: database
+- source: soc-custom-243-software
+  target: database
+- source: soc-custom-244-software
+  target: database
+- source: soc-custom-245-software
+  target: database
+- source: soc-custom-246-software
+  target: database
+- source: soc-custom-247-software
+  target: database
+- source: soc-custom-248-software
+  target: database
+- source: soc-custom-249-software
+  target: database
+- source: soc-custom-250-software
+  target: database

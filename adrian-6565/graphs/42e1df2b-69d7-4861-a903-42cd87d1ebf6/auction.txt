@@ -1,0 +1,5 @@
+Host: soc-motion
+Risk:  VOID -[0,53]->  iot-controller -[0,93]->  soc-motion -[0,08]-> soc-motion-software 1,96 0,04
+Joined: soc-motion
+Proposals:
+- proposal from soc-motion: reducing to 1,51 by AttributeChange [4msoftwareComponentIsEncrypted[0m to [4mtrue[0m for node [4msoc-motion[0m

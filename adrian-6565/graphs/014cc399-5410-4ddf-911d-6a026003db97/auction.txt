@@ -1,0 +1,6 @@
+Host: soc-gate
+Risk:  VOID -[0,53]->  soc-gate -[0,08]-> soc-gate-software 12,70 0,04
+Joined: iot-controller, soc-gate
+Proposals:
+- proposal from unknown: nothing
+- proposal from soc-gate: nothing

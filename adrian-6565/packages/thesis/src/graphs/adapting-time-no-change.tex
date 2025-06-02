@@ -1,0 +1,26 @@
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={Timestamp [s]},
+    ylabel={\shortstack{Cumulative \\ Adapting Time [ms]}},
+    xmin=0, xmax=75000,
+    ymin=0, ymax=2,
+    legend columns=-1,
+    legend style={at={(0.5,-0.1)},anchor=north},
+    ymajorgrids=true,
+    grid style=dashed,
+    width=\textwidth,
+    height=0.5\textwidth,
+    scaled x ticks=base 10:-3,
+    xtick scale label code/.code={}
+]
+
+	\addplot[color=blue,mark=square] coordinates {
+        (0,0)(5000,0)(10000,0)(15000,0)(20000,0)(25000,0)(30000,0)(35000,0)(40000,0)(45000,0)(50000,0)(55000,0)(60000,0)(65000,0)(70000,0)(70357,0)
+    };
+    \addlegendentry{Auctioning}
+
+
+
+
+\end{axis}
+\end{tikzpicture}

@@ -1,0 +1,5 @@
+Host: node-z
+Risk:  VOID -[0,99]->  node-z -[0,99]->  node-a -[0,99]->  node-b -[0,08]-> software-1 7,86 0,08
+Joined: node-y, node-z
+Proposals:
+- proposal from unknown: nothing

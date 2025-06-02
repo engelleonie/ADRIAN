@@ -1,0 +1,5 @@
+Host: soc-alarm
+Risk:  VOID -[0,93]->  iot-controller -[0,53]->  soc-alarm -[0,08]-> soc-alarm-software 7,86 0,04
+Joined: iot-controller, soc-alarm
+Proposals:
+- proposal from iot-controller: reducing to 6,03 by AttributeChange [4msoftwareComponentIsEncrypted[0m to [4mtrue[0m for node [4miot-controller[0m- proposal from soc-alarm: nothing

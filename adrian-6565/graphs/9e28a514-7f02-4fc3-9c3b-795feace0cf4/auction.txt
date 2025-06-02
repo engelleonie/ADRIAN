@@ -1,0 +1,5 @@
+Host: soc-gate
+Risk:  VOID -[0,71]->  soc-gate -[0,71]->  iot-controller -[0,08]-> database 40,63 0,04
+Joined: iot-controller, soc-gate
+Proposals:
+- proposal from iot-controller: reducing to 30,16 by AttributeChange [4mcontiki-ng/contiki-ng[0m to [4m4.7[0m for node [4miot-controller[0m- proposal from soc-gate: reducing to 30,16 by AttributeChange [4mcontiki-ng/contiki-ng[0m to [4m4.7[0m for node [4msoc-gate[0m

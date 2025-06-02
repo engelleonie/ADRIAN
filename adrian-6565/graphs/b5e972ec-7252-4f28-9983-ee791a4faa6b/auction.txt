@@ -1,0 +1,6 @@
+Host: soc-door-lock
+Risk:  VOID -[0,98]->  iot-controller -[0,53]->  soc-door-lock -[0,08]-> soc-door-lock-software 16,62 0,04
+Joined: soc-door-lock, iot-controller
+Proposals:
+- proposal from soc-door-lock: nothing
+- proposal from iot-controller: reducing to 15,71 by AttributeChange [4misPhysicallySecured[0m to [4mtrue[0m for node [4miot-controller[0m

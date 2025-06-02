@@ -1,0 +1,4 @@
+Host: soc-gate
+Risk:  VOID -[0,71]->  soc-gate -[0,08]-> soc-gate-software 17,10 0,06
+Joined: 
+Proposals:

@@ -1,0 +1,16 @@
+%% AttributeChange [4mcontiki-ng/contiki-ng[0m to [4m4.7[0m for node [4miot-controller[0m
+%%  VOID -[0,53]->  iot-controller -[0,53]->  soc-door-lock -[0,08]-> soc-door-lock-software 8,95 0,02
+flowchart LR
+	soc-door-lock[soc-door-lock]
+	soc-door-lock-software[soc-door-lock-software]
+	iot-controller[iot-controller]
+	VOID[VOID]
+	soc-door-lock -->|!CVE-2022-25666 0,08| soc-door-lock-software
+	iot-controller -->|hasFirewall 0,20| soc-door-lock
+	iot-controller -->|isPhysicallySecured 0,20| soc-door-lock
+	iot-controller -->|softwareComponentIsEncrypted 0,20| soc-door-lock
+	iot-controller -->|!CVE-2022-25666 0,08| soc-door-lock
+	VOID -->|!uncertainty-entry 0,08| iot-controller
+	VOID -->|hasFirewall 0,20| iot-controller
+	VOID -->|isPhysicallySecured 0,20| iot-controller
+	VOID -->|softwareComponentIsEncrypted 0,20| iot-controller

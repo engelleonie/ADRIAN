@@ -1,0 +1,57 @@
+Host: iot-controller
+Risk:  VOID -[0,93]->  iot-controller -[0,53]->  soc-door-lock -[0,08]-> soc-door-lock-software 15,71 0,04
+Joined: soc-temperature, soc-custom-9, soc-custom-7, soc-custom-8, soc-custom-16, soc-custom-17, soc-custom-14, soc-custom-15, soc-custom-18, soc-custom-19, soc-custom-50, soc-custom-12, soc-custom-13, soc-custom-10, soc-custom-11, iot-controller, soc-custom-27, soc-custom-28, soc-custom-25, soc-custom-26, soc-custom-29, soc-custom-20, soc-light, soc-custom-23, soc-custom-24, soc-custom-21, soc-custom-22, soc-custom-38, soc-custom-39, soc-custom-36, soc-custom-37, soc-custom-30, soc-custom-31, soc-custom-34, soc-custom-35, soc-custom-32, soc-custom-33, soc-custom-49, soc-custom-47, soc-custom-48, soc-smoke, desktop, soc-custom-5, soc-custom-41, soc-custom-6, soc-custom-42, soc-custom-3, soc-custom-4, soc-custom-40, soc-custom-1, soc-custom-45, soc-custom-2, soc-custom-46, soc-custom-43, soc-custom-44
+Proposals:
+- proposal from soc-temperature: nothing
+- proposal from soc-custom-9: nothing
+- proposal from soc-custom-7: nothing
+- proposal from soc-custom-8: nothing
+- proposal from soc-custom-16: nothing
+- proposal from soc-custom-17: nothing
+- proposal from soc-custom-14: nothing
+- proposal from soc-custom-15: nothing
+- proposal from soc-custom-18: nothing
+- proposal from soc-custom-19: nothing
+- proposal from soc-custom-50: nothing
+- proposal from soc-custom-12: nothing
+- proposal from soc-custom-13: nothing
+- proposal from soc-custom-10: nothing
+- proposal from soc-custom-11: nothing
+- proposal from iot-controller: reducing to 12,06 by AttributeChange [4msoftwareComponentIsEncrypted[0m to [4mtrue[0m for node [4miot-controller[0m- proposal from soc-custom-27: nothing
+- proposal from soc-custom-28: nothing
+- proposal from soc-custom-25: nothing
+- proposal from soc-custom-26: nothing
+- proposal from soc-custom-29: nothing
+- proposal from soc-light: nothing
+- proposal from soc-custom-20: nothing
+- proposal from soc-custom-23: nothing
+- proposal from soc-custom-24: nothing
+- proposal from soc-custom-21: nothing
+- proposal from soc-custom-22: nothing
+- proposal from soc-custom-38: nothing
+- proposal from soc-custom-39: nothing
+- proposal from soc-custom-36: nothing
+- proposal from soc-custom-37: nothing
+- proposal from soc-custom-30: nothing
+- proposal from soc-custom-31: nothing
+- proposal from soc-custom-34: nothing
+- proposal from soc-custom-35: nothing
+- proposal from soc-custom-32: nothing
+- proposal from soc-custom-33: nothing
+- proposal from soc-custom-49: nothing
+- proposal from soc-custom-47: nothing
+- proposal from soc-smoke: nothing
+- proposal from soc-custom-48: nothing
+- proposal from desktop: reducing to 0,00 by Migrating soc-door-lock-software from soc-door-lock to desktop- proposal from soc-custom-5: nothing
+- proposal from soc-custom-41: nothing
+- proposal from soc-custom-6: nothing
+- proposal from soc-custom-42: nothing
+- proposal from soc-custom-3: nothing
+- proposal from soc-custom-4: nothing
+- proposal from soc-custom-40: nothing
+- proposal from soc-custom-1: nothing
+- proposal from soc-custom-45: nothing
+- proposal from soc-custom-46: nothing
+- proposal from soc-custom-2: nothing
+- proposal from soc-custom-43: nothing
+- proposal from soc-custom-44: nothing

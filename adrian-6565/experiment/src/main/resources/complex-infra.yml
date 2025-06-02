@@ -1,0 +1,239 @@
+nodes:
+  - id: iot-controller
+    name: IoT Controller
+    hasAgent: true
+    exposed: true
+    canMigrate: true
+    contiki-ng/contiki-ng: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: soc-motion
+    name: Motion Sensor
+    hasAgent: true
+    contiki-ng/contiki-ng: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: soc-humidity
+    name: Humidity Controller
+    hasAgent: true
+    contiki-ng/contiki-ng: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: soc-door-lock
+    name: Door Lock
+    hasAgent: true
+    contiki-ng/contiki-ng: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: soc-gate
+    name: Gate Controller
+    hasAgent: true
+    exposed: true
+    contiki-ng/contiki-ng: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: soc-alarm
+    name: Alarm System
+    hasAgent: true
+    contiki-ng/contiki-ng: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: soc-smoke
+    name: Smoke Detector
+    hasAgent: true
+    contiki-ng/contiki-ng: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: soc-temperature
+    name: Temperature Controller
+    hasAgent: true
+    contiki-ng/contiki-ng: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: soc-light
+    name: Lighting Controller
+    hasAgent: true
+    contiki-ng/contiki-ng: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: desktop
+    name: Desktop
+    hasAgent: true
+    canMigrate: true
+#    contiki-ng/contiki-ng: 4.3.1
+#    qualcomm/apq8096: 1.0.5
+  - id: printer
+    name: Printer
+    hasAgent: true
+    exposed: true
+    contiki-ng/contiki-ng: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: server
+    name: Server
+    exposed: true
+    canMigrate: true
+    hasAgent: true
+    contiki-ng/contiki-ng: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: router
+    name: Router
+    exposed: true
+
+  - id: cloud-printer
+    name: Cloud Printer Service
+  - id: cloud-weather
+    name: Cloud Weather Service
+  - id: cloud-notification
+    name: Cloud Notification Service
+
+links:
+  - source: iot-controller
+    target: soc-motion
+  - source: iot-controller
+    target: soc-humidity
+  - source: iot-controller
+    target: soc-door-lock
+  - source: iot-controller
+    target: soc-gate
+  - source: iot-controller
+    target: soc-alarm
+  - source: iot-controller
+    target: soc-smoke
+  - source: iot-controller
+    target: soc-temperature
+  - source: iot-controller
+    target: soc-light
+  - source: router
+    target: iot-controller
+  - source: iot-controller
+    target: desktop
+  - source: router
+    target: printer
+  - source: mobile  
+    target: router
+  - source: cloud-printer
+    target: router
+  - source: cloud-weather
+    target: router
+  - source: cloud-notification
+    target: router
+
+
+assets:
+  - id: iot-controller-software
+    name: IoT Controller Software
+    host: iot-controller
+  - id: database
+    name: Database
+    host: iot-controller
+    isCritical: true
+    damageValue: 1000.0
+  - id: soc-motion-software
+    name: Motion Sensor Software
+    host: soc-motion
+    isCritical: true
+    damageValue: 50.0
+    qualcomm/apq8096: 1.0.5
+    google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+    amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+  - id: soc-humidity-software
+    name: Humidity Controller Software
+    host: soc-humidity
+    isCritical: true
+    damageValue: 50.0
+    qualcomm/apq8096: 1.0.5
+    google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+    amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+  - id: soc-door-lock-software
+    name: Door Lock Software
+    host: soc-door-lock
+    isCritical: true
+    damageValue: 400.0
+    qualcomm/apq8096: 1.0.5
+    google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+    amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+  - id: soc-gate-software
+    name: Gate Controller Software
+    host: soc-gate
+    isCritical: true
+    damageValue: 300.0
+    qualcomm/apq8096: 1.0.5
+    google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+    amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+  - id: soc-alarm-software
+    name: Alarm System Software
+    host: soc-alarm
+    isCritical: true
+    damageValue: 200.0
+    qualcomm/apq8096: 1.0.5
+    google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+    amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+  - id: soc-smoke-software
+    name: Smoke Detector Software
+    host: soc-smoke
+    damageValue: 50.0
+    qualcomm/apq8096: 1.0.5
+    google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+    amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+  - id: soc-temperature-software
+    name: Temperature Controller Software
+    host: soc-temperature
+    damageValue: 50.0
+    qualcomm/apq8096: 1.0.5
+    google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+    amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+  - id: soc-light-software
+    name: Lighting Controller Software
+    host: soc-light
+    damageValue: 50.0
+    qualcomm/apq8096: 1.0.5
+    google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+    amazon/amazon_web_services_iot_device_sdk_v2: 1.4.1
+
+  - id: desktop-software
+    name: Desktop Software
+    host: desktop
+    isCritical: true
+    damageValue: 50.0
+    qualcomm/apq8096: 1.0.5
+  - id: server-software
+    name: Server Software
+    host: server
+    isCritical: true
+    damageValue: 50.0
+    qualcomm/apq8096: 1.0.5
+  - id: printer-software
+    name: Printer Software
+    host: printer
+  
+  - id: cloud-printer-software
+    name: Cloud Printer Software
+    host: cloud-printer
+  - id: cloud-weather-software
+    name: Cloud Weather Software
+    host: cloud-weather
+  - id: cloud-notification-software
+    name: Cloud Notification Software
+    host: cloud-notification
+
+connectors:
+  - source: iot-controller-software
+    target: database
+  - source: soc-motion-software
+    target: database
+  - source: soc-humidity-software
+    target: database
+  - source: soc-door-lock-software
+    target: database
+  - source: soc-gate-software
+    target: database
+  - source: soc-alarm-software
+    target: database
+  - source: soc-smoke-software
+    target: database
+  - source: soc-temperature-software
+    target: database
+  - source: soc-light-software  
+    target: database
+  - source: server-software
+    target: database
+  - source: io-controller-software
+    target: server-software
+  
+  - source: cloud-printer-software
+    target: printer-software
+  - source: cloud-weather-software
+    target: iot-controller-software
+  - source: cloud-notification-software
+    target: iot-controller-software

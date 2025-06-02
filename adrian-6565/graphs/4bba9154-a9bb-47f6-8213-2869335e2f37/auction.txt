@@ -1,0 +1,4 @@
+Host: soc-gate
+Risk:  VOID -[0,93]->  soc-gate -[1,00]->  iot-controller -[0,08]-> database 73,92 0,07
+Joined: 
+Proposals:

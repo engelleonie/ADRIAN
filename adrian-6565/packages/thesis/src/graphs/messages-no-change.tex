@@ -1,0 +1,26 @@
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={Timestamp [s]},
+    ylabel={Messages},
+    xmin=0, xmax=75000,
+    ymin=0, ymax=121,
+    legend columns=-1,
+    legend style={at={(0.5,-0.1)},anchor=north},
+    ymajorgrids=true,
+    grid style=dashed,
+    width=\textwidth,
+    height=0.5\textwidth,
+    scaled x ticks=base 10:-3,
+    xtick scale label code/.code={}
+]
+
+	\addplot[color=blue,mark=square] coordinates {
+        (0,0)(5000,17)(10000,28)(15000,28)(20000,28)(25000,28)(30000,28)(35000,69)(40000,69)(45000,69)(50000,69)(55000,69)(60000,69)(65000,104)(70000,104)(70357,104)
+    };
+    \addlegendentry{Auctioning}
+
+
+
+
+\end{axis}
+\end{tikzpicture}

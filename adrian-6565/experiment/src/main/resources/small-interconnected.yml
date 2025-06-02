@@ -1,0 +1,374 @@
+nodes:
+  - id: node-a
+    name: Node A
+    trustedExecutionEnvironment: true
+    hasAgent: true
+    exposed: true
+    hasFirewall: true
+    canMigrate: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-b
+    name: Node B
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    exposed: true
+    hasFirewall: true
+    canMigrate: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-c
+    name: Node C
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    exposed: true
+    hasFirewall: true
+    canMigrate: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-d
+    name: Node D
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    hasFirewall: true
+    exposed: true
+    canMigrate: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-e
+    name: Node E
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    exposed: true
+    hasFirewall: true
+    canMigrate: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-f
+    name: Node F
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    exposed: true
+    hasFirewall: true
+    canMigrate: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-g
+    name: Node G
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    exposed: true
+    hasFirewall: true
+    canMigrate: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-h
+    name: Node H
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    exposed: true
+    hasFirewall: true
+    canMigrate: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-i
+    name: Node I
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    hasFirewall: true
+    exposed: true
+    canMigrate: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-j
+    name: Node J
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    exposed: true
+    hasFirewall: true
+    canMigrate: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-k
+    name: Node K
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    exposed: true
+    hasFirewall: true
+    canMigrate: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-l
+    name: Node L
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    exposed: true
+    hasFirewall: true
+    canMigrate: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-m
+    name: Node M
+    trustedExecutionEnvironment: true
+    hasAgent: true
+    exposed: true
+    canMigrate: true
+    hasFirewall: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-n
+    name: Node N
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    exposed: true
+    hasFirewall: true
+    canMigrate: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-o
+    name: Node O
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    exposed: true
+    canMigrate: true
+    hasFirewall: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-p
+    name: Node P
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    hasFirewall: true
+    exposed: true
+    canMigrate: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-q
+    name: Node q
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    exposed: true
+    canMigrate: true
+    hasFirewall: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-r
+    name: Node R
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    exposed: true
+    hasFirewall: true
+    canMigrate: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-s
+    name: Node S
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    hasFirewall: true
+    exposed: true
+    canMigrate: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-t
+    name: Node T
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    hasFirewall: true
+    exposed: true
+    canMigrate: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-u
+    name: Node U
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    hasFirewall: true
+    exposed: true
+    canMigrate: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-v
+    name: Node V
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    exposed: true
+    canMigrate: true
+    hasFirewall: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-w
+    name: Node W
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    exposed: true
+    hasFirewall: true
+    canMigrate: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-x
+    name: Node X
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    exposed: true
+    hasFirewall: true
+    canMigrate: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-y
+    name: Node Y
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    exposed: true
+    canMigrate: true
+    hasFirewall: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+  - id: node-z
+    name: Node Z
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    exposed: true
+    hasFirewall: true
+    canMigrate: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+    qualcomm/apq8096: 1.0.5
+
+links:
+  - source: node-a
+    target: node-b
+  - source: node-b
+    target: node-c
+  - source: node-c
+    target: node-d
+  - source: node-d
+    target: node-e
+  - source: node-e
+    target: node-f
+  - source: node-f
+    target: node-g
+  - source: node-g
+    target: node-h
+  - source: node-h
+    target: node-i
+  - source: node-i
+    target: node-j
+  - source: node-j
+    target: node-k
+  - source: node-k
+    target: node-l
+  - source: node-l
+    target: node-m
+  - source: node-m
+    target: node-n
+  - source: node-n
+    target: node-o
+  - source: node-o
+    target: node-p
+  - source: node-p
+    target: node-q
+  - source: node-q
+    target: node-r
+  - source: node-r
+    target: node-s
+  - source: node-s
+    target: node-t
+  - source: node-t
+    target: node-u
+  - source: node-u
+    target: node-v
+  - source: node-v
+    target: node-w
+  - source: node-w
+    target: node-x
+  - source: node-x
+    target: node-y
+  - source: node-y
+    target: node-z
+  - source: node-z
+    target: node-a
+
+  - source: node-a
+    target: node-g
+  - source: node-b
+    target: node-h
+  - source: node-c
+    target: node-i
+  - source: node-d
+    target: node-j
+  - source: node-e
+    target: node-k
+  - source: node-f
+    target: node-l
+
+  - source: node-z
+    target: node-y
+  - source: node-y
+    target: node-x
+  - source: node-x
+    target: node-w
+  - source: node-w
+    target: node-v
+  - source: node-v
+    target: node-u
+  - source: node-u
+    target: node-t
+  - source: node-t
+    target: node-s
+  - source: node-s
+    target: node-r
+  - source: node-r
+    target: node-q
+  - source: node-q
+    target: node-p
+  - source: node-p
+    target: node-o
+  - source: node-o
+    target: node-n
+  - source: node-n
+    target: node-m
+  - source: node-m
+    target: node-l
+  - source: node-l
+    target: node-k
+  - source: node-k
+    target: node-j
+  - source: node-j
+    target: node-i
+  - source: node-i
+    target: node-h
+  - source: node-h
+    target: node-g
+  - source: node-g
+    target: node-f
+  - source: node-f
+    target: node-e
+  - source: node-e
+    target: node-d
+  - source: node-d
+    target: node-c
+  - source: node-c
+    target: node-b
+  - source: node-b
+    target: node-a
+  - source: node-a
+    target: node-z
+
+
+assets:
+  - id: software-1
+    name: Software Component 1
+    type: software
+    isCritical: true
+    damageValue: 100.5
+    host: node-b
+  - id: software-2
+    name: Software Component 2
+    type: software
+    isCritical: true
+    damageValue: 45.5
+    host: node-a
+
+connectors:
+  - source: software-1
+    target: software-2

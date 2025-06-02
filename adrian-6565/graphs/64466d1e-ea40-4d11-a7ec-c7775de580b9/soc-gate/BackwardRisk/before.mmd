@@ -1,0 +1,12 @@
+%% AttributeChange [4mcontiki-ng/contiki-ng[0m to [4m4.7[0m for node [4msoc-gate[0m
+%%  VOID -[0,93]->  soc-gate -[0,08]-> soc-gate-software 22,28 0,07
+flowchart LR
+	soc-gate-software[soc-gate-software]
+	soc-gate[soc-gate]
+	VOID[VOID]
+	soc-gate -->|!CVE-2022-25666 0,08| soc-gate-software
+	VOID -->|!uncertainty-entry 0,08| soc-gate
+	VOID -->|hasFirewall 0,20| soc-gate
+	VOID -->|isPhysicallySecured 0,20| soc-gate
+	VOID -->|!software-encrypted-risk 0,80| soc-gate
+	VOID -->|!CVE-2022-35927 0,39| soc-gate

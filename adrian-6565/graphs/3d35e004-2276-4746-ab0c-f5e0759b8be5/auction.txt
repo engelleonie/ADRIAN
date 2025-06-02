@@ -1,0 +1,8 @@
+Host: iot-controller
+Risk:  VOID -[0,53]->  iot-controller -[0,53]->  soc-gate -[0,08]-> soc-gate-software 6,72 0,02
+Joined: soc-temperature, iot-controller, soc-smoke, soc-light
+Proposals:
+- proposal from soc-temperature: nothing
+- proposal from iot-controller: nothing
+- proposal from soc-smoke: nothing
+- proposal from soc-light: nothing

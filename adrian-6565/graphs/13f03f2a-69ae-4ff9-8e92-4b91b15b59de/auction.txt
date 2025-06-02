@@ -1,0 +1,11 @@
+Host: iot-controller
+Risk:  VOID -[0,93]->  soc-gate -[1,00]->  iot-controller -[0,08]-> database 73,92 0,07
+Joined: soc-door-lock, soc-temperature, iot-controller, soc-motion, soc-smoke, desktop, soc-alarm, soc-humidity, soc-light
+Proposals:
+- proposal from soc-door-lock: nothing
+- proposal from soc-temperature: nothing
+- proposal from soc-motion: nothing
+- proposal from iot-controller: reducing to 72,92 by AttributeChange [4mhasFirewall[0m to [4mtrue[0m for node [4miot-controller[0m- proposal from soc-smoke: nothing
+- proposal from desktop: reducing to 0,00 by Migrating database from iot-controller to desktop- proposal from soc-alarm: nothing
+- proposal from soc-humidity: nothing
+- proposal from soc-light: nothing

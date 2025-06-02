@@ -1,0 +1,24 @@
+%% AttributeChange [4mqualcom/apq8096[0m to [4m2.1[0m for node [4msoc-alarm[0m
+%%  VOID -[1,00]->  soc-gate -[0,93]->  iot-controller -[0,93]->  soc-alarm -[0,08]-> soc-alarm-software 13,72 0,07
+flowchart LR
+	iot-controller[iot-controller]
+	soc-gate[soc-gate]
+	soc-alarm[soc-alarm]
+	soc-alarm-software[soc-alarm-software]
+	VOID[VOID]
+	iot-controller -->|hasFirewall 0,20| soc-alarm
+	iot-controller -->|isPhysicallySecured 0,20| soc-alarm
+	iot-controller -->|!software-encrypted-risk 0,80| soc-alarm
+	iot-controller -->|!CVE-2022-25666 0,08| soc-alarm
+	iot-controller -->|!CVE-2022-35927 0,39| soc-alarm
+	soc-gate -->|hasFirewall 0,20| iot-controller
+	soc-gate -->|isPhysicallySecured 0,20| iot-controller
+	soc-gate -->|!software-encrypted-risk 0,80| iot-controller
+	soc-gate -->|!CVE-2022-25666 0,08| iot-controller
+	soc-gate -->|!CVE-2022-35927 0,39| iot-controller
+	soc-alarm -->|!CVE-2022-25666 0,08| soc-alarm-software
+	VOID -->|!uncertainty-entry 0,08| soc-gate
+	VOID -->|!firewall-risk 0,80| soc-gate
+	VOID -->|!physically-secured-risk 0,80| soc-gate
+	VOID -->|!software-encrypted-risk 0,80| soc-gate
+	VOID -->|!CVE-2022-35927 0,39| soc-gate

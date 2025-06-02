@@ -1,0 +1,17 @@
+%% AttributeChange [4msoftwareComponentIsEncrypted[0m to [4mtrue[0m for node [4msoc-gate[0m
+%%  VOID -[0,88]->  soc-gate -[0,71]->  iot-controller -[0,08]-> database 50,30 0,05
+flowchart LR
+	iot-controller[iot-controller]
+	database[database]
+	soc-gate[soc-gate]
+	VOID[VOID]
+	iot-controller -->|!CVE-2022-25666 0,08| database
+	soc-gate -->|hasFirewall 0,20| iot-controller
+	soc-gate -->|isPhysicallySecured 0,20| iot-controller
+	soc-gate -->|softwareComponentIsEncrypted 0,20| iot-controller
+	soc-gate -->|!CVE-2022-25666 0,08| iot-controller
+	soc-gate -->|!CVE-2022-35927 0,39| iot-controller
+	VOID -->|!uncertainty-entry 0,08| soc-gate
+	VOID -->|hasFirewall 0,20| soc-gate
+	VOID -->|!physically-secured-risk 0,80| soc-gate
+	VOID -->|softwareComponentIsEncrypted 0,20| soc-gate

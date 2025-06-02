@@ -1,0 +1,4 @@
+Host: soc-motion
+Risk:  VOID -[0,98]->  soc-gate -[0,71]->  iot-controller -[1,00]->  soc-motion -[0,08]-> soc-motion-software 2,79 0,06
+Joined: 
+Proposals:

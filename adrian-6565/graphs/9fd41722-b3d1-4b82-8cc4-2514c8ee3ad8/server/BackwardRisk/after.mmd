@@ -1,0 +1,11 @@
+%% AttributeChange [4mcontiki-ng/contiki-ng[0m to [4m4.7[0m for node [4mserver[0m
+%%  VOID -[0,88]->  server -[0,08]-> server-software 3,53 0,07
+flowchart LR
+	server[server]
+	server-software[server-software]
+	VOID[VOID]
+	server -->|!CVE-2022-25666 0,08| server-software
+	VOID -->|!uncertainty-entry 0,08| server
+	VOID -->|hasFirewall 0,20| server
+	VOID -->|isPhysicallySecured 0,20| server
+	VOID -->|!software-encrypted-risk 0,80| server

@@ -1,0 +1,16 @@
+Host: iot-controller
+Risk:  VOID -[1,00]->  iot-controller -[0,08]-> database 79,64 0,08
+Joined: soc-temperature, soc-custom-467, soc-custom-468, iot-controller, soc-custom-465, soc-custom-477, soc-custom-463, soc-custom-464, soc-custom-472, soc-custom-462, soc-custom-473, soc-custom-470, soc-custom-469
+Proposals:
+- proposal from soc-temperature: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing
+- proposal from unknown: nothing

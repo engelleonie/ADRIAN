@@ -1,0 +1,15 @@
+nodes:
+  - id: root
+    name: Root Node
+    hasAgent: true
+    exposed: true
+    fake-os: "2.0.1"
+
+assets:
+  - id: database
+    name: Database
+    type: software
+    isCritical: true
+    damageValue: 100.5
+    host: root
+    fake-sdk: "1.8"

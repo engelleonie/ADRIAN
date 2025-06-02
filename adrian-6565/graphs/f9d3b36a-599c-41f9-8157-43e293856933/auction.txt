@@ -1,0 +1,44 @@
+Host: iot-controller
+Risk:  VOID -[1,00]->  iot-controller -[0,08]-> database 79,64 0,08
+Joined: iot-controller
+Proposals:
+- proposal from soc-custom-148: nothing
+- proposal from soc-custom-127: nothing
+- proposal from soc-custom-446: nothing
+- proposal from soc-custom-105: nothing
+- proposal from soc-custom-303: nothing
+- proposal from soc-custom-245: nothing
+- proposal from soc-custom-169: nothing
+- proposal from soc-custom-241: nothing
+- proposal from soc-custom-184: nothing
+- proposal from soc-custom-59: nothing
+- proposal from soc-custom-96: nothing
+- proposal from soc-custom-97: nothing
+- proposal from soc-custom-319: nothing
+- proposal from soc-custom-95: nothing
+- proposal from soc-custom-119: nothing
+- proposal from soc-custom-10: nothing
+- proposal from soc-custom-316: nothing
+- proposal from soc-custom-410: nothing
+- proposal from soc-custom-333: nothing
+- proposal from soc-custom-256: nothing
+- proposal from soc-custom-279: nothing
+- proposal from soc-custom-158: nothing
+- proposal from soc-custom-199: nothing
+- proposal from soc-custom-210: nothing
+- proposal from soc-custom-299: nothing
+- proposal from soc-custom-330: nothing
+- proposal from soc-custom-195: nothing
+- proposal from soc-custom-196: nothing
+- proposal from soc-custom-174: nothing
+- proposal from soc-custom-295: nothing
+- proposal from soc-custom-290: nothing
+- proposal from soc-custom-5: nothing
+- proposal from soc-custom-41: nothing
+- proposal from soc-custom-83: nothing
+- proposal from soc-custom-309: nothing
+- proposal from soc-custom-109: nothing
+- proposal from soc-custom-406: nothing
+- proposal from soc-custom-128: nothing
+- proposal from soc-custom-404: nothing
+- proposal from soc-custom-305: nothing

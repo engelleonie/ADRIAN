@@ -1,0 +1,4 @@
+Host: soc-humidity
+Risk:  VOID -[0,98]->  soc-gate -[1,00]->  iot-controller -[1,00]->  soc-humidity -[0,08]-> soc-humidity-software 3,89 0,08
+Joined: 
+Proposals:

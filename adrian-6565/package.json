@@ -1,0 +1,13 @@
+{
+  "name": "adrian-6565",
+  "version": "1.0.0",
+  "description": "This is the repository for the ADRIAN project, containing the source code and results of the research project.",
+  "main": "createGraphs.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

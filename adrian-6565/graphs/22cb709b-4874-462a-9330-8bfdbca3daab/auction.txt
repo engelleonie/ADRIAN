@@ -1,0 +1,6 @@
+Host: node-f
+Risk:  VOID -[0,99]->  node-f -[0,99]->  node-g -[0,99]->  node-a -[0,99]->  node-b -[0,08]-> software-1 7,81 0,08
+Joined: node-b, node-f, node-g
+Proposals:
+- proposal from unknown: nothing
+- proposal from unknown: nothing

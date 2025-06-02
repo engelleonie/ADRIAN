@@ -1,0 +1,4 @@
+Host: server
+Risk:  VOID -[1,00]->  server -[0,08]-> server-software 3,98 0,08
+Joined: 
+Proposals:

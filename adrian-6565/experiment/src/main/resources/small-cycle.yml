@@ -1,0 +1,107 @@
+nodes:
+  - id: node-a
+    name: Node A
+    trustedExecutionEnvironment: true
+    hasAgent: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+  - id: node-b
+    name: Node B
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+  - id: node-c
+    name: Node C
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+  - id: node-d
+    name: Node D
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    hasFirewall: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+  - id: node-e
+    name: Node E
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+  - id: node-f
+    name: Node F
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+  - id: node-g
+    name: Node G
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+  - id: node-h
+    name: Node H
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+  - id: node-i
+    name: Node I
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    hasFirewall: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+  - id: node-j
+    name: Node J
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+  - id: node-k
+    name: Node K
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+  - id: node-l
+    name: Node L
+    trustedExecutionEnvironment: false
+    hasAgent: true
+    os-contiki-ng/contiki-ng-version: 4.3.1
+
+links:
+  - source: node-a
+    target: node-b
+  - source: node-b
+    target: node-c
+  - source: node-c
+    target: node-d
+  - source: node-d
+    target: node-e
+  - source: node-e
+    target: node-f
+  - source: node-f
+    target: node-g
+  - source: node-g
+    target: node-h
+  - source: node-h
+    target: node-i
+  - source: node-i
+    target: node-j
+  - source: node-j
+    target: node-k
+  - source: node-k
+    target: node-l
+  - source: node-l
+    target: node-a
+
+assets:
+  - id: software-1
+    name: Software Component 1
+    type: software
+    isCritical: true
+    damageValue: 100.5
+    host: node-b
+  - id: software-2
+    name: Software Component 2
+    type: software
+    isCritical: true
+    damageValue: 45.5
+    host: node-a
+
+connectors:
+  - source: software-1
+    target: software-2

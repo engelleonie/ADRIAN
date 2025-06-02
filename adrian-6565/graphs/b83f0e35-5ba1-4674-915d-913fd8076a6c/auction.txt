@@ -1,0 +1,4 @@
+Host: soc-alarm
+Risk:  VOID -[1,00]->  soc-gate -[1,00]->  iot-controller -[1,00]->  soc-alarm -[0,08]-> soc-alarm-software 15,79 0,08
+Joined: soc-alarm
+Proposals:

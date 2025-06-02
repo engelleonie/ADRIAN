@@ -1,0 +1,12 @@
+%% AttributeChange [4mqualcom/apq8096[0m to [4m2.1[0m for node [4mserver[0m
+%%  VOID -[0,93]->  server -[0,08]-> server-software 3,71 0,07
+flowchart LR
+	server[server]
+	server-software[server-software]
+	VOID[VOID]
+	server -->|!CVE-2022-25666 0,08| server-software
+	VOID -->|!uncertainty-entry 0,08| server
+	VOID -->|hasFirewall 0,20| server
+	VOID -->|isPhysicallySecured 0,20| server
+	VOID -->|!software-encrypted-risk 0,80| server
+	VOID -->|!CVE-2022-35927 0,39| server

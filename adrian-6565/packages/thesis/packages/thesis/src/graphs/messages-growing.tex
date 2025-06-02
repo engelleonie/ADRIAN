@@ -1,0 +1,38 @@
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={Timestamp [s]},
+    ylabel={Messages},
+    xmin=0, xmax=5000,
+    ymin=0, ymax=2,
+    legend columns=-1,
+    legend style={at={(0.5,-0.1)},anchor=north},
+    ymajorgrids=true,
+    grid style=dashed,
+    width=\textwidth,
+    height=0.5\textwidth,
+    scaled x ticks=base 10:-3,
+    xtick scale label code/.code={}
+]
+
+	\addplot[color=blue,mark=square] coordinates {
+        (0,0)(,0)
+    };
+    \addlegendentry{Auctioning}
+	\addplot[color=red,mark=triangle] coordinates {
+        (0,0)(,0)
+    };
+    \addlegendentry{Knowledge Sharing}
+	\addplot[color=orange,mark=diamond] coordinates {
+        (0,0)(,0)
+    };
+    \addlegendentry{Local}
+
+	\addplot[color=gray, dashed,] coordinates {(30000,0) (30000,2)};
+	\addplot[color=gray, dashed,] coordinates {(60000,0) (60000,2)};
+	\addplot[color=gray, dashed,] coordinates {(90000,0) (90000,2)};
+	\addplot[color=gray, dashed,] coordinates {(120000,0) (120000,2)};
+	\addplot[color=gray, dashed,] coordinates {(150000,0) (150000,2)};
+
+
+\end{axis}
+\end{tikzpicture}

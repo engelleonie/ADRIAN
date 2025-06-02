@@ -1,0 +1,23 @@
+%% AttributeChange [4mqualcom/apq8096[0m to [4m2.1[0m for node [4msoc-humidity[0m
+%%  VOID -[0,93]->  soc-gate -[0,71]->  iot-controller -[0,53]->  soc-humidity -[0,08]-> soc-humidity-software 1,40 0,03
+flowchart LR
+	iot-controller[iot-controller]
+	soc-humidity-software[soc-humidity-software]
+	soc-gate[soc-gate]
+	soc-humidity[soc-humidity]
+	VOID[VOID]
+	iot-controller -->|hasFirewall 0,20| soc-humidity
+	iot-controller -->|isPhysicallySecured 0,20| soc-humidity
+	iot-controller -->|softwareComponentIsEncrypted 0,20| soc-humidity
+	iot-controller -->|!CVE-2022-25666 0,08| soc-humidity
+	soc-gate -->|hasFirewall 0,20| iot-controller
+	soc-gate -->|isPhysicallySecured 0,20| iot-controller
+	soc-gate -->|softwareComponentIsEncrypted 0,20| iot-controller
+	soc-gate -->|!CVE-2022-25666 0,08| iot-controller
+	soc-gate -->|!CVE-2022-35927 0,39| iot-controller
+	soc-humidity -->|!CVE-2022-25666 0,08| soc-humidity-software
+	VOID -->|!uncertainty-entry 0,08| soc-gate
+	VOID -->|hasFirewall 0,20| soc-gate
+	VOID -->|isPhysicallySecured 0,20| soc-gate
+	VOID -->|!software-encrypted-risk 0,80| soc-gate
+	VOID -->|!CVE-2022-35927 0,39| soc-gate

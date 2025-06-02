@@ -1,0 +1,34 @@
+Host: iot-controller
+Risk:  VOID -[1,00]->  iot-controller -[0,08]-> database 79,64 0,08
+Joined: soc-temperature, soc-custom-9, soc-custom-7, soc-custom-8, soc-custom-16, soc-custom-38, soc-custom-17, soc-motion, soc-custom-14, soc-custom-15, soc-custom-18, soc-humidity, soc-custom-19, soc-custom-50, soc-custom-12, soc-custom-13, soc-custom-10, soc-custom-11, iot-controller, soc-custom-27, soc-custom-28, soc-custom-25, soc-smoke, soc-custom-26, soc-custom-29, soc-light, soc-custom-20, soc-custom-23, soc-custom-24, soc-custom-21, soc-custom-22
+Proposals:
+- proposal from soc-temperature: nothing
+- proposal from soc-custom-9: nothing
+- proposal from soc-custom-7: nothing
+- proposal from soc-custom-8: nothing
+- proposal from soc-custom-16: nothing
+- proposal from soc-custom-38: nothing
+- proposal from soc-custom-17: nothing
+- proposal from soc-custom-14: nothing
+- proposal from soc-motion: nothing
+- proposal from soc-custom-15: nothing
+- proposal from soc-custom-18: nothing
+- proposal from soc-custom-19: nothing
+- proposal from soc-humidity: nothing
+- proposal from soc-custom-50: nothing
+- proposal from soc-custom-12: nothing
+- proposal from soc-custom-13: nothing
+- proposal from soc-custom-10: nothing
+- proposal from soc-custom-11: nothing
+- proposal from iot-controller: reducing to 78,56 by AttributeChange [4mhasFirewall[0m to [4mtrue[0m for node [4miot-controller[0m- proposal from soc-custom-27: nothing
+- proposal from soc-custom-28: nothing
+- proposal from soc-custom-25: nothing
+- proposal from soc-custom-26: nothing
+- proposal from soc-smoke: nothing
+- proposal from soc-custom-29: nothing
+- proposal from soc-light: nothing
+- proposal from soc-custom-20: nothing
+- proposal from soc-custom-23: nothing
+- proposal from soc-custom-24: nothing
+- proposal from soc-custom-21: nothing
+- proposal from soc-custom-22: nothing

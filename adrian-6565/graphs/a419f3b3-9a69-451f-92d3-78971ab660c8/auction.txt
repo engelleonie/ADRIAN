@@ -1,0 +1,5 @@
+Host: soc-gate
+Risk:  VOID -[0,71]->  soc-gate -[0,08]-> soc-gate-software 17,10 0,06
+Joined: soc-gate
+Proposals:
+- proposal from soc-gate: reducing to 12,70 by AttributeChange [4mcontiki-ng/contiki-ng[0m to [4m4.7[0m for node [4msoc-gate[0m

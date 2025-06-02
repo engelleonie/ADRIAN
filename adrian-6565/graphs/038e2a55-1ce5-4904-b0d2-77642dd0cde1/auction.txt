@@ -1,0 +1,5 @@
+Host: soc-alarm
+Risk:  VOID -[0,98]->  iot-controller -[0,71]->  soc-alarm -[0,08]-> soc-alarm-software 11,20 0,06
+Joined: soc-alarm
+Proposals:
+- proposal from soc-alarm: reducing to 8,31 by AttributeChange [4mcontiki-ng/contiki-ng[0m to [4m4.7[0m for node [4msoc-alarm[0m
