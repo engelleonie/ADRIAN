@@ -1,12 +1,14 @@
 package tech.jorn.adrian.experiment;
 
 import tech.jorn.adrian.core.events.Event;
+import tech.jorn.adrian.core.messages.EventMessage;
+import tech.jorn.adrian.core.messages.Message;
 
-public class eventNode {
-    public Event event;
+public class eventNode<E extends Event> {
+    public E event;
     public long finishTime;
 
-    public eventNode(Event event, long finishTime) {
+    public eventNode(E event, long finishTime) {
         this.event = event;
         this.finishTime = finishTime;
     }
@@ -15,7 +17,7 @@ public class eventNode {
         return this.finishTime;
     }
 
-    public Event getEvent() {
+    public E getEvent() {
         return this.event;
     }
 
