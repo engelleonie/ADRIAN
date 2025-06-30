@@ -1,22 +1,19 @@
 package tech.jorn.adrian.experiment;
 
 
-import java.awt.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import tech.jorn.adrian.agent.AdrianAgent;
 import tech.jorn.adrian.core.agents.IAgent;
-import tech.jorn.adrian.core.agents.IAgentConfiguration;
+import tech.jorn.adrian.core.events.EventManager;
+import tech.jorn.adrian.core.events.queue.InMemoryQueue;
 import tech.jorn.adrian.core.graphs.MermaidGraphRenderer;
 import tech.jorn.adrian.core.graphs.base.GraphLink;
 import tech.jorn.adrian.core.graphs.infrastructure.Infrastructure;
@@ -41,7 +38,6 @@ import tech.jorn.adrian.experiment.scenarios.NoChangeScenario;
 import tech.jorn.adrian.experiment.scenarios.Scenario;
 import tech.jorn.adrian.experiment.scenarios.UnstableInfrastructureScenario;
 import tech.jorn.adrian.core.events.Event;
-import tech.jorn.adrian.core.events.EventManager;
 
 public class ExperimentRunner {
     private static int tick = 0;
@@ -51,13 +47,15 @@ public class ExperimentRunner {
     public static long simulatedTime = 0;
     static LinkedList<eventNode> eventQueue = new LinkedList<>();
 
+    private static final EventManager eventManager = null;
+
     public static void main(String[] args) throws InterruptedException {
 
 
         String[] param = new String[3];
-        param[0] = "testgraph250.yml";
+        param[0] = "simple-infra.yml";
         param[1] = "no-change";
-        param[2] = "auctioning";
+        param[2] = "knowledge-sharing";
 
         System.out.println(Arrays.stream(args).collect(Collectors.joining(", ")));
         var file = param[0];
@@ -124,6 +122,8 @@ public class ExperimentRunner {
         agentList.forEach(metricCollector::listenToAgent);
 
         scenario.scheduleEvents(agents);
+
+
         // agents.forEach(ExperimentalAgent::start);
 
 
@@ -172,11 +172,18 @@ public class ExperimentRunner {
 
         agents.forEach(AdrianAgent::start);
 
+
+
+
+
+
         //evtl Schleife in separater KLasse definieren?
-        while(!scenario.isFinished()) {
-            //Events in eventQueue einfügen, passiert primär in EventManager, noch nicht implementiert
+
+
+            /* //Events in eventQueue einfügen, passiert primär in EventManager, noch nicht implementiert
             simulatedTime += eventQueue.getFirst().getFinishTime();
             Event event = eventQueue.getFirst().getEvent();
+
             //event aufrufen
             //event aus queue entfernen (erstes Listenelement löschen)
 
@@ -184,31 +191,10 @@ public class ExperimentRunner {
             //Daten an MetricCollector senden: evtl nicht in jeder iteration aufrufen, später testen
             metricCollector.updateInterval(agents);
             //simuliert oder physisch? notwendig? evtl counter für vorigen Kommentar
-            tick++;
-        }
-    }
-
-    public static void addEvent(Event event, long duration) {
-        //Dauer der Aufgabe wird übergeben und Endzeitpunkt berechnet, nach diesem wird die Liste sortiert/der Knoten eingefügt
-        long finishedAt = simulatedTime + duration;
-        eventNode node = new eventNode(event, finishedAt);
-        if(eventQueue.isEmpty()) {
-            eventQueue.add(node);
-        }
-        else {
-            //Position zum Einfügen bestimmen
-            int index = 0;
-            for(int i = 0; i < eventQueue.size(); i++) {
-                if(eventQueue.get(i).getFinishTime() < finishedAt){
-                    break;
-                }
-                index++;
-            }
-            eventQueue.add(index, node);
-        }
-
+            tick++; */
 
     }
+
 
 
 
