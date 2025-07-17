@@ -8,6 +8,8 @@ import java.util.function.Consumer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tech.jorn.adrian.core.EventNode;
+import tech.jorn.adrian.core.GlobalQueue;
 import tech.jorn.adrian.core.agents.AgentState;
 import tech.jorn.adrian.core.events.queue.IEventQueue;
 import tech.jorn.adrian.core.observables.SubscribableValueEvent;
@@ -24,14 +26,15 @@ public class EventManager {
      private final Deque<Event> _queue = new ArrayDeque<>();
     // private Semaphore processing = new Semaphore(1);
 
-    private int simulatedTime = 0;
+    private long simulatedTime = 0;
 
-    private final PriorityQueue<Event> globalQueue = new PriorityQueue<>(Comparator.comparingInt(Event::getFinishTime));
+    private final GlobalQueue globalQueue = GlobalQueue.getInstance();
 
 
     public EventManager(IEventQueue queue, SubscribableValueEvent<AgentState> agentState) {
         this.queue = queue;
         this.agentState = agentState;
+
 
     }
 
@@ -72,28 +75,31 @@ public class EventManager {
             }
             this._queue.addLast(event);
         }
-        //Event in globalQueue einfügen
-        int finishTime = simulatedTime + eventDuration(event);
+        //adding event to globalqueue
+        long finishTime = simulatedTime + eventDuration(event);
+        EventNode node = new EventNode(event, finishTime);
         event.setFinishTime(finishTime);
-        this.globalQueue.offer(event);
+        globalQueue.offer(node);
+            log.info("Event erfolgreich eingefügt");
+
 
         //this.processEvent(event);
     }
 
     public int eventDuration(Event event) {
-        // je nach Event hier eine passende Dauer einfügen, funktioniert noch nicht wegen dependency
+
         return event.getDuration();
     }
 
-    public void processGlobalQueue() {
-        Event event = globalQueue.poll(); // Nächstes Event nach sortOrder
+    /* public void processGlobalQueue() {
+        EventNode event = globalQueue.poll(); // Nächstes Event nach sortOrder
         if (event == null) return;
 
         // Simulationszeit anpassen
         this.simulatedTime = event.getFinishTime();
 
         // Logging
-        if (!event.isDebugEvent()) {
+        if (!EventNode.isDebugEvent()) {
             this.log.debug("Processing event {} with sortOrder {} at simTime {}",
                     event.getClass().getSimpleName(), event.getFinishTime(), simulatedTime);
         }
@@ -109,7 +115,12 @@ public class EventManager {
                 }
             }
         }
+    } */
+
+    public boolean canHandle(Event event) {
+        return !getEventHandlers(event.getClass()).isEmpty();
     }
+
 
 
     // muss von executorService entkoppelt werden
