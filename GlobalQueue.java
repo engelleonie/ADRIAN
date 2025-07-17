@@ -1,4 +1,4 @@
-package tech.jorn.adrian.experiment;
+ package tech.jorn.adrian.core;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -6,69 +6,54 @@ import tech.jorn.adrian.core.events.Event;
 import tech.jorn.adrian.core.events.EventManager;
 import tech.jorn.adrian.core.messages.EventMessage;
 import tech.jorn.adrian.core.messages.Message;
-import tech.jorn.adrian.experiment.eventNode;
+import tech.jorn.adrian.core.EventNode;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 
 public class GlobalQueue {
     public long simulatedTime = 0;
+    private static final GlobalQueue instance = new GlobalQueue();
+    public static GlobalQueue getInstance() {
+        return instance;
+    }
 
-     LinkedList<eventNode> eventQueue = new LinkedList<>();
+    private GlobalQueue() {
+        // Konstruktor privat machen, damit niemand neue Instanzen erzeugt
+    }
+
+    private final PriorityQueue<EventNode> globalQueue = new PriorityQueue<>(Comparator.comparingLong(EventNode::getFinishTime));
 
     protected final Logger log = LogManager.getLogger(EventManager.class);
 
-     public GlobalQueue(EventManager eventManager) {
-
-     }
-
-
-    public void add(Event event, long duration) {
-        //Dauer der Aufgabe wird übergeben und Endzeitpunkt berechnet, nach diesem wird die Liste sortiert/der Knoten eingefügt
-        long finishedAt = simulatedTime + duration;
-        eventNode node = new eventNode(event, finishedAt);
-        if(eventQueue.isEmpty()) {
-            eventQueue.add(node);
-        }
-        else {
-            //Position zum Einfügen bestimmen
-            int index = 0;
-            for (tech.jorn.adrian.experiment.eventNode eventNode : eventQueue) {
-                if (eventNode.getFinishTime() < finishedAt) {
-                    break;
-                }
-                index++;
-            }
-            eventQueue.add(index, node);
-        }
-
+    public void offer(EventNode node) {
+        globalQueue.offer(node);
     }
 
-    public eventNode poll() {
-        if(eventQueue.isEmpty()) return null;
-        return eventQueue.pollFirst();
+    public EventNode poll() {
+        return globalQueue.poll();
+    }
+
+    public EventNode peek() {
+        return globalQueue.peek();
     }
 
     public boolean isEmpty() {
-        return eventQueue.poll() == null;
-    }
-
-    public void setSimulatedTime(long updatedTime) {
-         this.simulatedTime = updatedTime;
+        return globalQueue.isEmpty();
     }
 
     public long getSimulatedTime() {
-         return simulatedTime;
+        return simulatedTime;
+    }
+
+    public void setSimulatedTime(long time) {
+        this.simulatedTime = time;
     }
 
 
 
-
-
-
-
-
-         }
+}
 
 
 
