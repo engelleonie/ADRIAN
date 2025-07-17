@@ -11,9 +11,11 @@ import java.util.stream.Collectors;
 import org.apache.logging.log4j.LogManager;
 
 import tech.jorn.adrian.agent.AdrianAgent;
+import tech.jorn.adrian.core.EventNode;
+import tech.jorn.adrian.core.GlobalQueue;
 import tech.jorn.adrian.core.agents.IAgent;
+import tech.jorn.adrian.core.events.Event;
 import tech.jorn.adrian.core.events.EventManager;
-import tech.jorn.adrian.core.events.queue.InMemoryQueue;
 import tech.jorn.adrian.core.graphs.MermaidGraphRenderer;
 import tech.jorn.adrian.core.graphs.base.GraphLink;
 import tech.jorn.adrian.core.graphs.infrastructure.Infrastructure;
@@ -37,7 +39,6 @@ import tech.jorn.adrian.experiment.scenarios.MixedScenario;
 import tech.jorn.adrian.experiment.scenarios.NoChangeScenario;
 import tech.jorn.adrian.experiment.scenarios.Scenario;
 import tech.jorn.adrian.experiment.scenarios.UnstableInfrastructureScenario;
-import tech.jorn.adrian.core.events.Event;
 
 public class ExperimentRunner {
     private static int tick = 0;
@@ -45,7 +46,9 @@ public class ExperimentRunner {
     // private static Timer updateTimer = new Timer();
 
     public static long simulatedTime = 0;
-    static LinkedList<eventNode> eventQueue = new LinkedList<>();
+    static LinkedList<EventNode> eventQueue = new LinkedList<>();
+
+    private static final GlobalQueue globalQueue = GlobalQueue.getInstance();
 
     private static final EventManager eventManager = null;
 
@@ -62,12 +65,12 @@ public class ExperimentRunner {
         var infrastructure = InfrastructureLoader.loadFromYaml(file);
         var messageDispatcher = new EventDispatcher<Envelope>();
         var features = getFeatureSet(param[2], messageDispatcher);
-        var agentFactory = new AgentFactory(features);
+        var agentFactory = new AgentFactory(features, globalQueue);
 
         var scenario = getScenario(param[1], infrastructure, messageDispatcher, (node) -> agentFactory.fromNode(infrastructure, node));
         String config = param[0].substring(0, param[0].length() - 4) + "_" + param[1] + "_" + param[2];
 
-        runTest(infrastructure, features, scenario, config);
+        runTest(infrastructure, features, scenario, config, globalQueue);
     }
 
     public static Scenario getScenario(String input, Infrastructure infrastructure, EventDispatcher<Envelope> messageDispatcher, Function<InfrastructureNode, IAgent> agentFactory) {
@@ -97,7 +100,7 @@ public class ExperimentRunner {
     }
 
 
-    public static void runTest(Infrastructure infrastructure, FeatureSet featureSet, Scenario scenario, String config) {
+    public static void runTest(Infrastructure infrastructure, FeatureSet featureSet, Scenario scenario, String config, GlobalQueue globalQueue) {
         var log = LogManager.getLogger(ExperimentRunner.class);
 
         renderInfrastructure(infrastructure);
@@ -105,7 +108,7 @@ public class ExperimentRunner {
         var startTime = new Date().getTime();
 
 
-        var agentFactory = new AgentFactory(featureSet);
+        var agentFactory = new AgentFactory(featureSet, globalQueue);
         var metricCollector = new MetricCollector(infrastructure);
 
 
@@ -119,9 +122,16 @@ public class ExperimentRunner {
             agents.add(agent);
             agentList.add(agent);
         });
-        agentList.forEach(metricCollector::listenToAgent);
+        agents.forEach(metricCollector::listenToAgent);
 
         scenario.scheduleEvents(agents);
+
+
+
+        //LinkedList<eventNode> globalQueue = new LinkedList<>();
+        //GlobalQueue Queue = new GlobalQueue(globalQueue);
+
+
 
 
         // agents.forEach(ExperimentalAgent::start);
@@ -141,13 +151,13 @@ public class ExperimentRunner {
         //var scheduler = Executors.newScheduledThreadPool(agents.size());
 
         Runnable onFinished = () ->  {
-            //Dauer des Durchlaufs, evtl simulierte Zeit nehmen?
+
             log.info("Finished scenario in {}ms", new Date().getTime() - startTime);
 
             //shutdown vom scheduler, beendet Threads
             //scheduler.shutdownNow();
 
-            //beendet agents, threadfrei
+            //stopping agents, does not use threads
             agents.forEach(AdrianAgent::stop);
 
             try {
@@ -171,6 +181,24 @@ public class ExperimentRunner {
         log.debug("Starting agents");
 
         agents.forEach(AdrianAgent::start);
+
+        List<EventManager> eventManagers = agentList.stream()
+                .map(ExperimentalAgent::getEventManager)
+                .toList();
+
+
+        long maxSimTime = 100000;
+        QueueExecutor executor = new QueueExecutor(globalQueue, eventManagers, maxSimTime);
+
+
+
+        executor.execute();
+        System.out.println("executed");
+
+
+
+
+
 
 
 

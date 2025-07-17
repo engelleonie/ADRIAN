@@ -1,20 +1,17 @@
 package tech.jorn.adrian.experiment;
 
 import org.apache.logging.log4j.LogManager;
-import tech.jorn.adrian.core.agents.IAgent;
+import org.apache.logging.log4j.Logger;
+import tech.jorn.adrian.core.EventNode;
+import tech.jorn.adrian.core.GlobalQueue;
 import tech.jorn.adrian.core.events.Event;
 import tech.jorn.adrian.core.events.EventManager;
-import tech.jorn.adrian.core.messages.EventMessage;
-import tech.jorn.adrian.experiment.instruments.ExperimentalAgent;
 
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Logger;
 
-import static tech.jorn.adrian.experiment.ExperimentRunner.eventQueue;
 
 public class QueueExecutor {
-    private static final Logger log = (Logger) LogManager.getLogger(QueueExecutor.class);
+    private static final Logger log = LogManager.getLogger(QueueExecutor.class);
 
     private GlobalQueue globalQueue;
     private  List<EventManager> eventManagers;
@@ -27,21 +24,22 @@ public class QueueExecutor {
     }
 
     public void execute() {
-        while (!eventQueue.isEmpty()) {
             log.info("start execution");
-            while (!globalQueue.isEmpty() && globalQueue.simulatedTime < maxSimTime) {
-                var node = globalQueue.poll();
+            while (!globalQueue.isEmpty() && globalQueue.getSimulatedTime() < maxSimTime) {
+                log.info("in while");
+                EventNode node = globalQueue.poll();
 
                 if (node == null) break;
 
+                log.info("after break");
                 Event event = node.getEvent();
                 globalQueue.setSimulatedTime(node.getFinishTime());
 
                 if (event == null) continue;
 
-                log.debug("SimTime {}: Processing event {}", globalQueue.getSimulatedTime(), event.getClass().getSimpleName());
+                 log.debug("SimTime {}: Processing event {}", globalQueue.getSimulatedTime(), event.getClass().getSimpleName());
 
-                // Suche den passenden EventManager
+                // search for matching eventHandler
                 boolean handled = false;
                 for (EventManager manager : eventManagers) {
                     if (manager.canHandle(event)) {
@@ -61,4 +59,4 @@ public class QueueExecutor {
     }
 
 
-}
+
