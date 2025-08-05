@@ -1,8 +1,8 @@
 package tech.jorn.adrian.core.events;
 
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+//import java.util.concurrent.ExecutorService;
+//import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
 import org.apache.logging.log4j.LogManager;
@@ -22,11 +22,12 @@ public class EventManager {
     private final IEventQueue queue;
     private final SubscribableValueEvent<AgentState> agentState;
     private final Map<Class<Event>, List<Consumer<Event>>> eventHandlers = new HashMap<>();
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
-     private final Deque<Event> _queue = new ArrayDeque<>();
+    //private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+     //private final Deque<Event> _queue = new ArrayDeque<>();
     // private Semaphore processing = new Semaphore(1);
 
     private long simulatedTime = 0;
+    private final Set<Event> scheduledEvents = Collections.synchronizedSet(new HashSet<>());
 
     private final GlobalQueue globalQueue = GlobalQueue.getInstance();
 
@@ -54,34 +55,34 @@ public class EventManager {
     public void emit(Event event) {
         if (this.agentState.current().equals(AgentState.Shutdown)) return;
 
-        if (event.isImmediate()) {
-            this.log.debug("Scheduled immediate \033[4m{}\033[0m", event.getClass().getSimpleName());
-            Event first = this._queue.peekFirst();
-            if (first != null && first.getID().equals(event.getID())) {
-                this.log.debug("Event \033[4m{}\033[0m is already scheduled", event.getClass().getSimpleName());
-                return;
+        if (!scheduledEvents.add(event)) {
+            if (!event.isDebugEvent()) {
+                this.log.debug("Event {} wurde nicht erneut eingeplant, weil es bereits existiert", event.getClass().getSimpleName());
             }
-            this._queue.addFirst(event);
-        } else {
-            if (!event.isDebugEvent())
-                this.log.debug("Added \033[4m{}\033[0m to queue with {} events before it",
-                        event.getClass().getSimpleName(),
-                        this._queue.size());
+            return;
+        }
 
-            Event last = this._queue.peekLast();
+        if (!event.isDebugEvent()) {
+            this.log.debug("Added \033[4m{}\033[0m to queue with {} events before it",
+                    event.getClass().getSimpleName(),
+                    GlobalQueue.getInstance().getSize());
+
+            /* Event last = this._queue.peekLast();
             if (last != null && last.getID().equals(event.getID())) {
                 this.log.debug("Event \033[4m{}\033[0m is already scheduled", event.getClass().getSimpleName());
                 return;
-            }
-            this._queue.addLast(event);
-        }
-        //adding event to globalqueue
-        long finishTime = simulatedTime + eventDuration(event);
-        EventNode node = new EventNode(event, finishTime);
-        event.setFinishTime(finishTime);
-        globalQueue.offer(node);
-            log.info("Event erfolgreich eingefügt");
+            } */
 
+
+        }
+        GlobalQueue.getInstance().offer(event, eventDuration(event));
+        //adding event to globalqueue
+        //long finishTime = simulatedTime + eventDuration(event);
+        //EventNode node = new EventNode(event, finishTime);
+        //event.setFinishTime(finishTime);
+
+
+        log.info("Event erfolgreich eingefügt");
 
         //this.processEvent(event);
     }
@@ -124,7 +125,7 @@ public class EventManager {
 
 
     // muss von executorService entkoppelt werden
-    private void scheduleProcessing() {
+    /* private void scheduleProcessing() {
         if (this.executorService.isShutdown()) {
             this.log.warn("Attempted to schedule event processing after shutdown");
             return;
@@ -142,25 +143,30 @@ public class EventManager {
             if (!this._queue.isEmpty())
                 this.scheduleProcessing();
         });
-    }
+    } */
 
 
     // Semaphore entfernt
     public  <E extends Event> void processEvent(E event) {
-        var maxtime = new Date(System.currentTimeMillis() - 10 * 1000);
-        if (event.getTime().before(maxtime)) {
-            return;
-        }
+        //var maxtime = new Date(System.currentTimeMillis() - 10 * 1000);
+        //if (event.getTime().before(maxtime)) {
+          //  return;
+        //}
 
+        scheduledEvents.remove(event);
             if (!event.isDebugEvent()) {
                 this.log.debug("Processing event \033[4m{}\033[0m {}", event.getClass().getSimpleName(), event.getID());
             }
             var handlers = this.getEventHandlers(event.getClass());
             if (handlers != null) {
+                System.out.println(0);
                 for (var handler : handlers) {
                     try {
+                        System.out.println(1000);
                         handler.accept(event);
+                        System.out.println(2000);
                     } catch (Exception e) {
+                        System.out.println(3000);
                         this.log.error(e);
                     }
                 }
@@ -180,9 +186,9 @@ public class EventManager {
         return queue;
     }
 
-    public void terminate() {
+     public void terminate() {
 
-        this._queue.clear();
+        System.exit(0);
         //this.executorService.shutdown();
         //this.executorService.awaitTermination(5000, TimeUnit.MILLISECONDS);
         //} catch (InterruptedException e) {

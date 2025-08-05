@@ -11,18 +11,28 @@ import java.util.stream.Collectors;
 import org.apache.logging.log4j.LogManager;
 
 import tech.jorn.adrian.agent.AdrianAgent;
+import tech.jorn.adrian.agent.NodeRegistry;
+import tech.jorn.adrian.agent.controllers.KnowledgeController;
+import tech.jorn.adrian.agent.controllers.RiskController;
+import tech.jorn.adrian.agent.events.IdentifyRiskEvent;
+import tech.jorn.adrian.agent.events.SearchForProposalEvent;
+import tech.jorn.adrian.agent.events.SendMessageEvent;
+import tech.jorn.adrian.agent.events.ShareKnowledgeEvent;
 import tech.jorn.adrian.core.EventNode;
 import tech.jorn.adrian.core.GlobalQueue;
 import tech.jorn.adrian.core.agents.IAgent;
+import tech.jorn.adrian.core.controllers.IController;
 import tech.jorn.adrian.core.events.Event;
 import tech.jorn.adrian.core.events.EventManager;
 import tech.jorn.adrian.core.graphs.MermaidGraphRenderer;
 import tech.jorn.adrian.core.graphs.base.GraphLink;
+import tech.jorn.adrian.core.graphs.base.INode;
 import tech.jorn.adrian.core.graphs.infrastructure.Infrastructure;
 import tech.jorn.adrian.core.graphs.infrastructure.InfrastructureEntry;
 import tech.jorn.adrian.core.graphs.infrastructure.InfrastructureNode;
 import tech.jorn.adrian.core.graphs.risks.AttackGraphEntry;
 import tech.jorn.adrian.core.graphs.risks.AttackGraphLink;
+import tech.jorn.adrian.core.messages.EventMessage;
 import tech.jorn.adrian.core.observables.EventDispatcher;
 import tech.jorn.adrian.core.risks.RiskReport;
 import tech.jorn.adrian.experiment.features.AgentFactory;
@@ -32,6 +42,7 @@ import tech.jorn.adrian.experiment.features.NoAuctionFeatureSet;
 import tech.jorn.adrian.experiment.features.NoCommunicationFeatureSet;
 import tech.jorn.adrian.experiment.instruments.ExperimentalAgent;
 import tech.jorn.adrian.experiment.messages.Envelope;
+import tech.jorn.adrian.experiment.messages.InMemoryBroker;
 import tech.jorn.adrian.experiment.scenarios.GrowingInfrastructureScenario;
 import tech.jorn.adrian.experiment.scenarios.IntroduceRiskScenario;
 import tech.jorn.adrian.experiment.scenarios.LargeScenario;
@@ -45,7 +56,7 @@ public class ExperimentRunner {
     public static long start = System.currentTimeMillis();
     // private static Timer updateTimer = new Timer();
 
-    public static long simulatedTime = 0;
+    //public static long simulatedTime = 0;
     static LinkedList<EventNode> eventQueue = new LinkedList<>();
 
     private static final GlobalQueue globalQueue = GlobalQueue.getInstance();
@@ -171,8 +182,8 @@ public class ExperimentRunner {
             }
             long end = System.currentTimeMillis();
             long runtimeSec = (end - start) / 1000;
-            System.out.println("Physische Zeit: " + runtimeSec);
-            System.out.println("Laufzeit Simulation: " + simulatedTime + " ms");
+            System.out.println("Physical time: " + runtimeSec);
+            System.out.println("simulation runtime: " + GlobalQueue.simulatedTime + " ms");
 
             System.exit(0);
         };
@@ -180,6 +191,11 @@ public class ExperimentRunner {
 
         log.debug("Starting agents");
 
+        for (INode node : infrastructure.listNodes()) {
+            NodeRegistry.getInstance().registerNode(node);
+            System.out.println("Node registered: " + node.getID());
+        }
+        //changes state of each agent to idle, triggers initial knowledge sharing
         agents.forEach(AdrianAgent::start);
 
         List<EventManager> eventManagers = agentList.stream()
@@ -187,22 +203,56 @@ public class ExperimentRunner {
                 .toList();
 
 
-        long maxSimTime = 100000;
+        long maxSimTime = 100;
+
+
+        for (ExperimentalAgent agent : agents) {
+            List<IController> controllers = agent.getControllers();
+            for (IController controller : controllers) {
+                if (controller instanceof KnowledgeController) {
+                    ((KnowledgeController) controller).shareKnowledge();
+                }
+            }
+
+        }
+
+
+        for (ExperimentalAgent agent : agents) {
+
+            List<IController> controllers = agent.getControllers();
+
+
+              for (IController controller : controllers) {
+                log.debug(20);
+
+                if (controller instanceof RiskController riskController) {
+                    GlobalQueue.getInstance().offer(new IdentifyRiskEvent(), 10); // oder Event dafür erzeugen
+                    log.debug("adding identify risk event");
+                    log.debug(10);
+                }
+            }
+        }
         QueueExecutor executor = new QueueExecutor(globalQueue, eventManagers, maxSimTime);
 
 
 
+
+
         executor.execute();
+
+
+        List<Event> events = GlobalQueue.getInstance().listQueueItems();
+        events.forEach(event -> log.debug("Pending: {}", event));
+
+
+        System.out.println("Total messages sent: " + InMemoryBroker.getMessageCount());
+        System.out.println("identifyRisk() was called: " + RiskController.getIdentifyRiskCallCount() + " times");
+
+
+
         System.out.println("executed");
 
-
-
-
-
-
-
-
-
+        System.exit(0);
 
 
         //evtl Schleife in separater KLasse definieren?

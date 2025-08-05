@@ -10,10 +10,11 @@ import tech.jorn.adrian.core.EventNode;
 
 import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class GlobalQueue {
-    public long simulatedTime = 0;
+    public static long simulatedTime = 0;
     private static final GlobalQueue instance = new GlobalQueue();
     public static GlobalQueue getInstance() {
         return instance;
@@ -25,10 +26,13 @@ public class GlobalQueue {
 
     private final PriorityQueue<EventNode> globalQueue = new PriorityQueue<>(Comparator.comparingLong(EventNode::getFinishTime));
 
-    protected final Logger log = LogManager.getLogger(EventManager.class);
+    protected static final Logger log = LogManager.getLogger(EventManager.class);
 
-    public void offer(EventNode node) {
+    public void offer(Event event, long duration) {
+
+        EventNode node = new EventNode<>(event, simulatedTime + duration);
         globalQueue.offer(node);
+        log.debug("Offering event to queue: {}", event.getClass().getSimpleName());
     }
 
     public EventNode poll() {
@@ -52,6 +56,15 @@ public class GlobalQueue {
     }
 
 
+    public List<Event> listQueueItems() {
+        return globalQueue.stream()
+                .map(EventNode::getEvent)
+                .toList();
+    }
+
+    public int getSize() {
+        return listQueueItems().size();
+    }
 
 }
 

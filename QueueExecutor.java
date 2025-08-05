@@ -17,6 +17,8 @@ public class QueueExecutor {
     private  List<EventManager> eventManagers;
     private long maxSimTime;
 
+    private int maxEvents = 1000000;
+
     public QueueExecutor(GlobalQueue globalQueue, List<EventManager> eventManagers, long maxSimTime) {
         this.globalQueue = globalQueue;
         this.eventManagers = eventManagers;
@@ -25,17 +27,33 @@ public class QueueExecutor {
 
     public void execute() {
             log.info("start execution");
-            while (!globalQueue.isEmpty() && globalQueue.getSimulatedTime() < maxSimTime) {
-                log.info("in while");
+            while (globalQueue.getSimulatedTime() < maxSimTime && !globalQueue.isEmpty()) {
                 EventNode node = globalQueue.poll();
 
-                if (node == null) break;
+                if (node == null) {
+                    System.out.println(1);
+                    log.debug("No events to process, waiting...");
+                    continue;
+                }
 
-                log.info("after break");
                 Event event = node.getEvent();
+                System.out.println(2);
+
+                if (event == null) {
+                    System.out.println(3);
+                    EventNode next = globalQueue.peek();
+                    if (next != null && next.getFinishTime() > globalQueue.getSimulatedTime()) {
+                        // Skip nach vorne: simTime erhöhen
+                        globalQueue.setSimulatedTime(next.getFinishTime());
+                        System.out.println(4);
+                        continue;
+                    } else {
+                        System.out.println(5);
+                        break; // keine Events mehr
+                    }
+                }
                 globalQueue.setSimulatedTime(node.getFinishTime());
 
-                if (event == null) continue;
 
                  log.debug("SimTime {}: Processing event {}", globalQueue.getSimulatedTime(), event.getClass().getSimpleName());
 
@@ -45,6 +63,9 @@ public class QueueExecutor {
                     if (manager.canHandle(event)) {
                         manager.processEvent(event);
                         handled = true;
+                        log.info("Event processed successfully");
+                        //maxEvents--;
+
                         break;
                     }
                 }
