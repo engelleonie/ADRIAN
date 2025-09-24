@@ -5,15 +5,19 @@ import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService; */
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tech.jorn.adrian.agent.AdrianAgent;
 import tech.jorn.adrian.agent.events.FoundRiskEvent;
 import tech.jorn.adrian.agent.events.IdentifyRiskEvent;
 import tech.jorn.adrian.agent.events.InitiateAuctionEvent;
 import tech.jorn.adrian.agent.events.SelectedRiskEvent;
+import tech.jorn.adrian.core.EventNode;
 import tech.jorn.adrian.core.GlobalQueue;
 import tech.jorn.adrian.core.agents.AgentState;
 import tech.jorn.adrian.core.agents.IAgentConfiguration;
@@ -41,6 +45,15 @@ public class RiskController extends AbstractController {
     private RiskReport lastRiskReport;
 
     private static int identifyRiskCallCount = 0;
+    private long lastIdentifyTimestamp = 0;
+    private boolean identifyRunning = false;
+    private boolean identifyPending = false;
+    private static final long MIN_INTERVAL_MS = 200;
+    private long nextRiskAssessmentTime = -1;
+    private final Map<String, IdentifyRiskEvent> scheduledRiskEvents = new ConcurrentHashMap<>();
+
+
+
 
     public RiskController(RiskDetection riskDetection, KnowledgeBase knowledgeBase, EventManager eventManager,
             IRiskSelector riskSelector, IAgentConfiguration configuration,
@@ -54,62 +67,107 @@ public class RiskController extends AbstractController {
         this.riskSelector = riskSelector;
         this.configuration = configuration;
 
-        this.eventManager.registerEventHandler(IdentifyRiskEvent.class, this::identifyRisk);
+
+        this.eventManager.registerEventHandler(IdentifyRiskEvent.class, this::debounced);
+        eventManager.registerEventHandler(IdentifyRiskEvent.class, e -> {
+            System.out.println("Agent " + configuration.getNodeID()
+                    + " hat ein IdentifyRiskEvent ausgeführt");
+        });
+        this.eventManager.registerEventHandler(IdentifyRiskEvent.class, e -> {
+            System.out.println("DEBUG: Agent " + configuration.getNodeID() + " registriert Handler für IdentifyRiskEvent");
+        });
+        eventManager.registerEventHandler(IdentifyRiskEvent.class, e -> {
+            System.out.println("Agent " + configuration.getNodeID() +
+                    " received IdentifyRiskEvent for " + e.getAgentID());
+        });
+        this.eventManager.registerEventHandler(IdentifyRiskEvent.class, e -> {
+            System.out.println("Agent " + this.configuration.getNodeID() + " verarbeitet Event von Agent " + e.getAgentID());
+        });
+
+
+
+
+
+
         this.eventManager.registerEventHandler(FoundRiskEvent.class, this::foundRiskEvent);
         this.eventManager.registerEventHandler(SelectedRiskEvent.class, this::selectedRiskEvent);
+
+        System.out.println("DEBUG RiskController init for " + configuration.getNodeID());
+
+        System.out.println("RiskController für " + configuration.getNodeID()
+                + " verwendet EventManager " + eventManager.hashCode());
+
 
         //this.riskAssessmentTimer = new Timer(String.format("timer-%s", configuration.getNodeID()));
         //this.scheduleRiskAssessment();
     }
 
-    /* protected void debounced(IdentifyRiskEvent event) {
-        if (this.riskAssessmentFuture != null) {
-            this.riskAssessmentFuture.cancel(true);
+
+
+    protected void debounced(IdentifyRiskEvent event) {
+        String agentID = event.getAgentID();
+        String myID = this.configuration.getNodeID();
+
+        if (!agentID.equals(myID)) return;
+
+        if (agentState.current() != AgentState.Ready && agentState.current() != AgentState.Idle) {
+            log.debug("Agent {} not free (state={}), skipping IdentifyRiskEvent",
+                    configuration.getNodeID(), agentState.current());
+            return;
         }
 
-        this.riskAssessmentFuture = this.riskAssessmentScheduler.schedule(this::identifyRisk, 100, java.util.concurrent.TimeUnit.MILLISECONDS);
-    } */
+        identifyRunning = true;
+
+        try {
+            if (lastIdentifyTimestamp == 0 || knowledgeBase.hasChanged()) {
+                identifyRisk(event);
+                lastIdentifyTimestamp = System.currentTimeMillis();
+                knowledgeBase.resetChangedFlag();
+            }
+        } finally {
+            identifyRunning = false;
+            if (identifyPending) {
+                identifyPending = false;
+                debounced(event);
+            }
+        }
+    }
+
 
     public void identifyRisk(IdentifyRiskEvent event) {
         identifyRiskCallCount++;
-        System.out.println("Starting identifyRisk");
 
         if (!canDoRiskAssessment()) {
             log.debug("Skipping IdentifyRiskEvent due to agent state: {}", this.agentState.current());
+
             return;
         }
-        System.out.println("can do risk assessment");
 
         var attackGraph = this.riskDetection.createAttackGraph(this.knowledgeBase);
-        System.out.println("after attackGraph");
         var risks = this.riskDetection.identifyRisks(attackGraph, true);
-        System.out.println("after risks");
 
         if (this.lastRiskReport != null) {
             // Filter-out any risks that we previously processed
-            System.out.println("last risk report ist not null");
             risks.removeIf(r -> r.toString().equals(this.lastRiskReport.toString()));
         }
 
-        var risk = this.riskSelector.select(risks);
-        System.out.println("after selecting risk");
-        this.log.debug("Found {} risks{}", risks.size(), risk
-                .map(riskReport -> " and selected " + riskReport.toShortString())
-                .orElse(""));
+        var selectedRisk = this.riskSelector.select(risks);
 
-        risks.forEach(r -> this.eventManager.emit(new FoundRiskEvent(r)));
-        risk.ifPresentOrElse(
-                r -> this.eventManager.emit(new SelectedRiskEvent(r)),
-                () -> this.log.warn("No risk was found with the given constraints"));
+        selectedRisk.ifPresentOrElse(risk -> {
+            this.log.debug("Selected risk {}", risk.toShortString());
 
-        GlobalQueue.getInstance().offer(new IdentifyRiskEvent(), 30);
+            this.eventManager.emit(new FoundRiskEvent(risk));
+
+            this.lastRiskReport = risk; // merken, dass es bearbeitet wird
+        }, () -> this.log.warn("No risk was found with the given constraints"));
 
     }
 
     protected void foundRiskEvent(FoundRiskEvent event) {
 
         // needs RiskReport as parameter
-        this.eventManager.emit(new InitiateAuctionEvent(event.getRiskReport()));
+        this.eventManager.emit(new SelectedRiskEvent(event.getRiskReport()));
+
     }
 
     protected void selectedRiskEvent(SelectedRiskEvent event) {
@@ -157,7 +215,7 @@ public class RiskController extends AbstractController {
     } */
 
     private boolean canDoRiskAssessment() {
-        return this.agentState.current().equals(AgentState.Idle);
+        return (this.agentState.current().equals(AgentState.Idle) || this.agentState.current().equals(AgentState.Ready));
     }
 
     public void stop() {

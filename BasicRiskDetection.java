@@ -9,6 +9,8 @@ import tech.jorn.adrian.core.graphs.knowledgebase.KnowledgeBase;
 import tech.jorn.adrian.core.graphs.knowledgebase.KnowledgeBaseNode;
 import tech.jorn.adrian.core.graphs.knowledgebase.KnowledgeBaseSoftwareAsset;
 import tech.jorn.adrian.core.graphs.risks.*;
+import tech.jorn.adrian.core.properties.AbstractProperty;
+import tech.jorn.adrian.core.risks.Risk;
 import tech.jorn.adrian.core.risks.RiskEdge;
 import tech.jorn.adrian.core.risks.RiskReport;
 import tech.jorn.adrian.core.risks.RiskRule;
@@ -18,6 +20,7 @@ import tech.jorn.adrian.core.services.probability.IRiskProbabilityCalculator;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -25,6 +28,7 @@ public class BasicRiskDetection implements RiskDetection {
     private final List<RiskRule> riskRules;
     private final IRiskProbabilityCalculator probabilityCalculator;
     private final IAgentConfiguration configuration;
+    private final Set<String> knownRisks = new HashSet<>();
 
     public BasicRiskDetection(List<RiskRule> riskRules, IRiskProbabilityCalculator probabilityCalculator, IAgentConfiguration configuration) {
         this.riskRules = riskRules;
@@ -60,11 +64,9 @@ public class BasicRiskDetection implements RiskDetection {
 
     @Override
     public List<RiskReport> identifyRisks(AttackGraph attackGraph, boolean isContained) {
-        // 1. Collect all the exposed nodes and critical software components to calculate all paths.
         var voidNode = attackGraph.findById(VoidNode.getIncoming().getID());
 
         List<? extends AttackGraphEntry<?>> exposed = attackGraph.getNeighbours(VoidNode.getIncoming());
-        System.out.println("Exposed: " + exposed.size());
         List<AttackGraphSoftwareAsset> criticalSoftware = new ArrayList<>();
         attackGraph.getNodes().forEach(node -> {
             if (node instanceof AttackGraphSoftwareAsset) {
@@ -74,17 +76,14 @@ public class BasicRiskDetection implements RiskDetection {
             }
         });
 
-        // 2. If there are no nodes to start from or go to, we can exit.
         if (exposed.isEmpty() || criticalSoftware.isEmpty())
             return new ArrayList<>();
 
-        // 3. Get all possible paths between all different start en end nodes.
         List<List<AttackGraphEntry<?>>> criticalPaths = new ArrayList<>();
 
         criticalSoftware.forEach(asset -> {
             var newPaths = attackGraph.findPathsTo(VoidNode.getIncoming(), asset).stream()
                     .filter(path -> {
-                        // Check if the path contains the current node, otherwise we should not select it
                         if (this.configuration == null || !isContained) return true;
                         var contained = path.stream().filter(n -> n.getID().equals(this.configuration.getNodeID())).findAny();
                         return contained.isPresent();
@@ -99,7 +98,6 @@ public class BasicRiskDetection implements RiskDetection {
             });
         });
 
-        // 4. Calculate the risk reports based on the critical paths.
         List<RiskReport> riskReports = criticalPaths.stream().map(criticalPath -> {
             var path = criticalPath.stream().map(n -> (INode) n).toList();
             var graph = attackGraph.getGraphForPath(criticalPath);
@@ -110,10 +108,11 @@ public class BasicRiskDetection implements RiskDetection {
         return new ArrayList<>(riskReports);
     }
 
+
     public Consumer<RiskEdge> createRiskDispatcher(AttackGraph attackGraph) {
 
         return e -> {
-            System.out.println("RiskEdge: from=" + e.from().getID() + " to=" + e.to().getID() + " risk=" + e.risk().toString());
+            //System.out.println("RiskEdge: from=" + e.from().getID() + " to=" + e.to().getID() + " risk=" + e.risk().toString());
             var from = attackGraph.findById(e.from().getID()).get();
             var to = attackGraph.findById(e.to().getID()).get();
             if (from == null || to == null) {

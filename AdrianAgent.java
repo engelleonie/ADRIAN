@@ -26,7 +26,11 @@ public class AdrianAgent implements IAgent {
 
     private final EventManager eventManager;
 
+    private long lastActiveTimestamp = System.currentTimeMillis();
+    private static final long SLEEP_THRESHOLD_MS = 5000;
 
+    private int searchCount = 0;
+    private boolean unsuccessfulSearch = false;
 
     public AdrianAgent(List<IController> controllers, IAgentConfiguration configuration, ValueDispatcher<AgentState> agentState, EventManager eventManager) {
         this.controllers = controllers;
@@ -41,12 +45,40 @@ public class AdrianAgent implements IAgent {
         });
     }
 
-    public void start() {
+    public void startReady() {
         // decoupling of ready and idle statechange? adding a timer?
 
         this.agentState.setCurrent(AgentState.Ready);
+    }
 
+    public void start() {
+
+    }
+
+    public void startIdle() {
         this.agentState.setCurrent(AgentState.Idle);
+    }
+
+
+    public void recordSearchResult(boolean success) {
+        searchCount++;
+
+        if (success) {
+            searchCount = 0;
+        }
+
+        if (searchCount >= 2 && unsuccessfulSearch) {
+            shutdownAgent();
+        }
+    }
+
+    public void setUnsuccessfulSearch() {
+        this.unsuccessfulSearch = true;
+    }
+
+    private void shutdownAgent() {
+        agentState.setCurrent(AgentState.Shutdown);
+        System.out.println("Agent wird heruntergefahren!");
     }
 
     public void stop() {
@@ -68,5 +100,23 @@ public class AdrianAgent implements IAgent {
 
     public IAgentConfiguration getConfiguration() {
         return this.configuration;
+    }
+
+    public void markActive() {
+        lastActiveTimestamp = System.currentTimeMillis();
+        if (getState() == AgentState.Idle) {
+            setState(AgentState.Ready);
+        }
+    }
+
+    public void checkSleep() {
+        if (getState() != AgentState.Shutdown &&
+                System.currentTimeMillis() - lastActiveTimestamp > SLEEP_THRESHOLD_MS) {
+            setState(AgentState.Idle);
+        }
+    }
+
+    public void setState(AgentState state) {
+        agentState.setCurrent(state);
     }
 }
