@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -14,12 +15,12 @@ import tech.jorn.adrian.agent.AdrianAgent;
 import tech.jorn.adrian.agent.NodeRegistry;
 import tech.jorn.adrian.agent.controllers.KnowledgeController;
 import tech.jorn.adrian.agent.controllers.RiskController;
-import tech.jorn.adrian.agent.events.IdentifyRiskEvent;
-import tech.jorn.adrian.agent.events.SearchForProposalEvent;
-import tech.jorn.adrian.agent.events.SendMessageEvent;
-import tech.jorn.adrian.agent.events.ShareKnowledgeEvent;
+import tech.jorn.adrian.agent.controllers.SleepController;
+import tech.jorn.adrian.agent.controllers.SystemController;
+import tech.jorn.adrian.agent.events.*;
 import tech.jorn.adrian.core.EventNode;
 import tech.jorn.adrian.core.GlobalQueue;
+import tech.jorn.adrian.core.agents.AgentState;
 import tech.jorn.adrian.core.agents.IAgent;
 import tech.jorn.adrian.core.controllers.IController;
 import tech.jorn.adrian.core.events.Event;
@@ -34,6 +35,8 @@ import tech.jorn.adrian.core.graphs.risks.AttackGraphEntry;
 import tech.jorn.adrian.core.graphs.risks.AttackGraphLink;
 import tech.jorn.adrian.core.messages.EventMessage;
 import tech.jorn.adrian.core.observables.EventDispatcher;
+import tech.jorn.adrian.core.observables.FlagDispatcher;
+import tech.jorn.adrian.core.observables.SubscribableValueEvent;
 import tech.jorn.adrian.core.risks.RiskReport;
 import tech.jorn.adrian.experiment.features.AgentFactory;
 import tech.jorn.adrian.experiment.features.FeatureSet;
@@ -67,13 +70,18 @@ public class ExperimentRunner {
 
 
         String[] param = new String[3];
-        param[0] = "simple-infra.yml";
+        param[0] = "complex-infra.yml";
         param[1] = "no-change";
-        param[2] = "knowledge-sharing";
+        param[2] = "local";
 
         System.out.println(Arrays.stream(args).collect(Collectors.joining(", ")));
         var file = param[0];
         var infrastructure = InfrastructureLoader.loadFromYaml(file);
+        infrastructure.getNodes().forEach(n -> {
+            var neighbours = infrastructure.getNeighbours(n);
+            System.out.println("  " + n.getID() + " -> " +
+                    neighbours.stream().map(x -> x.getID()).toList());
+        });
         var messageDispatcher = new EventDispatcher<Envelope>();
         var features = getFeatureSet(param[2], messageDispatcher);
         var agentFactory = new AgentFactory(features, globalQueue);
@@ -91,7 +99,7 @@ public class ExperimentRunner {
             case "growing": return new GrowingInfrastructureScenario(infrastructure, messageDispatcher, agentFactory);
             case "unstable": return new UnstableInfrastructureScenario(infrastructure, messageDispatcher, agentFactory);
             case "mixed": return new MixedScenario(infrastructure, messageDispatcher);
-            case "no-chance":
+            case "no-change":
             default:
                 return new NoChangeScenario(infrastructure, messageDispatcher);
         }
@@ -125,51 +133,22 @@ public class ExperimentRunner {
 
         log.debug("Creating agents");
 
-        Queue<ExperimentalAgent> agents = agentFactory.fromInfrastructure(infrastructure);
+        var agents = agentFactory.fromInfrastructure(infrastructure);
         List<ExperimentalAgent> agentList = new ArrayList<>(agents);
 
-        scenario.onNewAgent().subscribe(agent -> {
-            metricCollector.listenToAgent(agent);
-            agents.add(agent);
-            agentList.add(agent);
-        });
-        agents.forEach(metricCollector::listenToAgent);
-
-        scenario.scheduleEvents(agents);
-
-
-
-        //LinkedList<eventNode> globalQueue = new LinkedList<>();
-        //GlobalQueue Queue = new GlobalQueue(globalQueue);
-
-
-
-
-        // agents.forEach(ExperimentalAgent::start);
-
-
-        // erstellt die task zum updaten der Metriken, aufgerufene Methode überflüssig
-        //var task = createUpdateTimerTask(agents, metricCollector);
-
-        //sorgt dafür dass die Metriken geupdated werden, wird nicht explizit beendet,
-        //updateTimer.scheduleAtFixedRate(task, TimeUnit.SECONDS.toMillis(0), TimeUnit.SECONDS.toMillis(5));
-
-        //Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
-
-
-
-        //erstellt ThreadPool entsprechend der Menge der Agenten
-        //var scheduler = Executors.newScheduledThreadPool(agents.size());
+        AtomicInteger shutdownCount = new AtomicInteger(0);
+        int totalAgents = agents.size();
 
         Runnable onFinished = () ->  {
 
+
             log.info("Finished scenario in {}ms", new Date().getTime() - startTime);
 
-            //shutdown vom scheduler, beendet Threads
-            //scheduler.shutdownNow();
 
             //stopping agents, does not use threads
-            agents.forEach(AdrianAgent::stop);
+            log.info("Stopping {} agents", agentList.size());
+
+            System.out.println(6);
 
             try {
                 log.debug("Writing measures");
@@ -185,8 +164,63 @@ public class ExperimentRunner {
             System.out.println("Physical time: " + runtimeSec);
             System.out.println("simulation runtime: " + GlobalQueue.simulatedTime + " ms");
 
+            System.out.println("Total messages sent: " + InMemoryBroker.getMessageCount());
+            System.out.println("identifyRisk() was called: " + RiskController.getIdentifyRiskCallCount() + " times");
+
+            System.out.println("executed");
+
             System.exit(0);
+
+
         };
+
+        for (AdrianAgent agent : agents) {
+            agent.onStateChange().subscribe(state -> {
+                if (state == AgentState.Shutdown) {
+                    int current = shutdownCount.incrementAndGet();
+                    log.info("Agent {} went to Shutdown ({}/{})",
+                            agent.getConfiguration().getNodeID(),
+                            current, totalAgents);
+
+                    if (current == totalAgents) {
+                        log.info("All agents are Shutdown → calling onFinished");
+                        onFinished.run();
+                    }
+                }
+            });
+        }
+
+        agents.forEach(metricCollector::listenToAgent);
+        scenario.onNewAgent().subscribe(agent -> {
+            metricCollector.listenToAgent(agent);
+            agents.add(agent);
+            agentList.add(agent);
+        });
+
+        for (ExperimentalAgent agent : agentList) {
+            new SystemController(agent.getEventManager(), agent.onStateChange());
+        }
+
+        //LinkedList<eventNode> globalQueue = new LinkedList<>();
+        //GlobalQueue Queue = new GlobalQueue(globalQueue);
+
+
+        // agents.forEach(ExperimentalAgent::start);
+
+
+        // erstellt die task zum updaten der Metriken, aufgerufene Methode überflüssig
+        //var task = createUpdateTimerTask(agents, metricCollector);
+
+        //sorgt dafür dass die Metriken geupdated werden, wird nicht explizit beendet,
+        //updateTimer.scheduleAtFixedRate(task, TimeUnit.SECONDS.toMillis(0), TimeUnit.SECONDS.toMillis(5));
+
+        //Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+
+
+        //erstellt ThreadPool entsprechend der Menge der Agenten
+        //var scheduler = Executors.newScheduledThreadPool(agents.size());
+
+
         scenario.onFinished().subscribe(onFinished);
 
         log.debug("Starting agents");
@@ -196,63 +230,66 @@ public class ExperimentRunner {
             System.out.println("Node registered: " + node.getID());
         }
         //changes state of each agent to idle, triggers initial knowledge sharing
-        agents.forEach(AdrianAgent::start);
+        agents.forEach(AdrianAgent::startReady);
+        agents.forEach(AdrianAgent::startIdle);
 
-        List<EventManager> eventManagers = agentList.stream()
-                .map(ExperimentalAgent::getEventManager)
-                .toList();
-
-
-        long maxSimTime = 100;
+        //scenario.scheduleEvents(agents);
 
 
-        for (ExperimentalAgent agent : agents) {
+        List<AdrianAgent> adrianAgents = new ArrayList<>(agentList);
+
+        SleepController sleepCoordinator = new SleepController(adrianAgents, onFinished);
+
+        EventDispatcher<Void> tickDispatcher = new EventDispatcher<>();
+        tickDispatcher.subscribe((Void v) -> {
+            agents.forEach(agent -> {
+                agent.checkSleep();       // Agenten schlafen lassen bei Inaktivität
+                agent.markActive();       // Optional: bei Actions aktiv halten
+            });
+            metricCollector.updateInterval(agents);
+            log.debug("Metrics updated at simTime={}", GlobalQueue.simulatedTime);
+            sleepCoordinator.checkAgents();
+        });
+
+        long maxSimTime = 2000;
+
+        /*for (ExperimentalAgent agent : agents) {
             List<IController> controllers = agent.getControllers();
+
             for (IController controller : controllers) {
                 if (controller instanceof KnowledgeController) {
                     ((KnowledgeController) controller).shareKnowledge();
                 }
             }
+        } */
 
+
+
+
+         for (ExperimentalAgent agent : agents) {
+             var event = new IdentifyRiskEvent(agent.getConfiguration().getNodeID());
+             GlobalQueue.getInstance().offer(event, 5);
+         }
+
+        long interval = maxSimTime / 10;
+        for (long t = 0; t <= maxSimTime; t += interval) {
+            GlobalQueue.getInstance().offer(new MetricTickEvent(t, tickDispatcher), t);
         }
 
 
-        for (ExperimentalAgent agent : agents) {
+        var finishEvent = new FinishScenarioEvent(scenario.finishedDispatcher());
+        GlobalQueue.getInstance().offer(finishEvent, maxSimTime);
 
-            List<IController> controllers = agent.getControllers();
-
-
-              for (IController controller : controllers) {
-                log.debug(20);
-
-                if (controller instanceof RiskController riskController) {
-                    GlobalQueue.getInstance().offer(new IdentifyRiskEvent(), 10); // oder Event dafür erzeugen
-                    log.debug("adding identify risk event");
-                    log.debug(10);
-                }
-            }
-        }
-        QueueExecutor executor = new QueueExecutor(globalQueue, eventManagers, maxSimTime);
-
-
-
-
+        QueueExecutor executor = new QueueExecutor(globalQueue, agentList, maxSimTime);
 
         executor.execute();
 
+        renderInfrastructure(infrastructure);
 
         List<Event> events = GlobalQueue.getInstance().listQueueItems();
         events.forEach(event -> log.debug("Pending: {}", event));
 
 
-        System.out.println("Total messages sent: " + InMemoryBroker.getMessageCount());
-        System.out.println("identifyRisk() was called: " + RiskController.getIdentifyRiskCallCount() + " times");
-
-
-
-        System.out.println("executed");
-
-        System.exit(0);
 
 
         //evtl Schleife in separater KLasse definieren?
@@ -273,12 +310,8 @@ public class ExperimentRunner {
 
     }
 
-
-
-
-
     private static void renderInfrastructure(Infrastructure infrastructure) {
-        var filename = String.format("./graphs/infrastructure-%d.mmd", tick * 5000);
+        var filename = String.format("./graphs/infrastructure-%d.mmd", System.currentTimeMillis() - start);
         try {
             var writer = new FileWriter(filename);
             var graphRender = new MermaidGraphRenderer<InfrastructureEntry<?>, GraphLink<InfrastructureEntry<?>>>();
