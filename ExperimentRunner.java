@@ -64,6 +64,8 @@ public class ExperimentRunner {
 
     private static final GlobalQueue globalQueue = GlobalQueue.getInstance();
 
+
+
     private static final EventManager eventManager = null;
 
     public static void main(String[] args) throws InterruptedException {
@@ -118,7 +120,6 @@ public class ExperimentRunner {
         }
     }
 
-
     public static void runTest(Infrastructure infrastructure, FeatureSet featureSet, Scenario scenario, String config, GlobalQueue globalQueue) {
         var log = LogManager.getLogger(ExperimentRunner.class);
 
@@ -126,26 +127,44 @@ public class ExperimentRunner {
 
         var startTime = new Date().getTime();
 
-
         var agentFactory = new AgentFactory(featureSet, globalQueue);
         var metricCollector = new MetricCollector(infrastructure);
-
 
         log.debug("Creating agents");
 
         var agents = agentFactory.fromInfrastructure(infrastructure);
+        AtomicInteger sleepingAgents = new AtomicInteger(0);
+        int totalAgents = agents.size();
+
+        for (AdrianAgent agent : agents) {
+            agent.getEventManager().registerEventHandler(AgentSleepingEvent.class, event -> {
+                int count = sleepingAgents.incrementAndGet();
+                log.info("Agent {} sleeping ({}/{})", agent.getID(), count, totalAgents);
+
+                if (count == totalAgents) {
+                    log.info("All Agents asleep, finishing simulation.");
+                    GlobalQueue.getInstance().offer(
+                            new FinishScenarioEvent(scenario.finishedDispatcher()),
+                            GlobalQueue.getInstance().getSimulatedTime()
+                    );
+                }
+            });
+
+            agent.getEventManager().registerEventHandler(AgentWakeUpEvent.class, event -> {
+                int count = sleepingAgents.decrementAndGet();
+                log.info("Agent {} woke up ({} of {} asleep)",
+                        event.getAgentID(), count, totalAgents);
+            });
+        }
+
         List<ExperimentalAgent> agentList = new ArrayList<>(agents);
 
         AtomicInteger shutdownCount = new AtomicInteger(0);
-        int totalAgents = agents.size();
 
         Runnable onFinished = () ->  {
 
-
             log.info("Finished scenario in {}ms", new Date().getTime() - startTime);
 
-
-            //stopping agents, does not use threads
             log.info("Stopping {} agents", agentList.size());
 
             System.out.println(6);
@@ -170,8 +189,6 @@ public class ExperimentRunner {
             System.out.println("executed");
 
             System.exit(0);
-
-
         };
 
         for (AdrianAgent agent : agents) {
@@ -201,26 +218,6 @@ public class ExperimentRunner {
             new SystemController(agent.getEventManager(), agent.onStateChange());
         }
 
-        //LinkedList<eventNode> globalQueue = new LinkedList<>();
-        //GlobalQueue Queue = new GlobalQueue(globalQueue);
-
-
-        // agents.forEach(ExperimentalAgent::start);
-
-
-        // erstellt die task zum updaten der Metriken, aufgerufene Methode überflüssig
-        //var task = createUpdateTimerTask(agents, metricCollector);
-
-        //sorgt dafür dass die Metriken geupdated werden, wird nicht explizit beendet,
-        //updateTimer.scheduleAtFixedRate(task, TimeUnit.SECONDS.toMillis(0), TimeUnit.SECONDS.toMillis(5));
-
-        //Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
-
-
-        //erstellt ThreadPool entsprechend der Menge der Agenten
-        //var scheduler = Executors.newScheduledThreadPool(agents.size());
-
-
         scenario.onFinished().subscribe(onFinished);
 
         log.debug("Starting agents");
@@ -235,23 +232,31 @@ public class ExperimentRunner {
 
         //scenario.scheduleEvents(agents);
 
-
         List<AdrianAgent> adrianAgents = new ArrayList<>(agentList);
 
-        SleepController sleepCoordinator = new SleepController(adrianAgents, onFinished);
+        Runnable onAllSleeping = () -> {
+            log.info("All agents asleep, finishing simulation.");
+            var finishEvent = new FinishScenarioEvent(scenario.finishedDispatcher());
+            GlobalQueue.getInstance().offer(finishEvent, GlobalQueue.getInstance().getSimulatedTime());
+        };
 
+        long interval = 1;
         EventDispatcher<Void> tickDispatcher = new EventDispatcher<>();
         tickDispatcher.subscribe((Void v) -> {
             agents.forEach(agent -> {
-                agent.checkSleep();       // Agenten schlafen lassen bei Inaktivität
-                agent.markActive();       // Optional: bei Actions aktiv halten
+                agent.checkSleep();
+                agent.markActive();
             });
             metricCollector.updateInterval(agents);
             log.debug("Metrics updated at simTime={}", GlobalQueue.simulatedTime);
-            sleepCoordinator.checkAgents();
+            boolean allSleeping = agents.stream().allMatch(a -> a.getState() == AgentState.Sleeping);
+            if (!allSleeping) {
+                GlobalQueue.getInstance().offer(
+                        new MetricTickEvent(GlobalQueue.getInstance().getSimulatedTime() + interval, tickDispatcher),
+                        GlobalQueue.getInstance().getSimulatedTime() + interval
+                );
+            }
         });
-
-        long maxSimTime = 2000;
 
         /*for (ExperimentalAgent agent : agents) {
             List<IController> controllers = agent.getControllers();
@@ -263,51 +268,22 @@ public class ExperimentRunner {
             }
         } */
 
-
-
-
          for (ExperimentalAgent agent : agents) {
              var event = new IdentifyRiskEvent(agent.getConfiguration().getNodeID());
              GlobalQueue.getInstance().offer(event, 5);
          }
 
-        long interval = maxSimTime / 10;
-        for (long t = 0; t <= maxSimTime; t += interval) {
-            GlobalQueue.getInstance().offer(new MetricTickEvent(t, tickDispatcher), t);
-        }
+        GlobalQueue queue = GlobalQueue.getInstance();
 
+        queue.offer(new MetricTickEvent(queue.getSimulatedTime() + interval, tickDispatcher), queue.getSimulatedTime() + interval);
 
-        var finishEvent = new FinishScenarioEvent(scenario.finishedDispatcher());
-        GlobalQueue.getInstance().offer(finishEvent, maxSimTime);
-
-        QueueExecutor executor = new QueueExecutor(globalQueue, agentList, maxSimTime);
-
+        QueueExecutor executor = new QueueExecutor(globalQueue, agentList);
         executor.execute();
 
         renderInfrastructure(infrastructure);
 
         List<Event> events = GlobalQueue.getInstance().listQueueItems();
         events.forEach(event -> log.debug("Pending: {}", event));
-
-
-
-
-        //evtl Schleife in separater KLasse definieren?
-
-
-            /* //Events in eventQueue einfügen, passiert primär in EventManager, noch nicht implementiert
-            simulatedTime += eventQueue.getFirst().getFinishTime();
-            Event event = eventQueue.getFirst().getEvent();
-
-            //event aufrufen
-            //event aus queue entfernen (erstes Listenelement löschen)
-
-
-            //Daten an MetricCollector senden: evtl nicht in jeder iteration aufrufen, später testen
-            metricCollector.updateInterval(agents);
-            //simuliert oder physisch? notwendig? evtl counter für vorigen Kommentar
-            tick++; */
-
     }
 
     private static void renderInfrastructure(Infrastructure infrastructure) {

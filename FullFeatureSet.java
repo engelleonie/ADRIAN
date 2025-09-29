@@ -1,10 +1,7 @@
 package tech.jorn.adrian.experiment.features;
 
 import tech.jorn.adrian.agent.AgentConfiguration;
-import tech.jorn.adrian.agent.controllers.AuctionController;
-import tech.jorn.adrian.agent.controllers.KnowledgeController;
-import tech.jorn.adrian.agent.controllers.ProposalController;
-import tech.jorn.adrian.agent.controllers.RiskController;
+import tech.jorn.adrian.agent.controllers.*;
 import tech.jorn.adrian.agent.events.SendMessageEvent;
 import tech.jorn.adrian.agent.services.AuctionManager;
 import tech.jorn.adrian.core.agents.AgentState;
@@ -31,6 +28,7 @@ import tech.jorn.adrian.experiment.messages.InMemoryBroker;
 import tech.jorn.adrian.experiment.messages.ThreadedBroker;
 import tech.jorn.adrian.risks.RiskLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,6 +66,7 @@ public class FullFeatureSet extends FeatureSet {
         var proposalManager = new ProposalManager(knowledgeBase, riskDetection, new LowestDamage(100.0f), configuration, agentState, infrastructureEffector);
 
 
+        var agent = new ExperimentalAgent(messageBroker, eventManager, riskDetection, knowledgeBase, new ArrayList<>(), configuration, agentState, node.getID());
 
 
 
@@ -75,13 +74,16 @@ public class FullFeatureSet extends FeatureSet {
 
 
         List<IController> controllers = List.of(
-                new KnowledgeController(knowledgeBase, messageBroker, eventManager, configuration, agentState.subscribable),
-                new RiskController(riskDetection, knowledgeBase, eventManager, new HighestRisk(1.0f), configuration, agentState.subscribable),
+                new KnowledgeController(knowledgeBase, messageBroker, eventManager, configuration, agentState.subscribable, node.getID()),
+                new RiskController(riskDetection, knowledgeBase, eventManager, new HighestRisk(1.0f), agent),
                 new ProposalController(proposalManager, eventManager, agentState.subscribable),
-                new AuctionController(auctionManager, eventManager, configuration, agentState)
+                new AuctionController(auctionManager, eventManager, configuration, agentState),
+                new SystemController(eventManager, agentState.subscribable),
+                new SleepController(agent)
         );
 
-        var agent = new ExperimentalAgent(messageBroker, eventManager, riskDetection, knowledgeBase, controllers, configuration, agentState);
+        agent.getControllers().addAll(controllers);
+
 
         messageBroker.registerMessageHandler(message -> {
             if (message instanceof EventMessage<?> m) eventManager.emit(m.getEvent());

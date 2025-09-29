@@ -20,6 +20,29 @@ public class KnowledgeBase extends AbstractGraph<KnowledgeBaseEntry<?>, GraphLin
         super();
     }
 
+    private boolean changed = false;
+
+    public void markChanged() { changed = true; }
+    public boolean hasChanged() {
+        return changed;
+    }
+
+    public void resetChangedFlag() {
+        changed = false;
+    }
+
+    @Override
+    public void upsertNode(KnowledgeBaseEntry<?> node) {
+        super.upsertNode(node);
+        changed = true;
+    }
+
+    @Override
+    public void addEdge(KnowledgeBaseEntry<?> from, KnowledgeBaseEntry<?> to) {
+        super.addEdge(from, to);
+        changed = true;
+    }
+
     public void processNewInformation(AbstractDetailedNode<NodeProperty<?>> origin, KnowledgeBase knowledgeBase) {
         System.out.println(820);
         List<KnowledgeBaseEntry<?>> nodesSnapshot = new ArrayList<>(knowledgeBase.getNodes());

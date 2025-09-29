@@ -67,9 +67,8 @@ public class MetricCollector {
     }
 
     public void listenToAgent(ExperimentalAgent agent) {
-        //übergebene Agenten zu Liste hinzufügen
+
         this.agents.add(agent);
-        //proposalcount für übergebenen Agenten initialisieren
         this.proposalCount.put(agent, 0);
         System.out.println("Registering agent: " + agent.getConfiguration().getNodeID());
 
