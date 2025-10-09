@@ -21,12 +21,13 @@ public class GlobalQueue {
     }
 
     private GlobalQueue() {
-        // Konstruktor privat machen, damit niemand neue Instanzen erzeugt
+
     }
 
     private final PriorityQueue<EventNode> globalQueue = new PriorityQueue<>(Comparator.comparingLong(EventNode::getFinishTime));
 
     protected static final Logger log = LogManager.getLogger(EventManager.class);
+    private boolean acceptNewEvents;
 
     public void offer(Event event, long duration) {
 
@@ -35,6 +36,9 @@ public class GlobalQueue {
         log.debug("Offering event to queue: {}", event.getClass().getSimpleName());
     }
 
+    public void shutDownNewEvents() {
+        acceptNewEvents = false;
+    }
     public EventNode poll() {
         return globalQueue.poll();
     }
@@ -65,6 +69,54 @@ public class GlobalQueue {
     public int getSize() {
         return listQueueItems().size();
     }
+
+    public boolean remove(Event event) {
+        return globalQueue.removeIf(node -> node.getEvent().equals(event));
+    }
+
+
+    public int countPendingEventsFor(String agentId) {
+        synchronized(globalQueue) {
+            return (int) globalQueue.stream()
+                    .filter(node -> node.getEvent() != null)
+                    .filter(node -> {
+                        Event e = node.getEvent();
+                        try {
+                            var m = e.getClass().getMethod("getAgentID");
+                            Object id = m.invoke(e);
+                            return agentId.equals(id);
+                        } catch (Exception ex) {
+                            return false;
+                        }
+                    })
+                    .count();
+        }
+    }
+
+    public List<Event> getPendingEvents(String agentID) {
+        synchronized (globalQueue) {
+            return globalQueue.stream()
+                    .map(EventNode::getEvent)
+                    .filter(e -> e != null && hasAgentId(e, agentID))
+                    .toList();
+        }
+    }
+
+    private boolean hasAgentId(Event e, String agentID) {
+        try {
+            var method = e.getClass().getMethod("getAgentID");
+            Object id = method.invoke(e);
+            return agentID.equals(id);
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+
+    public boolean hasPendingEventsFor(String agentId) {
+        return countPendingEventsFor(agentId) > 0;
+    }
+
 
 }
 

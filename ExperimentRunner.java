@@ -74,7 +74,7 @@ public class ExperimentRunner {
         String[] param = new String[3];
         param[0] = "complex-infra.yml";
         param[1] = "no-change";
-        param[2] = "local";
+        param[2] = "auctioning";
 
         System.out.println(Arrays.stream(args).collect(Collectors.joining(", ")));
         var file = param[0];
@@ -140,6 +140,24 @@ public class ExperimentRunner {
             agent.getEventManager().registerEventHandler(AgentSleepingEvent.class, event -> {
                 int count = sleepingAgents.incrementAndGet();
                 log.info("Agent {} sleeping ({}/{})", agent.getID(), count, totalAgents);
+
+                if (count == totalAgents - 1) {
+                    Optional<ExperimentalAgent> lastAwake = agents.stream()
+                            .filter(a -> a.getState() != AgentState.Sleeping)
+                            .findFirst();
+
+                    lastAwake.ifPresent(a -> {
+                        if (a.getFailedSearches() < 3) {
+                            log.info("Only one agent left awake ({}). Emitting one IdentifyRiskEvent to let it progress toward sleep.", a.getID());
+                            GlobalQueue.getInstance().offer(
+                                    new IdentifyRiskEvent(a.getConfiguration().getNodeID()),
+                                    GlobalQueue.getInstance().getSimulatedTime() + 1
+                            );
+                        } else {
+                            log.debug("Last awake agent {} already has failedSearches >= 3 ({}), no forced event.", a.getID(), a.getFailedSearches());
+                        }
+                    });
+                }
 
                 if (count == totalAgents) {
                     log.info("All Agents asleep, finishing simulation.");
@@ -240,7 +258,7 @@ public class ExperimentRunner {
             GlobalQueue.getInstance().offer(finishEvent, GlobalQueue.getInstance().getSimulatedTime());
         };
 
-        long interval = 1;
+        long interval = 10;
         EventDispatcher<Void> tickDispatcher = new EventDispatcher<>();
         tickDispatcher.subscribe((Void v) -> {
             agents.forEach(agent -> {
@@ -258,7 +276,7 @@ public class ExperimentRunner {
             }
         });
 
-        /*for (ExperimentalAgent agent : agents) {
+        /* for (ExperimentalAgent agent : agents) {
             List<IController> controllers = agent.getControllers();
 
             for (IController controller : controllers) {
@@ -277,7 +295,7 @@ public class ExperimentRunner {
 
         queue.offer(new MetricTickEvent(queue.getSimulatedTime() + interval, tickDispatcher), queue.getSimulatedTime() + interval);
 
-        QueueExecutor executor = new QueueExecutor(globalQueue, agentList);
+        QueueExecutor executor = new QueueExecutor(globalQueue, agentList, 10000);
         executor.execute();
 
         renderInfrastructure(infrastructure);
