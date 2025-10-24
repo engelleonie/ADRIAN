@@ -11,10 +11,7 @@ import tech.jorn.adrian.core.messages.Message;
 import tech.jorn.adrian.core.messages.MessageBroker;
 import tech.jorn.adrian.core.observables.EventDispatcher;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 //import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.function.Consumer;
@@ -27,6 +24,7 @@ public class InMemoryBroker implements MessageBroker {
     private final EventDispatcher<Envelope> messageDispatcher;
 
     private static int messageCounter = 0;
+    private final Set<String> processedMessages = Collections.synchronizedSet(new HashSet<>());
 
     protected final Queue<Consumer<Message>> listeners = new ArrayDeque<>();
 
@@ -45,7 +43,6 @@ public class InMemoryBroker implements MessageBroker {
         this.log.debug("Send message to \033[4m{}\033[0m: \033[4m{}\033[0m ", recipient.getID(), ((EventMessage<?>) message).getEvent().getClass().getSimpleName());
         //this.messageDispatcher.dispatch(new Envelope(this.node, recipient.getID(), message));
 
-        //adding the message to the global queue
         messageCounter++;
         GlobalQueue.getInstance().offer(new SendMessageEvent(this.node, recipient.getID(), message), 5);
 

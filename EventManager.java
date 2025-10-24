@@ -32,17 +32,20 @@ public class EventManager {
     private final GlobalQueue globalQueue = GlobalQueue.getInstance();
 
 
+
     public EventManager(IEventQueue queue, SubscribableValueEvent<AgentState> agentState) {
         this.queue = queue;
         this.agentState = agentState;
-
-
     }
 
     public <E extends Event> void registerEventHandler(Class<E> eventClass, Consumer<E> eventHandler) {
         var handlers = this.eventHandlers.getOrDefault((Class<Event>) eventClass, new ArrayList<>());
         handlers.add((Consumer<Event>) eventHandler);
         this.eventHandlers.put((Class<Event>) eventClass, handlers);
+
+
+
+
     }
 
     // ??
@@ -55,12 +58,12 @@ public class EventManager {
     public void emit(Event event) {
         if (this.agentState.current().equals(AgentState.Shutdown)) return;
 
-        if (!scheduledEvents.add(event)) {
+        /*if (!scheduledEvents.add(event)) {
             if (!event.isDebugEvent()) {
                 this.log.debug("Event {} wurde nicht erneut eingeplant, weil es bereits existiert", event.getClass().getSimpleName());
             }
             return;
-        }
+        } */
 
         if (!event.isDebugEvent()) {
             this.log.debug("Added \033[4m{}\033[0m to queue with {} events before it",
@@ -73,16 +76,13 @@ public class EventManager {
                 return;
             } */
 
-
         }
         GlobalQueue.getInstance().offer(event, eventDuration(event));
+
         //adding event to globalqueue
         //long finishTime = simulatedTime + eventDuration(event);
         //EventNode node = new EventNode(event, finishTime);
         //event.setFinishTime(finishTime);
-
-
-        log.info("Event erfolgreich eingefügt");
 
         //this.processEvent(event);
     }
@@ -92,66 +92,20 @@ public class EventManager {
         return event.getDuration();
     }
 
-    /* public void processGlobalQueue() {
-        EventNode event = globalQueue.poll(); // Nächstes Event nach sortOrder
-        if (event == null) return;
-
-        // Simulationszeit anpassen
-        this.simulatedTime = event.getFinishTime();
-
-        // Logging
-        if (!EventNode.isDebugEvent()) {
-            this.log.debug("Processing event {} with sortOrder {} at simTime {}",
-                    event.getClass().getSimpleName(), event.getFinishTime(), simulatedTime);
-        }
-
-        // Handler ausführen
-        var handlers = this.getEventHandlers(event.getClass());
-        if (handlers != null) {
-            for (var handler : handlers) {
-                try {
-                    handler.accept(event);
-                } catch (Exception e) {
-                    this.log.error(e);
-                }
-            }
-        }
-    } */
-
     public boolean canHandle(Event event) {
         return !getEventHandlers(event.getClass()).isEmpty();
     }
 
 
-
-    // muss von executorService entkoppelt werden
-    /* private void scheduleProcessing() {
-        if (this.executorService.isShutdown()) {
-            this.log.warn("Attempted to schedule event processing after shutdown");
-            return;
-        }
-
-        this.executorService.execute(() -> {
-            if (this._queue.isEmpty())
-                return;
-
-            var event = this._queue.pollFirst();
-            if (event == null)
-                return;
-
-            this.processEvent(event);
-            if (!this._queue.isEmpty())
-                this.scheduleProcessing();
-        });
-    } */
-
-
     // Semaphore entfernt
     public  <E extends Event> void processEvent(E event) {
+
+
         //var maxtime = new Date(System.currentTimeMillis() - 10 * 1000);
         //if (event.getTime().before(maxtime)) {
           //  return;
         //}
+
 
         scheduledEvents.remove(event);
             if (!event.isDebugEvent()) {
@@ -159,14 +113,12 @@ public class EventManager {
             }
             var handlers = this.getEventHandlers(event.getClass());
             if (handlers != null) {
-                System.out.println(0);
                 for (var handler : handlers) {
                     try {
-                        System.out.println(1000);
+                        System.out.println(55);
                         handler.accept(event);
-                        System.out.println(2000);
+                        System.out.println(66);
                     } catch (Exception e) {
-                        System.out.println(3000);
                         this.log.error(e);
                     }
                 }

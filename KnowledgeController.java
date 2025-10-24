@@ -23,10 +23,10 @@ import tech.jorn.adrian.core.messages.MessageBroker;
 import tech.jorn.adrian.core.observables.SubscribableValueEvent;
 import tech.jorn.adrian.core.properties.NodeProperty;
 
+import java.util.HashSet;
 import java.util.List;
-//import java.util.concurrent.Executors;
-//import java.util.concurrent.Future;
-//import java.util.concurrent.ScheduledExecutorService;
+import java.util.Set;
+
 
 public class KnowledgeController extends AbstractController {
     Logger log = LogManager.getLogger(KnowledgeController.class);
@@ -34,17 +34,18 @@ public class KnowledgeController extends AbstractController {
     private final KnowledgeBase knowledgeBase;
     private final MessageBroker messageBroker;
     private final IAgentConfiguration configuration;
-    private boolean hasSharedInitialKnowledge = false;
-    private boolean triggerRiskIdentificationOnIdle = false;
-
-    //private ScheduledExecutorService knowledgeShareScheduler = Executors.newSingleThreadScheduledExecutor();
-    //private Future<?> knowledgeShareFuture;
+    private final String nodeID;
+    private int onAssetPropertyChange = 0;
+    private  int onNodePropertyChange = 0;
+    private int reducedCount = 0;
+    private final Set<String> seenKnowledgeOrigins = new HashSet<>();
 
     public KnowledgeController(KnowledgeBase knowledgeBase, MessageBroker messageBroker, EventManager eventManager,
-            IAgentConfiguration configuration, SubscribableValueEvent<AgentState> agentState) {
+            IAgentConfiguration configuration, SubscribableValueEvent<AgentState> agentState, String nodeID) {
         super(eventManager, agentState);
         this.messageBroker = messageBroker;
         this.configuration = configuration;
+        this.nodeID = nodeID;
 
         log = LogManager.getLogger("[" + configuration.getNodeID() + "] KnowledgeController");
 
@@ -69,49 +70,56 @@ public class KnowledgeController extends AbstractController {
     }
 
     protected void processKnowledge(ShareKnowledgeEvent event) {
-        System.out.println(78);
-        System.out.println("Distance: " + event.getDistance());
-        if (knowledgeBase.findById(event.getOrigin().getID()).isEmpty() && event.getDistance() == 1) {
-            System.out.println(79);
-            this.messageBroker.addRecipient(event.getOrigin());
-            this.log.info("Added a new neighbour {}", event.getOrigin().getID());
+        if (event == null || event.getOrigin() == null || event.getKnowledgeBase() == null) return;
+
+        String originId = event.getOrigin().getID();
+
+        if (seenKnowledgeOrigins.contains(originId)) {
+            log.debug("Knowledge from origin {} already processed, skipping", originId);
+            return;
         }
 
-        System.out.println(82);
+        seenKnowledgeOrigins.add(originId);
+
+        boolean newInformationAdded = false;
+
         try {
-            this.knowledgeBase.processNewInformation(event.getOrigin(), event.getKnowledgeBase());
+            this.knowledgeBase.processNewInformation(
+                    event.getOrigin(),
+                    event.getKnowledgeBase()
+            );
         } catch (Exception e) {
-            System.out.println("Exception in processNewInformation: " + e.getMessage());
-            e.printStackTrace();
-            return; // wichtig: abbrechen, sonst null/kaputter Zustand
+            log.error("Exception in processNewInformation: {}", e.getMessage(), e);
+            return;
         }
-        System.out.println(89);
-        System.out.println("AgentState: " + this.agentState.current());
-        if (this.agentState.current().equals(AgentState.Idle))
-            System.out.println(80);
-            this.eventManager.emit(new IdentifyRiskEvent());
-        //
 
-        System.out.println("KnowledgeBase findById empty? " + knowledgeBase.findById(event.getOrigin().getID()).isEmpty());
+        if (newInformationAdded) {
+            log.info("Agent {} acquired new knowledge from {}, triggering risk identification",
+                    this.nodeID, originId);
+
+            this.eventManager.emit(new IdentifyRiskEvent(this.nodeID));
+        } else {
+            log.debug("Agent {} received knowledge from {}, but nothing new was added",
+                    this.nodeID, originId);
+        }
+
         if (event.getDistance() > 1) {
-            System.out.println(81);
-            var next = ShareKnowledgeEvent.reducedDistance(event);
+            ShareKnowledgeEvent next = event.reducedDistance(event);
             this.messageBroker.broadcast(new EventMessage<>(next));
-            //
+            log.debug("Agent {} forwarded knowledge from {} (new distance={})",
+                    this.nodeID, originId, next.getDistance());
+        } else {
+            log.trace("Knowledge from {} not forwarded (distance limit reached)", originId);
         }
     }
+
 
     private void processMessage(SendMessageEvent event) {
         this.messageBroker.deliver(event.getRecipient(), event.getMessage());
     }
 
     protected void debouncedPropertyChange(NodeProperty<?> property) {
-        //if (this.knowledgeShareFuture != null && !this.knowledgeShareFuture.isDone()) {
-            //this.knowledgeShareFuture.cancel(true);
-       // }
-        //this.knowledgeShareFuture = this.knowledgeShareScheduler.schedule(() -> {
             this.onNodePropertyChange(property);
-        //}, 100, java.util.concurrent.TimeUnit.MILLISECONDS);
     }
 
     protected void onNodePropertyChange(NodeProperty<?> property) {
@@ -123,9 +131,10 @@ public class KnowledgeController extends AbstractController {
 
         this.shareKnowledge();
 
-        // this.triggerRiskIdentificationOnIdle = true;
         if (this.agentState.current().equals(AgentState.Idle))
-            this.eventManager.emit(new IdentifyRiskEvent());
+            this.eventManager.emit(new IdentifyRiskEvent(nodeID));
+        onNodePropertyChange++;
+        System.out.println("On Node property change: " + onNodePropertyChange);
     }
 
     protected void onAssetPropertyChange(SoftwareAsset asset) {
@@ -134,10 +143,11 @@ public class KnowledgeController extends AbstractController {
 
         this.shareKnowledge();
 
-        // this.triggerRiskIdentificationOnIdle = true;
         if (this.agentState.current().equals(AgentState.Idle))
-            this.eventManager.emit(new IdentifyRiskEvent());
+            this.eventManager.emit(new IdentifyRiskEvent(nodeID));
         //
+        onAssetPropertyChange++;
+        System.out.println("On asset property change: " + onAssetPropertyChange);
     }
 
     public void shareKnowledge() {
@@ -146,7 +156,6 @@ public class KnowledgeController extends AbstractController {
                 this.knowledgeBase,
                 1);
         this.messageBroker.broadcast(new EventMessage<>(event));
-        //
     }
 
     private KnowledgeBase createKnowledgeBaseFromConfig(KnowledgeBase knowledgeBase,
@@ -158,6 +167,21 @@ public class KnowledgeController extends AbstractController {
         var originNode = KnowledgeBaseNode.fromNode(origin)
                 .setKnowledgeOrigin(KnowledgeOrigin.DIRECT);
         knowledgeBase.upsertNode(originNode);
+
+        assets.forEach(asset -> {
+            var assetNode = KnowledgeBaseSoftwareAsset.fromNode(asset);
+            knowledgeBase.upsertNode(assetNode);
+            knowledgeBase.addEdge(originNode, assetNode);
+            knowledgeBase.addEdge(assetNode, originNode);
+        });
+
+        links.forEach(neighborId -> {
+            var neighborNode = new KnowledgeBaseNode(neighborId)
+                    .setKnowledgeOrigin(KnowledgeOrigin.INFERRED);
+            knowledgeBase.upsertNode(neighborNode);
+            knowledgeBase.addEdge(originNode, neighborNode);
+            knowledgeBase.addEdge(neighborNode, originNode);
+        });
 
         var isExposed = (Boolean) origin.getProperty("exposed").orElse(false);
         if (isExposed)
@@ -176,6 +200,14 @@ public class KnowledgeController extends AbstractController {
             knowledgeBase.addEdge(originNode, neighbourNode);
             knowledgeBase.addEdge(neighbourNode, originNode);
         });
+
+        /* System.out.println("KnowledgeBase dump:");
+        knowledgeBase.getNodes().forEach(n -> {
+            var neighbours = knowledgeBase.getNeighbours(n);
+            System.out.println("  " + n.getID() + " -> " +
+                    neighbours.stream().map(x -> x.getID()).toList());
+        }); */
+
         return knowledgeBase;
     }
 }

@@ -1,0 +1,52 @@
+nodes:
+  - id: server
+    name: Central Server
+    hasAgent: true
+    exposed: true
+    canMigrate: true
+    contiki-ng/contiki-ng: 4.3.1
+    qualcomm/apq8096: 1.0.5
+
+  - id: sensor
+    name: IoT Sensor
+    hasAgent: true
+    contiki-ng/contiki-ng: 4.3.1
+    qualcomm/apq8096: 1.0.5
+
+  - id: cloud
+    name: Cloud Service
+    exposed: true
+
+links:
+  - source: server
+    target: sensor
+  - source: cloud
+    target: server
+
+assets:
+  - id: server-software
+    name: Server Software
+    host: server
+    isCritical: true
+    damageValue: 500.0
+    contiki-ng/contiki-ng: 4.3.1
+    qualcomm/apq8096: 1.0.5
+
+  - id: sensor-software
+    name: Sensor Software
+    host: sensor
+    isCritical: true
+    damageValue: 100.0
+    contiki-ng/contiki-ng: 4.3.1
+    qualcomm/apq8096: 1.0.4
+    google/cloud_iot_device_sdk_for_embedded_c: 1.0.1
+
+  - id: cloud-service
+    name: Cloud Data Service
+    host: cloud
+
+connectors:
+  - source: sensor-software
+    target: server-software
+  - source: server-software
+    target: cloud-service

@@ -31,8 +31,14 @@ public class GlobalQueue {
 
     public void offer(Event event, long duration) {
 
+        if (isDuplicate(event)) {
+            log.debug("Skipping duplicate event: {}", event.getClass().getSimpleName());
+            return;
+        }
         EventNode node = new EventNode<>(event, simulatedTime + duration);
-        globalQueue.offer(node);
+        synchronized(globalQueue) {
+            globalQueue.offer(node);
+        }
         log.debug("Offering event to queue: {}", event.getClass().getSimpleName());
     }
 
@@ -117,6 +123,27 @@ public class GlobalQueue {
         return countPendingEventsFor(agentId) > 0;
     }
 
+
+    private boolean isDuplicate(Event event) {
+        synchronized (globalQueue) {
+            return globalQueue.stream().anyMatch(node -> {
+                Event e = node.getEvent();
+                if (e == null) return false;
+                // gleiche Klasse
+                if (!e.getClass().equals(event.getClass())) return false;
+                // gleiche Agent-ID
+                try {
+                    var method = e.getClass().getMethod("getAgentID");
+                    Object existingId = method.invoke(e);
+                    var newMethod = event.getClass().getMethod("getAgentID");
+                    Object newId = newMethod.invoke(event);
+                    return existingId.equals(newId);
+                } catch (Exception ex) {
+                    return false;
+                }
+            });
+        }
+    }
 
 }
 

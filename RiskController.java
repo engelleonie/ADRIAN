@@ -100,15 +100,10 @@ public class RiskController extends AbstractController {
                 shouldIdentify = true;
             }
 
-            else if (agent.getFailedSearches() > 0) {
-                shouldIdentify = true;
-            }
-
             if (shouldIdentify) {
                 identifyRisk(event);
                 lastIdentifyTimestamp = System.currentTimeMillis();
                 knowledgeBase.resetChangedFlag();
-                agent.incrementIdentifyAttempts();
             }
 
             log.debug("lastIdentifyTimestamp={}, hasChanged={}, failedSearches={}, identifyAttempts={}",
@@ -121,15 +116,12 @@ public class RiskController extends AbstractController {
                     agent.getIdentifyAttempts());
         }
     }
-
-
+    
     public void identifyRisk(IdentifyRiskEvent event) {
-        log.debug("[{}] identifyRisk() called (failedSearches={}, state={})",
-                configuration.getNodeID(), agent.getFailedSearches(), agent.getState());
+        log.debug("[{}] identifyRisk() called (state={})",
+                configuration.getNodeID(), agent.getState());
 
         identifyRiskCallCount++;
-
-
 
         if (!canDoRiskAssessment()) {
             log.debug("Skipping IdentifyRiskEvent due to agent state: {}", this.agentState.current());
@@ -140,45 +132,18 @@ public class RiskController extends AbstractController {
         var attackGraph = this.riskDetection.createAttackGraph(this.knowledgeBase);
         var risks = this.riskDetection.identifyRisks(attackGraph, true);
 
-        boolean sameAsBefore = (this.lastRiskReport != null && risks.size() == 0)
-                || (this.lastRiskReport != null && risks.stream()
-                .anyMatch(r -> r.toString().equals(this.lastRiskReport.toString())));
-
-        if (sameAsBefore) {
-            agent.incrementRepeatedBehavior();
-            log.debug("[{}] repeated behavior detected (count={})", configuration.getNodeID(), agent.getRepeatedBehaviorCount());
-        } else {
-            agent.resetRepeatedBehavior();
-        }
-
-
         var selectedRisk = this.riskSelector.select(risks);
 
         selectedRisk.ifPresentOrElse(risk -> {
             this.log.debug("Selected risk {}", risk.toShortString());
 
             this.lastRiskReport = risk;
-            agent.resetFailedSearches();
-            agent.resetRepeatedBehavior();
-            if (agent.getState() == AgentState.Sleeping) {
-                eventManager.emit(new AgentWakeUpEvent(agent.getID()));
-                log.info("Agent {} wakes up because risk was found", configuration.getNodeID());
-
-            }
             agent.setState(AgentState.Busy);
             this.eventManager.emit(new FoundRiskEvent(risk));
         }, () -> {
-
-            agent.addFailedSearch();
-            this.log.warn("No risk was found ({} consecutive failures)", agent.getFailedSearches());
-
-            this.eventManager.emit(new IdentifyRiskEvent(agent.getID()));
+            this.log.warn("No risk was found");
+            
             agent.setState(AgentState.Idle);
-
-
-
-
-
             //scheduleSleepCheck();
             /* if (this.failedSearches >= maxFailedSearches) {
                 boolean agentIdle = (agent.getState() == AgentState.Idle || agent.getState() == AgentState.Ready);
@@ -206,7 +171,6 @@ public class RiskController extends AbstractController {
 
      });
     }
-
 
     protected void foundRiskEvent(FoundRiskEvent event) {
         this.eventManager.emit(new SelectedRiskEvent(event.getRiskReport()));
@@ -270,17 +234,5 @@ public class RiskController extends AbstractController {
         return identifyRiskCallCount;
     }
 
-    public void scheduleSleepCheck() {
-        int pending = GlobalQueue.getInstance().countPendingEventsFor(this.agent.getID());
-        int active = this.agent.getActiveEventCount();
-
-        log.debug("[{}] Sleep check: pending={}, active={}, failedSearches={}",
-                this.agent.getID(), pending, active, agent.getFailedSearches());
-
-        if (pending == 0 && active == 0 && agent.getFailedSearches() >= maxFailedSearches) {
-            log.info("[{}] All work done, agent going to sleep", this.agent.getID());
-            eventManager.emit(new AgentSleepingEvent(this.agent.getID()));
-        }
-    }
 
 }

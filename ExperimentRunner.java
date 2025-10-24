@@ -57,24 +57,15 @@ import tech.jorn.adrian.experiment.scenarios.UnstableInfrastructureScenario;
 public class ExperimentRunner {
     private static int tick = 0;
     public static long start = System.currentTimeMillis();
-    // private static Timer updateTimer = new Timer();
-
-    //public static long simulatedTime = 0;
-    static LinkedList<EventNode> eventQueue = new LinkedList<>();
-
     private static final GlobalQueue globalQueue = GlobalQueue.getInstance();
-
-
-
-    private static final EventManager eventManager = null;
+    private static int knowledgeCount = 0;
 
     public static void main(String[] args) throws InterruptedException {
 
-
         String[] param = new String[3];
-        param[0] = "complex-infra.yml";
+        param[0] = "simple.yml";
         param[1] = "no-change";
-        param[2] = "auctioning";
+        param[2] = "knowledge-sharing";
 
         System.out.println(Arrays.stream(args).collect(Collectors.joining(", ")));
         var file = param[0];
@@ -133,51 +124,14 @@ public class ExperimentRunner {
         log.debug("Creating agents");
 
         var agents = agentFactory.fromInfrastructure(infrastructure);
-        AtomicInteger sleepingAgents = new AtomicInteger(0);
-        int totalAgents = agents.size();
-
-        for (AdrianAgent agent : agents) {
-            agent.getEventManager().registerEventHandler(AgentSleepingEvent.class, event -> {
-                int count = sleepingAgents.incrementAndGet();
-                log.info("Agent {} sleeping ({}/{})", agent.getID(), count, totalAgents);
-
-                if (count == totalAgents - 1) {
-                    Optional<ExperimentalAgent> lastAwake = agents.stream()
-                            .filter(a -> a.getState() != AgentState.Sleeping)
-                            .findFirst();
-
-                    lastAwake.ifPresent(a -> {
-                        if (a.getFailedSearches() < 3) {
-                            log.info("Only one agent left awake ({}). Emitting one IdentifyRiskEvent to let it progress toward sleep.", a.getID());
-                            GlobalQueue.getInstance().offer(
-                                    new IdentifyRiskEvent(a.getConfiguration().getNodeID()),
-                                    GlobalQueue.getInstance().getSimulatedTime() + 1
-                            );
-                        } else {
-                            log.debug("Last awake agent {} already has failedSearches >= 3 ({}), no forced event.", a.getID(), a.getFailedSearches());
-                        }
-                    });
-                }
-
-                if (count == totalAgents) {
-                    log.info("All Agents asleep, finishing simulation.");
-                    GlobalQueue.getInstance().offer(
-                            new FinishScenarioEvent(scenario.finishedDispatcher()),
-                            GlobalQueue.getInstance().getSimulatedTime()
-                    );
-                }
-            });
-
-            agent.getEventManager().registerEventHandler(AgentWakeUpEvent.class, event -> {
-                int count = sleepingAgents.decrementAndGet();
-                log.info("Agent {} woke up ({} of {} asleep)",
-                        event.getAgentID(), count, totalAgents);
-            });
-        }
-
         List<ExperimentalAgent> agentList = new ArrayList<>(agents);
 
-        AtomicInteger shutdownCount = new AtomicInteger(0);
+        agents.forEach(metricCollector::listenToAgent);
+        scenario.onNewAgent().subscribe(agent -> {
+            metricCollector.listenToAgent(agent);
+            agents.add(agent);
+            agentList.add(agent);
+        });
 
         Runnable onFinished = () ->  {
 
@@ -209,33 +163,6 @@ public class ExperimentRunner {
             System.exit(0);
         };
 
-        for (AdrianAgent agent : agents) {
-            agent.onStateChange().subscribe(state -> {
-                if (state == AgentState.Shutdown) {
-                    int current = shutdownCount.incrementAndGet();
-                    log.info("Agent {} went to Shutdown ({}/{})",
-                            agent.getConfiguration().getNodeID(),
-                            current, totalAgents);
-
-                    if (current == totalAgents) {
-                        log.info("All agents are Shutdown → calling onFinished");
-                        onFinished.run();
-                    }
-                }
-            });
-        }
-
-        agents.forEach(metricCollector::listenToAgent);
-        scenario.onNewAgent().subscribe(agent -> {
-            metricCollector.listenToAgent(agent);
-            agents.add(agent);
-            agentList.add(agent);
-        });
-
-        for (ExperimentalAgent agent : agentList) {
-            new SystemController(agent.getEventManager(), agent.onStateChange());
-        }
-
         scenario.onFinished().subscribe(onFinished);
 
         log.debug("Starting agents");
@@ -248,54 +175,31 @@ public class ExperimentRunner {
         agents.forEach(AdrianAgent::startReady);
         agents.forEach(AdrianAgent::startIdle);
 
-        //scenario.scheduleEvents(agents);
 
-        List<AdrianAgent> adrianAgents = new ArrayList<>(agentList);
-
-        Runnable onAllSleeping = () -> {
-            log.info("All agents asleep, finishing simulation.");
+        Runnable onQueueEmpty = () -> {
+            log.info("All agents idle, finishing simulation.");
             var finishEvent = new FinishScenarioEvent(scenario.finishedDispatcher());
             GlobalQueue.getInstance().offer(finishEvent, GlobalQueue.getInstance().getSimulatedTime());
         };
 
-        long interval = 10;
-        EventDispatcher<Void> tickDispatcher = new EventDispatcher<>();
-        tickDispatcher.subscribe((Void v) -> {
-            agents.forEach(agent -> {
-                agent.checkSleep();
-                agent.markActive();
-            });
-            metricCollector.updateInterval(agents);
-            log.debug("Metrics updated at simTime={}", GlobalQueue.simulatedTime);
-            boolean allSleeping = agents.stream().allMatch(a -> a.getState() == AgentState.Sleeping);
-            if (!allSleeping) {
-                GlobalQueue.getInstance().offer(
-                        new MetricTickEvent(GlobalQueue.getInstance().getSimulatedTime() + interval, tickDispatcher),
-                        GlobalQueue.getInstance().getSimulatedTime() + interval
-                );
-            }
-        });
-
-        /* for (ExperimentalAgent agent : agents) {
+          for (ExperimentalAgent agent : agents) {
             List<IController> controllers = agent.getControllers();
 
             for (IController controller : controllers) {
                 if (controller instanceof KnowledgeController) {
                     ((KnowledgeController) controller).shareKnowledge();
+                    knowledgeCount++;
+                    System.out.println("knowledgeCount: " + knowledgeCount);
                 }
             }
-        } */
+        }
 
          for (ExperimentalAgent agent : agents) {
              var event = new IdentifyRiskEvent(agent.getConfiguration().getNodeID());
              GlobalQueue.getInstance().offer(event, 5);
          }
 
-        GlobalQueue queue = GlobalQueue.getInstance();
-
-        queue.offer(new MetricTickEvent(queue.getSimulatedTime() + interval, tickDispatcher), queue.getSimulatedTime() + interval);
-
-        QueueExecutor executor = new QueueExecutor(globalQueue, agentList, 10000);
+        QueueExecutor executor = new QueueExecutor(globalQueue, agentList, 10000, metricCollector, agents, onQueueEmpty, onFinished);
         executor.execute();
 
         renderInfrastructure(infrastructure);
@@ -318,27 +222,6 @@ public class ExperimentRunner {
             throw new RuntimeException(e);
         }
     }
-
-    /* public static TimerTask createUpdateTimerTask(Queue<ExperimentalAgent> agents, MetricCollector metricCollector) {
-
-        return new TimerTask() {
-            // ??
-            Logger log = LogManager.getLogger(ExperimentRunner.class);
-
-            @Override
-            public void run() {
-                //2 Zeilen nötig??
-                final Thread thread = Thread.currentThread();
-                thread.setPriority(Thread.MAX_PRIORITY);
-
-                // log.debug("Updating metrics");
-                metricCollector.updateInterval(agents);
-                tick++;
-
-                thread.setPriority(Thread.NORM_PRIORITY);
-            }
-        };
-    } */
 
     // debugging
     private static void renderAuction(String id, RiskReport report) {

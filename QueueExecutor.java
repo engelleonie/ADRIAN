@@ -13,10 +13,9 @@ import tech.jorn.adrian.core.events.Event;
 import tech.jorn.adrian.core.events.EventManager;
 import tech.jorn.adrian.experiment.instruments.ExperimentalAgent;
 
-import java.util.HashMap;
+import java.awt.*;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 
 public class QueueExecutor {
@@ -25,15 +24,20 @@ public class QueueExecutor {
     private static final GlobalQueue globalQueue = GlobalQueue.getInstance();
     private List<EventManager> eventManagers;
     private long maxSimTime;
+    private final MetricCollector metricCollector;
+    private Queue<ExperimentalAgent> agentQueue;
+    boolean finishEventTriggered = false;
+    private final Runnable onQueueEmpty;
 
-    private int maxEvents = 1000000;
+
+
     private final Map<String, EventManager> managersByAgentId;
     private final Map<String, AdrianAgent> agentsById;
     private final int totalAgents;
-    private final java.util.concurrent.atomic.AtomicInteger sleepingAgents = new java.util.concurrent.atomic.AtomicInteger(0);
-    private final java.util.Set<String> pendingSleepChecks = java.util.concurrent.ConcurrentHashMap.newKeySet();
+    private final Runnable onFinished;
 
-    public QueueExecutor(GlobalQueue globalQueue, List<ExperimentalAgent> agents, int maxSimTime) {
+    public QueueExecutor(GlobalQueue globalQueue, List<ExperimentalAgent> agents, int maxSimTime, MetricCollector metricCollector, Queue<ExperimentalAgent> agentQueue, Runnable onQueueEmpty,
+     Runnable onFinished) {
 
         //this.eventManagers = eventManagers;
         this.maxSimTime = maxSimTime;
@@ -48,10 +52,14 @@ public class QueueExecutor {
             agentsById.put(agent.getID(), agent);
         }
         this.totalAgents = agents.size();
+        this.metricCollector = metricCollector;
+        this.agentQueue = agentQueue;
+        this.onQueueEmpty = onQueueEmpty;
+        this.onFinished = onFinished;
     }
 
     public void execute() {
-
+        long startTime = System.currentTimeMillis();
         log.info("Start simulation");
         while (!globalQueue.isEmpty() ) {
             EventNode node = globalQueue.poll();
@@ -69,27 +77,6 @@ public class QueueExecutor {
                 event.trigger();
                 handled = true;
             }
-
-            /* if (event instanceof CheckSleepEvent checkEvent) {
-                String agentId = checkEvent.getAgentID();
-                AdrianAgent agent = agentsById.get(agentId);
-
-                if (agent != null) {
-                    int active = agent.getActiveEventCount();
-                    var pending = globalQueue.countPendingEventsFor(agentId);
-
-                    if (active == 0 && pending == 0 && agent.getFailedSearches() >= 3) {
-                        agent.getEventManager().emit(new AgentSleepingEvent(agentId));
-                        log.info("[{}] -> Going to sleep after deferred check", agentId);
-                    } else {
-                        log.debug("[{}] stays awake (active={}, pending={}, failed={})",
-                                agentId, active, pending, agent.getFailedSearches());
-                    }
-                }
-                handled = true;
-                continue;
-            } */
-
 
             else {
                 String agentId = null;
@@ -128,41 +115,28 @@ public class QueueExecutor {
                         }
                         handled = true;
 
-                        checkSleep(agent);
+                        metricCollector.updateInterval(agentQueue);
+                        if (!finishEventTriggered && globalQueue.isEmpty()) {
+                            log.info("Queue is empty after processing {}, inserting FinishScenarioEvent", event.getClass().getSimpleName());
+                            onQueueEmpty.run();
+                            finishEventTriggered = true;
+                        }
+
                     }
                 }
 
                 if (!handled) {
                     log.warn("Event {} was not handled", event.getClass().getSimpleName());
                 }
+
+                if (System.currentTimeMillis() - startTime >= 30000) {
+                    log.warn("Simulation timed out after 1 second");
+                    onFinished.run();
+                    break;
+                }
             }
         }
-        log.info("Simulation finished at simTime {}", globalQueue.getSimulatedTime());
-    }
 
-    private void checkSleep(AdrianAgent agent) {
-        int failed = agent.getFailedSearches();
-        int active = agent.getActiveEventCount();
-        int pending = globalQueue.countPendingEventsFor(agent.getID());
-
-        List<Event> pendingTypes = globalQueue.getPendingEvents(agent.getID());
-        boolean onlyIdentifyPending = pendingTypes.isEmpty()
-                || pendingTypes.stream().allMatch(t -> t.getClass().equals(IdentifyRiskEvent.class));
-
-        if (failed >= 3 && active == 0 && onlyIdentifyPending) {
-            long checkTime = globalQueue.getSimulatedTime() + 1;
-            log.info("[{}] Agent meets sleep criteria (failed={}, pending={}, active={}, state={})",
-                    agent.getConfiguration().getNodeID(), failed, pending, active, agent.getState());
-
-            agent.getEventManager().emit(new AgentSleepingEvent(agent.getID()));
-            //globalQueue.offer(new CheckSleepEvent(agent.getID()), checkTime);
-            //agent.setState(AgentState.Sleeping);
-        }
-        else {
-            log.debug("[{}] stays awake (failed={}, active={}, pending={}, state={})",
-                    agent.getID(), failed, active, pendingTypes, agent.getState());
-
-        }
     }
 
 }
