@@ -93,11 +93,12 @@ public class KnowledgeController extends AbstractController {
             return;
         }
 
+        //!
         if (newInformationAdded) {
             log.info("Agent {} acquired new knowledge from {}, triggering risk identification",
                     this.nodeID, originId);
 
-            this.eventManager.emit(new IdentifyRiskEvent(this.nodeID));
+            this.eventManager.emit(new IdentifyRiskEvent(this.nodeID), nodeID);
         } else {
             log.debug("Agent {} received knowledge from {}, but nothing new was added",
                     this.nodeID, originId);
@@ -132,7 +133,7 @@ public class KnowledgeController extends AbstractController {
         this.shareKnowledge();
 
         if (this.agentState.current().equals(AgentState.Idle))
-            this.eventManager.emit(new IdentifyRiskEvent(nodeID));
+            this.eventManager.emit(new IdentifyRiskEvent(this.nodeID), nodeID);
         onNodePropertyChange++;
         System.out.println("On Node property change: " + onNodePropertyChange);
     }
@@ -144,7 +145,7 @@ public class KnowledgeController extends AbstractController {
         this.shareKnowledge();
 
         if (this.agentState.current().equals(AgentState.Idle))
-            this.eventManager.emit(new IdentifyRiskEvent(nodeID));
+            this.eventManager.emit(new IdentifyRiskEvent(this.nodeID), nodeID);
         //
         onAssetPropertyChange++;
         System.out.println("On asset property change: " + onAssetPropertyChange);

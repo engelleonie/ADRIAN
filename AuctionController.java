@@ -70,7 +70,7 @@ public class AuctionController extends AbstractController {
 
     private void receiveAuctionBid(AuctionBidEvent event) {
         this.auctionManager.receiveProposal(event.getProposal(), event.getOrigin());
-        this.eventManager.emit(new FoundProposalEvent(event.getProposal()));
+        this.eventManager.emit(new FoundProposalEvent(event.getProposal()), configuration.getNodeID());
     }
 
     private void selectedProposal(SelectedProposalEvent event) {
@@ -103,7 +103,7 @@ public class AuctionController extends AbstractController {
         }
 
         if (shouldApply) {
-            this.eventManager.emit(new ApplyProposalEvent(event.getProposal()));
+            this.eventManager.emit(new ApplyProposalEvent(event.getProposal()), configuration.getNodeID());
             System.out.println("Proposal applied");
 
         }

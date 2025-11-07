@@ -21,7 +21,7 @@ public class ProposalController extends AbstractController {
 
         this.proposalManager = proposalManager;
 
-        // TODO: Probably also implement some event for selecting proposals?
+
         this.eventManager.registerEventHandler(SearchForProposalEvent.class, this::searchForProposal);
         this.eventManager.registerEventHandler(ApplyProposalEvent.class, this::applyProposal);
     }
@@ -30,14 +30,14 @@ public class ProposalController extends AbstractController {
         var proposals = this.proposalManager.findProposals(event.getAuction());
         var proposal = this.proposalManager.selectProposal(proposals, event.getAuction());
 
-        proposals.forEach(p -> eventManager.emit(new FoundProposalEvent(p)));
+        proposals.forEach(p -> eventManager.emit(new FoundProposalEvent(p)), );
         proposal.ifPresentOrElse(
                 p -> {
                     eventManager.emit(new SelectedProposalEvent(p));
                 },
                 () -> {
                     this.log.warn("No proposal was found with the given constrains, tried {} proposals", proposals.size());
-                    eventManager.emit(new CancelProposalEvent(event.getAuction()));
+                    eventManager.emit(new CancelProposalEvent(event.getAuction()), );
                 }
         );
     }

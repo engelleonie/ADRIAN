@@ -37,7 +37,7 @@ public class QueueExecutor {
     private final Runnable onFinished;
 
     public QueueExecutor(GlobalQueue globalQueue, List<ExperimentalAgent> agents, int maxSimTime, MetricCollector metricCollector, Queue<ExperimentalAgent> agentQueue, Runnable onQueueEmpty,
-     Runnable onFinished) {
+                         Runnable onFinished) {
 
         //this.eventManagers = eventManagers;
         this.maxSimTime = maxSimTime;
@@ -107,12 +107,12 @@ public class QueueExecutor {
                                 globalQueue.getSimulatedTime());
 
                         // --- Active Event Counter ---
-                        agent.onStartProcessingEvent();
-                        try {
+                        //agent.onStartProcessingEvent();
+                        //try {
                             manager.processEvent(event);
-                        } finally {
+                        /* } finally {
                             agent.onFinishProcessingEvent();
-                        }
+                        } */
                         handled = true;
 
                         metricCollector.updateInterval(agentQueue);
@@ -140,7 +140,6 @@ public class QueueExecutor {
     }
 
 }
-
 
 
 
