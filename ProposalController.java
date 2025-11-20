@@ -30,14 +30,14 @@ public class ProposalController extends AbstractController {
         var proposals = this.proposalManager.findProposals(event.getAuction());
         var proposal = this.proposalManager.selectProposal(proposals, event.getAuction());
 
-        proposals.forEach(p -> eventManager.emit(new FoundProposalEvent(p)), );
+        proposals.forEach(p -> eventManager.emit(new FoundProposalEvent(p, event.getAgent())));
         proposal.ifPresentOrElse(
                 p -> {
-                    eventManager.emit(new SelectedProposalEvent(p));
+                    eventManager.emit(new SelectedProposalEvent(p, event.getAgent()));
                 },
                 () -> {
                     this.log.warn("No proposal was found with the given constrains, tried {} proposals", proposals.size());
-                    eventManager.emit(new CancelProposalEvent(event.getAuction()), );
+                    eventManager.emit(new CancelProposalEvent(event.getAuction(), event.getAgent()));
                 }
         );
     }
@@ -45,13 +45,11 @@ public class ProposalController extends AbstractController {
     protected void applyProposal(ApplyProposalEvent event) {
         this.log.info("Applying proposal from auction {}: {}", event.getProposal().auction().getId(), event.getProposal().mutation().toString());
         var changed = proposalManager.applyProposal(event.getProposal());
-        for (String nodes : changed) {
-            eventManager.emit(new IdentifyRiskEvent(nodes));
-        }
+
+            GlobalQueue.getInstance().offer(new IdentifyRiskEvent(event.getAgent()), 5);
+
+
          //eventManager.getQueue().clear(); // Maybe remove this
-
-
-
 
     }
 }

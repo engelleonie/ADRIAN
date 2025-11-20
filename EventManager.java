@@ -55,7 +55,7 @@ public class EventManager {
         this.eventHandlers.put((Class<Event>) eventClass, handlers);
     }
 
-    public void emit(Event event, String agentID) {
+    public void emit(Event event) {
         if (this.agentState.current().equals(AgentState.Shutdown)) return;
 
         /*if (!scheduledEvents.add(event)) {
@@ -77,7 +77,7 @@ public class EventManager {
             } */
 
         }
-        GlobalQueue.getInstance().offer(event, eventDuration(event), agentID);
+        GlobalQueue.getInstance().offer(event, eventDuration(event));
 
         //adding event to globalqueue
         //long finishTime = simulatedTime + eventDuration(event);
@@ -97,17 +97,12 @@ public class EventManager {
         return !getEventHandlers(event.getClass()).isEmpty();
     }
 
-
-    // Semaphore entfernt
     public  <E extends Event> void processEvent(E event) {
-
-
 
         //var maxtime = new Date(System.currentTimeMillis() - 10 * 1000);
         //if (event.getTime().before(maxtime)) {
           //  return;
         //}
-
 
         scheduledEvents.remove(event);
             if (!event.isDebugEvent()) {

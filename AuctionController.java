@@ -2,8 +2,10 @@ package tech.jorn.adrian.agent.controllers;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import tech.jorn.adrian.agent.NodeRegistry;
 import tech.jorn.adrian.agent.events.*;
 import tech.jorn.adrian.agent.services.AuctionManager;
+import tech.jorn.adrian.core.GlobalQueue;
 import tech.jorn.adrian.core.agents.AgentState;
 import tech.jorn.adrian.core.agents.IAgentConfiguration;
 import tech.jorn.adrian.core.controllers.AbstractController;
@@ -70,7 +72,7 @@ public class AuctionController extends AbstractController {
 
     private void receiveAuctionBid(AuctionBidEvent event) {
         this.auctionManager.receiveProposal(event.getProposal(), event.getOrigin());
-        this.eventManager.emit(new FoundProposalEvent(event.getProposal()), configuration.getNodeID());
+        this.eventManager.emit(new FoundProposalEvent(event.getProposal(), NodeRegistry.getInstance().getAgentByNodeId(configuration.getNodeID())));
     }
 
     private void selectedProposal(SelectedProposalEvent event) {
@@ -103,12 +105,13 @@ public class AuctionController extends AbstractController {
         }
 
         if (shouldApply) {
-            this.eventManager.emit(new ApplyProposalEvent(event.getProposal()), configuration.getNodeID());
+            this.eventManager.emit(new ApplyProposalEvent(event.getProposal(), event.getAgent()));
             System.out.println("Proposal applied");
 
         }
     }
     private void onAuctionCancelled(AuctionCancelledEvent e) {
         this.auctionManager.reset();
+        GlobalQueue.getInstance().offer(new IdentifyRiskEvent(e.getAgent()), 5);
     }
 }

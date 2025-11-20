@@ -2,6 +2,7 @@ package tech.jorn.adrian.experiment.messages;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import tech.jorn.adrian.agent.NodeRegistry;
 import tech.jorn.adrian.agent.events.BroadcastMessageEvent;
 import tech.jorn.adrian.agent.events.SendMessageEvent;
 import tech.jorn.adrian.core.GlobalQueue;
@@ -41,10 +42,12 @@ public class InMemoryBroker implements MessageBroker {
     @Override
     public void send(INode recipient, Message message) {
         this.log.debug("Send message to \033[4m{}\033[0m: \033[4m{}\033[0m ", recipient.getID(), ((EventMessage<?>) message).getEvent().getClass().getSimpleName());
-        //this.messageDispatcher.dispatch(new Envelope(this.node, recipient.getID(), message));
+        this.messageDispatcher.dispatch(new Envelope(this.node, recipient.getID(), message));
 
         messageCounter++;
-        GlobalQueue.getInstance().offer(new SendMessageEvent(this.node, recipient.getID(), message), 5);
+
+        //??
+        //GlobalQueue.getInstance().offer(new SendMessageEvent(this.node, recipient.getID(), message, ((EventMessage<?>) message).getEvent().getAgent()), 5);
 
     }
 
@@ -58,10 +61,10 @@ public class InMemoryBroker implements MessageBroker {
     public void broadcast(Message message) {
         this.neighbours.forEach(recipient -> {
             messageCounter++;
-            this.log.debug("Send message to \033[4m{}\033[0m: \033[4m{}\033[0m ", recipient, ((EventMessage<?>) message).getEvent().getClass().getSimpleName());
-
-            GlobalQueue.getInstance().offer(new SendMessageEvent(this.node, recipient, message), 5);
-            //this.messageDispatcher.dispatch(new Envelope(this.node, recipient, message));
+            this.log.debug("bSend message to \033[4m{}\033[0m: \033[4m{}\033[0m ", recipient, ((EventMessage<?>) message).getEvent().getClass().getSimpleName());
+            //??
+            //GlobalQueue.getInstance().offer(new SendMessageEvent(this.node, recipient, message, ((EventMessage<?>) message).getEvent().getAgent()), 5);
+            this.messageDispatcher.dispatch(new Envelope(this.node, recipient, message));
         });
     }
 

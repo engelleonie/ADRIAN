@@ -3,6 +3,7 @@ package tech.jorn.adrian.agent.controllers;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tech.jorn.adrian.agent.NodeRegistry;
 import tech.jorn.adrian.agent.events.IdentifyRiskEvent;
 import tech.jorn.adrian.agent.events.SendMessageEvent;
 import tech.jorn.adrian.agent.events.ShareKnowledgeEvent;
@@ -59,14 +60,6 @@ public class KnowledgeController extends AbstractController {
         this.configuration.getParentNode().onPropertyChange().subscribe(this::debouncedPropertyChange);
         this.configuration.getAssets()
                 .forEach(asset -> asset.onPropertyChange().subscribe(() -> this.onAssetPropertyChange(asset)));
-
-        /* agentState.subscribe(state -> {
-            if (state == AgentState.Idle && (!this.hasSharedInitialKnowledge || triggerRiskIdentificationOnIdle)) {
-                this.shareKnowledge();
-                this.hasSharedInitialKnowledge = true;
-                this.triggerRiskIdentificationOnIdle = false;
-            }
-        }); */
     }
 
     protected void processKnowledge(ShareKnowledgeEvent event) {
@@ -74,10 +67,10 @@ public class KnowledgeController extends AbstractController {
 
         String originId = event.getOrigin().getID();
 
-        if (seenKnowledgeOrigins.contains(originId)) {
+        /* if (seenKnowledgeOrigins.contains(originId)) {
             log.debug("Knowledge from origin {} already processed, skipping", originId);
             return;
-        }
+        } */
 
         seenKnowledgeOrigins.add(originId);
 
@@ -98,20 +91,20 @@ public class KnowledgeController extends AbstractController {
             log.info("Agent {} acquired new knowledge from {}, triggering risk identification",
                     this.nodeID, originId);
 
-            this.eventManager.emit(new IdentifyRiskEvent(this.nodeID), nodeID);
+            this.eventManager.emit(new IdentifyRiskEvent(NodeRegistry.getInstance().getAgentByNodeId(configuration.getNodeID())));
         } else {
             log.debug("Agent {} received knowledge from {}, but nothing new was added",
                     this.nodeID, originId);
         }
 
-        if (event.getDistance() > 1) {
+        /*if (event.getDistance() > 1) {
             ShareKnowledgeEvent next = event.reducedDistance(event);
             this.messageBroker.broadcast(new EventMessage<>(next));
             log.debug("Agent {} forwarded knowledge from {} (new distance={})",
                     this.nodeID, originId, next.getDistance());
         } else {
             log.trace("Knowledge from {} not forwarded (distance limit reached)", originId);
-        }
+        } */
     }
 
 
@@ -133,7 +126,7 @@ public class KnowledgeController extends AbstractController {
         this.shareKnowledge();
 
         if (this.agentState.current().equals(AgentState.Idle))
-            this.eventManager.emit(new IdentifyRiskEvent(this.nodeID), nodeID);
+            this.eventManager.emit(new IdentifyRiskEvent(NodeRegistry.getInstance().getAgentByNodeId(configuration.getNodeID())));
         onNodePropertyChange++;
         System.out.println("On Node property change: " + onNodePropertyChange);
     }
@@ -145,7 +138,7 @@ public class KnowledgeController extends AbstractController {
         this.shareKnowledge();
 
         if (this.agentState.current().equals(AgentState.Idle))
-            this.eventManager.emit(new IdentifyRiskEvent(this.nodeID), nodeID);
+            this.eventManager.emit(new IdentifyRiskEvent(NodeRegistry.getInstance().getAgentByNodeId(configuration.getNodeID())));
         //
         onAssetPropertyChange++;
         System.out.println("On asset property change: " + onAssetPropertyChange);
@@ -155,7 +148,7 @@ public class KnowledgeController extends AbstractController {
         var event = new ShareKnowledgeEvent(
                 this.configuration.getParentNode(),
                 this.knowledgeBase,
-                1);
+                1, NodeRegistry.getInstance().getAgentByNodeId(configuration.getNodeID()));
         this.messageBroker.broadcast(new EventMessage<>(event));
     }
 

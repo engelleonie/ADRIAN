@@ -1,5 +1,6 @@
 package tech.jorn.adrian.agent.events;
 
+import tech.jorn.adrian.core.agents.IAgent;
 import tech.jorn.adrian.core.events.Event;
 import tech.jorn.adrian.core.graphs.base.INode;
 import tech.jorn.adrian.core.graphs.infrastructure.InfrastructureNode;
@@ -12,7 +13,8 @@ public class BroadcastMessageEvent extends Event {
     private final INode sender;
     //private final INode recipient;
 
-    public BroadcastMessageEvent(INode sender, Message message) {
+    public BroadcastMessageEvent(INode sender, Message message, IAgent agent) {
+        super(agent);
 
         this.sender = sender;
         //this.recipient = recipient;

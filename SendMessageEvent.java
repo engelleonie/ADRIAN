@@ -1,6 +1,7 @@
 package tech.jorn.adrian.agent.events;
 
 import tech.jorn.adrian.agent.NodeRegistry;
+import tech.jorn.adrian.core.agents.IAgent;
 import tech.jorn.adrian.core.events.Event;
 import tech.jorn.adrian.core.graphs.base.INode;
 import tech.jorn.adrian.core.messages.Message;
@@ -11,9 +12,8 @@ public class SendMessageEvent extends Event {
     private INode recipient;
 
 
-        // Konstruktor mit INode recipient
-        public SendMessageEvent(INode sender, INode recipient, Message message) {
-            super();
+        public SendMessageEvent(INode sender, INode recipient, Message message, IAgent agent) {
+            super(agent);
             if (sender == null) throw new IllegalArgumentException("Sender cannot be null");
             if (recipient == null) throw new IllegalArgumentException("Recipient cannot be null");
             if (message == null) throw new IllegalArgumentException("Message cannot be null");
@@ -23,9 +23,8 @@ public class SendMessageEvent extends Event {
             this.message = message;
         }
 
-        // Konstruktor mit recipientId als String, wandelt in INode um
-        public SendMessageEvent(INode sender, String recipientId, Message message) {
-            super();
+        public SendMessageEvent(INode sender, String recipientId, Message message, IAgent agent) {
+            super(agent);
             if (sender == null) throw new IllegalArgumentException("Sender cannot be null");
             if (recipientId == null) throw new IllegalArgumentException("RecipientId cannot be null");
             if (message == null) throw new IllegalArgumentException("Message cannot be null");

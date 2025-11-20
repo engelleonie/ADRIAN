@@ -1,5 +1,6 @@
 package tech.jorn.adrian.agent.events;
 
+import tech.jorn.adrian.core.agents.IAgent;
 import tech.jorn.adrian.core.events.Event;
 import tech.jorn.adrian.core.graphs.AbstractDetailedNode;
 import tech.jorn.adrian.core.graphs.knowledgebase.KnowledgeBase;
@@ -12,8 +13,10 @@ public class ShareKnowledgeEvent extends Event  {
     private final AbstractDetailedNode<NodeProperty<?>>  origin;
     private final KnowledgeBase knowledgeBase;
     private final int distance;
+    private static int distanceShare = 0;
 
-    public ShareKnowledgeEvent(AbstractDetailedNode<NodeProperty<?>> origin, KnowledgeBase knowledgeBase, int distance) {
+    public ShareKnowledgeEvent(AbstractDetailedNode<NodeProperty<?>> origin, KnowledgeBase knowledgeBase, int distance, IAgent agent) {
+        super(agent);
         this.origin = origin;
         this.knowledgeBase = knowledgeBase;
         this.distance = distance;
@@ -36,7 +39,9 @@ public class ShareKnowledgeEvent extends Event  {
     }
 
     public static ShareKnowledgeEvent reducedDistance(ShareKnowledgeEvent event) {
-        return new ShareKnowledgeEvent(event.getOrigin(), event.getKnowledgeBase(), event.getDistance() - 1);
+        distanceShare++;
+        System.out.println("distanceShare: " + distanceShare);
+        return new ShareKnowledgeEvent(event.getOrigin(), event.getKnowledgeBase(), event.getDistance() - 1, event.getAgent());
     }
 
     @Override

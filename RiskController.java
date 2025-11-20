@@ -89,36 +89,14 @@ public class RiskController extends AbstractController {
             return;
         }
 
-        try {
-            boolean shouldIdentify = false;
 
-            if (lastIdentifyTimestamp == 0) {
-                shouldIdentify = true;
-            }
-
-            else if (knowledgeBase.hasChanged()) {
-                shouldIdentify = true;
-            }
-
-            if (shouldIdentify) {
-                log.debug("[{}] Debounced called: shouldIdentify={}, hasChanged={}, lastIdentifyTimestamp={}, state={}",
-                        configuration.getNodeID(), shouldIdentify, knowledgeBase.hasChanged(), lastIdentifyTimestamp, agentState.current());
+                log.debug("[{}] Debounced called:  hasChanged={}, lastIdentifyTimestamp={}, state={}",
+                        configuration.getNodeID(), knowledgeBase.hasChanged(), lastIdentifyTimestamp, agentState.current());
 
                 identifyRisk(event);
-                lastIdentifyTimestamp = System.currentTimeMillis();
                 knowledgeBase.resetChangedFlag();
             }
 
-            log.debug("lastIdentifyTimestamp={}, hasChanged={}, failedSearches={}, identifyAttempts={}",
-                    lastIdentifyTimestamp, knowledgeBase.hasChanged(), agent.getFailedSearches(),
-                    agent.getIdentifyAttempts());
-
-        } finally {
-            log.debug("finally lastIdentifyTimestamp={}, hasChanged={}, failedSearches={}, identifyAttempts={}",
-                    lastIdentifyTimestamp, knowledgeBase.hasChanged(), agent.getFailedSearches(),
-                    agent.getIdentifyAttempts());
-        }
-    }
     
     public void identifyRisk(IdentifyRiskEvent event) {
         log.debug("[{}] identifyRisk() called (state={})",
@@ -149,7 +127,7 @@ public class RiskController extends AbstractController {
 
             this.lastRiskReport = risk;
             agent.setState(AgentState.Busy);
-            this.eventManager.emit(new FoundRiskEvent(risk), agent.getID());
+            this.eventManager.emit(new FoundRiskEvent(risk, event.getAgent()));
         }, () -> {
             this.log.warn("No risk was found");
             
@@ -186,7 +164,7 @@ public class RiskController extends AbstractController {
 
     protected void foundRiskEvent(FoundRiskEvent event) {
         log.info("[{}] foundRiskEvent received (risk={})", configuration.getNodeID(), event.getRiskReport().toShortString());
-        this.eventManager.emit(new SelectedRiskEvent(event.getRiskReport()), agent.getID());
+        this.eventManager.emit(new SelectedRiskEvent(event.getRiskReport(), event.getAgent()));
 
     }
 
@@ -202,7 +180,7 @@ public class RiskController extends AbstractController {
                         .stream()
                         .map(INode::getID)
                         .collect(Collectors.joining(" -> ")));
-        this.eventManager.emit(new InitiateAuctionEvent(event.getRiskReport()), agent.getID());
+        this.eventManager.emit(new InitiateAuctionEvent(event.getRiskReport(), event.getAgent()));
         this.lastRiskReport = event.getRiskReport();
     }
 

@@ -63,9 +63,9 @@ public class ExperimentRunner {
     public static void main(String[] args) throws InterruptedException {
 
         String[] param = new String[3];
-        param[0] = "simple.yml";
+        param[0] = "complex-infra.yml";
         param[1] = "no-change";
-        param[2] = "knowledge-sharing";
+        param[2] = "auctioning";
 
         System.out.println(Arrays.stream(args).collect(Collectors.joining(", ")));
         var file = param[0];
@@ -125,6 +125,7 @@ public class ExperimentRunner {
 
         var agents = agentFactory.fromInfrastructure(infrastructure);
         List<ExperimentalAgent> agentList = new ArrayList<>(agents);
+        agents.forEach(agent -> NodeRegistry.getInstance().registerAgent(agent));
 
         agents.forEach(metricCollector::listenToAgent);
         scenario.onNewAgent().subscribe(agent -> {
@@ -134,12 +135,16 @@ public class ExperimentRunner {
         });
 
         Runnable onFinished = () ->  {
-
             log.info("Finished scenario in {}ms", new Date().getTime() - startTime);
-
             log.info("Stopping {} agents", agentList.size());
 
-            System.out.println(6);
+            List<Event> remainingEvents = globalQueue.listQueueItems();
+            if (remainingEvents.isEmpty()) {
+                log.info("No remaining events in the global queue.");
+            } else {
+                log.info("Remaining events in the global queue ({}):", remainingEvents.size());
+                remainingEvents.forEach(e -> log.info("  - {}", e.getClass().getSimpleName() + " [" + e + "]"));
+            }
 
             try {
                 log.debug("Writing measures");
@@ -178,9 +183,11 @@ public class ExperimentRunner {
 
         Runnable onQueueEmpty = () -> {
             log.info("All agents idle, finishing simulation.");
-            var finishEvent = new FinishScenarioEvent(scenario.finishedDispatcher());
+            // finishEvent doesn't need a specific agent, triggers end of simulation
+            var finishEvent = new FinishScenarioEvent(scenario.finishedDispatcher(), agents.peek());
             GlobalQueue.getInstance().offer(finishEvent, GlobalQueue.getInstance().getSimulatedTime());
         };
+
 
           for (ExperimentalAgent agent : agents) {
             List<IController> controllers = agent.getControllers();
@@ -195,7 +202,8 @@ public class ExperimentRunner {
         }
 
          for (ExperimentalAgent agent : agents) {
-             var event = new IdentifyRiskEvent(agent.getConfiguration().getNodeID());
+             var event = new IdentifyRiskEvent(agent);
+             log.debug("agent: {}, eventid: {}", agent.getID(), event.getAgentID());
              GlobalQueue.getInstance().offer(event, 5);
          }
 

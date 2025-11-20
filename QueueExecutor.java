@@ -61,8 +61,15 @@ public class QueueExecutor {
     public void execute() {
         long startTime = System.currentTimeMillis();
         log.info("Start simulation");
-        while (!globalQueue.isEmpty() ) {
+        while (true ) {
+
+            if (!finishEventTriggered && globalQueue.isEmpty()) {
+                log.info("Queue is empty, inserting FinishScenarioEvent");
+                onQueueEmpty.run();
+                finishEventTriggered = true;
+            }
             EventNode node = globalQueue.poll();
+
             if (node == null) {
                 continue;
             }
@@ -81,8 +88,12 @@ public class QueueExecutor {
             else {
                 String agentId = null;
                 if (event instanceof IdentifyRiskEvent) {
-                    agentId = ((IdentifyRiskEvent) event).getAgentID();
+                    agentId = event.getAgent().getID();
+                    System.out.println(22);
                     AdrianAgent agent = agentsById.get(agentId);
+                    System.out.println(33);
+                    log.debug("Agent {} agentstate: {}", agentId, agent);
+                    System.out.println(44);
                     if (agent.getState() == AgentState.Searching || agent.getState() == AgentState.Auctioning || agent.getState() == AgentState.Migrating) {
                         log.debug("Agent {} is currently handling a risk, skipping IdentifyRiskEvent", agentId);
                         continue;
@@ -98,38 +109,41 @@ public class QueueExecutor {
                     }
                 }
 
-                if (agentId != null) {
-                    EventManager manager = managersByAgentId.get(agentId);
-                    AdrianAgent agent = agentsById.get(agentId);
-
-                    if (manager != null && manager.canHandle(event)) {
-                        log.debug("Agent {} processes {} at simTime={}", agentId, event.getClass().getSimpleName(),
-                                globalQueue.getSimulatedTime());
-
-                        // --- Active Event Counter ---
-                        //agent.onStartProcessingEvent();
-                        //try {
-                            manager.processEvent(event);
-                        /* } finally {
-                            agent.onFinishProcessingEvent();
-                        } */
-                        handled = true;
-
-                        metricCollector.updateInterval(agentQueue);
-                        if (!finishEventTriggered && globalQueue.isEmpty()) {
-                            log.info("Queue is empty after processing {}, inserting FinishScenarioEvent", event.getClass().getSimpleName());
-                            onQueueEmpty.run();
-                            finishEventTriggered = true;
-                        }
-
+                if (agentId != null || event.getAgent() != null) {
+                    if (event.getAgent() != null) {
+                        agentId = event.getAgent().getID();
                     }
+
+                    AdrianAgent agent = agentsById.get(agentId);
+                    EventManager manager = managersByAgentId.get(agentId);
+
+                    if (agent == null || manager == null) {
+                        log.warn("Agent oder Manager nicht gefunden für Event {} von {}", event.getClass().getSimpleName(), agentId);
+                        continue;
+                    }
+
+                    if (event instanceof IdentifyRiskEvent &&
+                            (agent.getState() == AgentState.Searching ||
+                                    agent.getState() == AgentState.Auctioning ||
+                                    agent.getState() == AgentState.Migrating)) {
+                        log.debug("Agent {} beschäftigt, überspringe Event {}", agentId, event.getClass().getSimpleName());
+                        continue;
+                    }
+
+                    log.debug("Agent {} processes {} at simTime={}", agentId, event.getClass().getSimpleName(),
+                            globalQueue.getSimulatedTime());
+
+                    manager.processEvent(event);
+                    handled = true;
+
+                    metricCollector.updateInterval(agentQueue);
                 }
 
                 if (!handled) {
                     log.warn("Event {} was not handled", event.getClass().getSimpleName());
                 }
 
-                if (System.currentTimeMillis() - startTime >= 30000) {
+                if (System.currentTimeMillis() - startTime >= 180000) {
                     log.warn("Simulation timed out after 1 second");
                     onFinished.run();
                     break;
