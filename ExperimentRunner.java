@@ -5,7 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -15,16 +14,12 @@ import tech.jorn.adrian.agent.AdrianAgent;
 import tech.jorn.adrian.agent.NodeRegistry;
 import tech.jorn.adrian.agent.controllers.KnowledgeController;
 import tech.jorn.adrian.agent.controllers.RiskController;
-import tech.jorn.adrian.agent.controllers.SleepController;
-import tech.jorn.adrian.agent.controllers.SystemController;
+//import tech.jorn.adrian.agent.controllers.SystemController;
 import tech.jorn.adrian.agent.events.*;
-import tech.jorn.adrian.core.EventNode;
 import tech.jorn.adrian.core.GlobalQueue;
-import tech.jorn.adrian.core.agents.AgentState;
 import tech.jorn.adrian.core.agents.IAgent;
 import tech.jorn.adrian.core.controllers.IController;
 import tech.jorn.adrian.core.events.Event;
-import tech.jorn.adrian.core.events.EventManager;
 import tech.jorn.adrian.core.graphs.MermaidGraphRenderer;
 import tech.jorn.adrian.core.graphs.base.GraphLink;
 import tech.jorn.adrian.core.graphs.base.INode;
@@ -33,10 +28,7 @@ import tech.jorn.adrian.core.graphs.infrastructure.InfrastructureEntry;
 import tech.jorn.adrian.core.graphs.infrastructure.InfrastructureNode;
 import tech.jorn.adrian.core.graphs.risks.AttackGraphEntry;
 import tech.jorn.adrian.core.graphs.risks.AttackGraphLink;
-import tech.jorn.adrian.core.messages.EventMessage;
 import tech.jorn.adrian.core.observables.EventDispatcher;
-import tech.jorn.adrian.core.observables.FlagDispatcher;
-import tech.jorn.adrian.core.observables.SubscribableValueEvent;
 import tech.jorn.adrian.core.risks.RiskReport;
 import tech.jorn.adrian.experiment.features.AgentFactory;
 import tech.jorn.adrian.experiment.features.FeatureSet;
@@ -62,29 +54,46 @@ public class ExperimentRunner {
 
     public static void main(String[] args) throws InterruptedException {
 
+        //input-parameters for each simulation-run
         String[] param = new String[3];
-        param[0] = "complex-infra.yml";
+        //yml file containing network infrastructure
+        param[0] = "simple.yml";
+        //scenario (options in getScenario() below)
         param[1] = "no-change";
-        param[2] = "auctioning";
+        //featureSet: local, knowledge-sharing or auctioning
+        param[2] = "knowledge-sharing";
+
+
 
         System.out.println(Arrays.stream(args).collect(Collectors.joining(", ")));
         var file = param[0];
         var infrastructure = InfrastructureLoader.loadFromYaml(file);
+        //debugging to check if infrastructure was initialized correctly
         infrastructure.getNodes().forEach(n -> {
             var neighbours = infrastructure.getNeighbours(n);
             System.out.println("  " + n.getID() + " -> " +
                     neighbours.stream().map(x -> x.getID()).toList());
         });
+
+
+        //responsible for communication between Agents
         var messageDispatcher = new EventDispatcher<Envelope>();
+        // initializes components necessary to support chosen featureSet
         var features = getFeatureSet(param[2], messageDispatcher);
-        var agentFactory = new AgentFactory(features, globalQueue);
+        //create agentFactory instance, necessary to create agents later
+        var agentFactory = new AgentFactory(features);
+
 
         var scenario = getScenario(param[1], infrastructure, messageDispatcher, (node) -> agentFactory.fromNode(infrastructure, node));
+        //creating CSV-name for current simulation
         String config = param[0].substring(0, param[0].length() - 4) + "_" + param[1] + "_" + param[2];
 
-        runTest(infrastructure, features, scenario, config, globalQueue);
+        //starting agent initialization first, simulation-loop is triggered at the end of runTest()
+        runTest(infrastructure, scenario, config, globalQueue, agentFactory);
     }
 
+
+    // initializes chosen scenario
     public static Scenario getScenario(String input, Infrastructure infrastructure, EventDispatcher<Envelope> messageDispatcher, Function<InfrastructureNode, IAgent> agentFactory) {
         switch (input) {
             case "large": return new LargeScenario(infrastructure, messageDispatcher, agentFactory);
@@ -98,6 +107,7 @@ public class ExperimentRunner {
         }
     }
 
+    // initializes chosen featureSet
     public static FeatureSet getFeatureSet(String input, EventDispatcher<Envelope> messageDispatcher) {
         switch(input) {
             case "knowledge-sharing":
@@ -111,29 +121,33 @@ public class ExperimentRunner {
         }
     }
 
-    public static void runTest(Infrastructure infrastructure, FeatureSet featureSet, Scenario scenario, String config, GlobalQueue globalQueue) {
+    public static void runTest(Infrastructure infrastructure, Scenario scenario, String config, GlobalQueue globalQueue, AgentFactory agentFactory) {
         var log = LogManager.getLogger(ExperimentRunner.class);
 
         renderInfrastructure(infrastructure);
 
         var startTime = new Date().getTime();
 
-        var agentFactory = new AgentFactory(featureSet, globalQueue);
+        //var agentFactory = new AgentFactory(featureSet, globalQueue);
         var metricCollector = new MetricCollector(infrastructure);
 
         log.debug("Creating agents");
 
+        //initializes ExperimentalAgents
         var agents = agentFactory.fromInfrastructure(infrastructure);
+        //additional lists containing all agents
         List<ExperimentalAgent> agentList = new ArrayList<>(agents);
         agents.forEach(agent -> NodeRegistry.getInstance().registerAgent(agent));
 
         agents.forEach(metricCollector::listenToAgent);
+        //adding agent to data structures in case one is created during simulation
         scenario.onNewAgent().subscribe(agent -> {
             metricCollector.listenToAgent(agent);
             agents.add(agent);
             agentList.add(agent);
         });
 
+        //called when QueueExecutor calls FinishScenarioEvent
         Runnable onFinished = () ->  {
             log.info("Finished scenario in {}ms", new Date().getTime() - startTime);
             log.info("Stopping {} agents", agentList.size());
@@ -147,6 +161,7 @@ public class ExperimentRunner {
             }
 
             try {
+                //final update to metrics.csv containing all metrics of current simulation run
                 log.debug("Writing measures");
                 metricCollector.updateInterval(agents);
                 metricCollector.writeToCSV(agents, new Date().getTime() - startTime, config);
@@ -172,15 +187,18 @@ public class ExperimentRunner {
 
         log.debug("Starting agents");
 
-        for (INode node : infrastructure.listNodes()) {
+        /*for (INode node : infrastructure.listNodes()) {
             NodeRegistry.getInstance().registerNode(node);
             System.out.println("Node registered: " + node.getID());
-        }
-        //changes state of each agent to idle, triggers initial knowledge sharing
+        }*/
+        //changes state of each agent to idle
         agents.forEach(AdrianAgent::startReady);
         agents.forEach(AdrianAgent::startIdle);
 
 
+
+
+        //creates final event once the global queue is empty, stopping the simulation
         Runnable onQueueEmpty = () -> {
             log.info("All agents idle, finishing simulation.");
             // finishEvent doesn't need a specific agent, triggers end of simulation
@@ -189,33 +207,42 @@ public class ExperimentRunner {
         };
 
 
+        //creates initial ShareKnowledgeEvents for each agent
           for (ExperimentalAgent agent : agents) {
             List<IController> controllers = agent.getControllers();
 
             for (IController controller : controllers) {
                 if (controller instanceof KnowledgeController) {
+                    //shareKnowledge creates new ShareKnowledgeEvent but also triggers immediate knowledge sharing, causing issues later on
+                    // as knowledge is not updated properly by later ShareKnowledgeEvents
                     ((KnowledgeController) controller).shareKnowledge();
+                    //debugging
                     knowledgeCount++;
                     System.out.println("knowledgeCount: " + knowledgeCount);
                 }
             }
         }
 
+          //creates initial IdentifyRiskEvent
          for (ExperimentalAgent agent : agents) {
              var event = new IdentifyRiskEvent(agent);
              log.debug("agent: {}, eventid: {}", agent.getID(), event.getAgentID());
              GlobalQueue.getInstance().offer(event, 5);
          }
 
-        QueueExecutor executor = new QueueExecutor(globalQueue, agentList, 10000, metricCollector, agents, onQueueEmpty, onFinished);
+         //creates executor and starts simulation-loop
+        QueueExecutor executor = new QueueExecutor(agentList, metricCollector, agents, onQueueEmpty, onFinished);
+         //calls Event-Loop, loop has while(true) condition, only stops once FinishScenarioEvent is executed
         executor.execute();
 
         renderInfrastructure(infrastructure);
 
+        //lists remaining items in global queue, prints them at the end of the simulation
         List<Event> events = GlobalQueue.getInstance().listQueueItems();
         events.forEach(event -> log.debug("Pending: {}", event));
     }
 
+    //creates mmd-Graph containing applied proposals
     private static void renderInfrastructure(Infrastructure infrastructure) {
         var filename = String.format("./graphs/infrastructure-%d.mmd", System.currentTimeMillis() - start);
         try {
@@ -226,12 +253,12 @@ public class ExperimentRunner {
             writer.write(mmdGraph);
             writer.close();
         } catch (IOException e) {
-            System.err.println("SOMETHING WENT WRONG OUTPUTTING GRAPH " + e.toString());
+            System.err.println("SOMETHING WENT WRONG OUTPUTTING GRAPH " + e);
             throw new RuntimeException(e);
         }
     }
 
-    // debugging
+    // debugging to follow auction behavior
     private static void renderAuction(String id, RiskReport report) {
         var filename = String.format("./graphs/auction-%s.mmd", id);
         try {

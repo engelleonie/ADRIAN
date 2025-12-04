@@ -54,7 +54,7 @@ public class MetricCollector {
     public MetricCollector(Infrastructure infrastructure) {
         this.infrastructure = infrastructure;
 
-        //initialisiert die csv Datenstruktur zum Datensammeln
+        //initializes data structures for metric collection
         csv.put("messages-total", new ArrayList<>());
         csv.put("proposals-total", new ArrayList<>());
         csv.put("riskCount-total", new ArrayList<>());
@@ -71,7 +71,6 @@ public class MetricCollector {
         this.agents.add(agent);
         this.proposalCount.put(agent, 0);
         System.out.println("Registering agent: " + agent.getConfiguration().getNodeID());
-
 
         agent.getMessageBroker().registerMessageHandler(message -> {
             System.out.println("Received Message: " + message);
@@ -171,7 +170,8 @@ public class MetricCollector {
     }
 
     public void updateInterval(Queue<ExperimentalAgent> agents) {
-        System.out.println(3);
+
+        System.out.println("Updating Metrics");
 
         csv.compute("messages-total", (k, list) -> {
             list.add(messageCount.values().stream().mapToInt(Integer::intValue).sum());
@@ -295,7 +295,6 @@ public class MetricCollector {
         renderAttackGraph(null, attackGraph, tick);
         System.out.println(6);
         return risks;
-
     }
 
     private void renderAttackGraph(IAgentConfiguration configuration, AttackGraph graph, int graphCount) {
@@ -390,7 +389,6 @@ public class MetricCollector {
         });
 
         writer.close();
-        System.out.println(8);
         log.info("Wrote metrics to ./metrics.csv");
     }
 }

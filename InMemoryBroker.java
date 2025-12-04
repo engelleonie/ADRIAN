@@ -23,19 +23,13 @@ public class InMemoryBroker implements MessageBroker {
     protected final INode node;
     protected final Queue<String> neighbours;
     private final EventDispatcher<Envelope> messageDispatcher;
-
     private static int messageCounter = 0;
-    private final Set<String> processedMessages = Collections.synchronizedSet(new HashSet<>());
-
     protected final Queue<Consumer<Message>> listeners = new ArrayDeque<>();
-
     public InMemoryBroker(INode node, List<String> neighbours, EventDispatcher<Envelope> messageDispatcher) {
         this.node = node;
         this.neighbours = new ArrayDeque<>(neighbours);
         this.messageDispatcher = messageDispatcher;
-
         this.messageDispatcher.subscribable.subscribe(this::handleIncomingEnvelope);
-
         this.log = LogManager.getLogger(String.format("[%s] %s", node.getID(), InMemoryBroker.class.getSimpleName()));
     }
 
@@ -61,7 +55,7 @@ public class InMemoryBroker implements MessageBroker {
     public void broadcast(Message message) {
         this.neighbours.forEach(recipient -> {
             messageCounter++;
-            this.log.debug("bSend message to \033[4m{}\033[0m: \033[4m{}\033[0m ", recipient, ((EventMessage<?>) message).getEvent().getClass().getSimpleName());
+            this.log.debug(" bSend message to \033[4m{}\033[0m: \033[4m{}\033[0m ", recipient, ((EventMessage<?>) message).getEvent().getClass().getSimpleName());
             //??
             //GlobalQueue.getInstance().offer(new SendMessageEvent(this.node, recipient, message, ((EventMessage<?>) message).getEvent().getAgent()), 5);
             this.messageDispatcher.dispatch(new Envelope(this.node, recipient, message));

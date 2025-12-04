@@ -24,13 +24,16 @@ public class GlobalQueue {
 
     }
 
+    // priority queue sorted by earliest finished event, calculated by adding duration to current simulated time
     private final PriorityQueue<EventNode> globalQueue = new PriorityQueue<>(Comparator.comparingLong(EventNode::getFinishTime));
 
     public static final Logger log = LogManager.getLogger(EventManager.class);
-    private boolean acceptNewEvents;
 
+    //adding an event to the queue
     public void offer(Event event, long duration) {
 
+        //don't add event if the same event is already in the queue
+        //unnecessary if messages and knowledge is handled correctly
          if (isDuplicate(event)) {
             log.debug("Skipping duplicate event {} for agent {}",
                     event.getClass().getSimpleName(), event.getAgentID());
@@ -46,13 +49,10 @@ public class GlobalQueue {
         log.debug("Agentstate of agent {} : {}", event.getAgent().getID(), event.getAgent().getState());
     }
 
-    public void shutDownNewEvents() {
-        acceptNewEvents = false;
-    }
+
     public EventNode poll() {
         return globalQueue.poll();
     }
-
     public EventNode peek() {
         return globalQueue.peek();
     }
@@ -60,15 +60,12 @@ public class GlobalQueue {
     public boolean isEmpty() {
         return globalQueue.isEmpty();
     }
-
     public long getSimulatedTime() {
         return simulatedTime;
     }
-
     public void setSimulatedTime(long time) {
         this.simulatedTime = time;
     }
-
 
     public List<Event> listQueueItems() {
         return globalQueue.stream()
@@ -79,12 +76,11 @@ public class GlobalQueue {
     public int getSize() {
         return listQueueItems().size();
     }
-
     public boolean remove(Event event) {
         return globalQueue.removeIf(node -> node.getEvent().equals(event));
     }
 
-
+    //counting all pending events for an agent
     public int countPendingEventsFor(String agentId) {
         synchronized(globalQueue) {
             return (int) globalQueue.stream()
@@ -103,6 +99,7 @@ public class GlobalQueue {
         }
     }
 
+    //testing if agent has any pending event queued
     private boolean hasAgentId(Event e, String agentID) {
         try {
             var method = e.getClass().getMethod("getAgentID");
@@ -113,7 +110,7 @@ public class GlobalQueue {
         }
     }
 
-
+    //checking if the same event is already queued
      private boolean isDuplicate(Event event) {
         synchronized (globalQueue) {
             return globalQueue.stream().anyMatch(node -> {
@@ -122,9 +119,6 @@ public class GlobalQueue {
                 System.out.println("GetAgentid event: " + event.getAgent().getID());
                 System.out.println("Agentid e: " + e.getAgentID());
                 System.out.println("GetAgentid e: " + e.getAgent().getID());
-
-
-                if (e == null) return false;
 
                 if (!e.getClass().equals(event.getClass())) return false;
 
@@ -135,8 +129,7 @@ public class GlobalQueue {
                     Object newId = newMethod.invoke(event);
                     if (!existingId.equals(newId)) return false;
 
-                    // Jetzt der entscheidende neue Teil:
-                    // Prüfen ob der Empfänger gleich ist
+                    // testing if recipient is the same
                     var recMethod = e.getClass().getMethod("getRecipient");
                     Object existingRecipient = recMethod.invoke(e);
 

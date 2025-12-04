@@ -7,6 +7,7 @@ import tech.jorn.adrian.agent.NodeRegistry;
 import tech.jorn.adrian.agent.events.IdentifyRiskEvent;
 import tech.jorn.adrian.agent.events.SendMessageEvent;
 import tech.jorn.adrian.agent.events.ShareKnowledgeEvent;
+import tech.jorn.adrian.core.GlobalQueue;
 import tech.jorn.adrian.core.agents.AgentState;
 import tech.jorn.adrian.core.agents.IAgentConfiguration;
 import tech.jorn.adrian.core.controllers.AbstractController;
@@ -35,77 +36,69 @@ public class KnowledgeController extends AbstractController {
     private final KnowledgeBase knowledgeBase;
     private final MessageBroker messageBroker;
     private final IAgentConfiguration configuration;
-    private final String nodeID;
+
     private int onAssetPropertyChange = 0;
     private  int onNodePropertyChange = 0;
-    private int reducedCount = 0;
-    private final Set<String> seenKnowledgeOrigins = new HashSet<>();
 
+    //created for each agent along with 3 other controllers
     public KnowledgeController(KnowledgeBase knowledgeBase, MessageBroker messageBroker, EventManager eventManager,
             IAgentConfiguration configuration, SubscribableValueEvent<AgentState> agentState, String nodeID) {
         super(eventManager, agentState);
         this.messageBroker = messageBroker;
         this.configuration = configuration;
-        this.nodeID = nodeID;
 
         log = LogManager.getLogger("[" + configuration.getNodeID() + "] KnowledgeController");
 
+        //initializing an agents knowledgeBase
         this.knowledgeBase = this.createKnowledgeBaseFromConfig(knowledgeBase, configuration.getParentNode(),
                 configuration.getNeighbours(), configuration.getAssets());
 
+        //calling processKnowledge() when executing ShareKnowledgeEvent
         this.eventManager.registerEventHandler(ShareKnowledgeEvent.class, this::processKnowledge);
-        this.eventManager.registerEventHandler(SendMessageEvent.class, this::processMessage);
+        //this.eventManager.registerEventHandler(SendMessageEvent.class, this::processMessage);
 
 
+        //reacting to changed properties
         this.configuration.getParentNode().onPropertyChange().subscribe(this::debouncedPropertyChange);
+        //reacting to changed assets
         this.configuration.getAssets()
                 .forEach(asset -> asset.onPropertyChange().subscribe(() -> this.onAssetPropertyChange(asset)));
     }
 
     protected void processKnowledge(ShareKnowledgeEvent event) {
-        if (event == null || event.getOrigin() == null || event.getKnowledgeBase() == null) return;
 
-        String originId = event.getOrigin().getID();
+            /*if (event == null || event.getOrigin() == null || event.getKnowledgeBase() == null) {
+                System.out.println(667);
+                return;
+            } */
 
-        /* if (seenKnowledgeOrigins.contains(originId)) {
-            log.debug("Knowledge from origin {} already processed, skipping", originId);
-            return;
-        } */
+            String originId = event.getOrigin().getID();
+            boolean isDirectNeighbor = event.getDistance() == 1;
 
-        seenKnowledgeOrigins.add(originId);
+            //testing if knowledge contains a new neighbor
+            boolean isNewNeighbor = isDirectNeighbor &&
+                    !originId.equals(this.configuration.getParentNode().getID()) &&
+                    knowledgeBase.findById(originId).isEmpty();
 
-        boolean newInformationAdded = false;
+            //adding new neighbor
+            if (isNewNeighbor) {
+                this.messageBroker.addRecipient(event.getOrigin());
+                this.log.info("Added a new neighbour {}", originId);
+            }
 
-        try {
-            this.knowledgeBase.processNewInformation(
-                    event.getOrigin(),
-                    event.getKnowledgeBase()
-            );
-        } catch (Exception e) {
-            log.error("Exception in processNewInformation: {}", e.getMessage(), e);
-            return;
+            //updating knowledgeBase
+        System.out.println("EventID: " + event.getOrigin().getID());
+            this.knowledgeBase.processNewInformation(event.getOrigin(), event.getKnowledgeBase());
+
+
+
+            // distributing knowledge further in case it is supposed to travel more than one hop
+            if (event.getDistance() > 1) {
+                var next = ShareKnowledgeEvent.reducedDistance(event);
+                this.messageBroker.broadcast(new EventMessage<>(next));
+            }
+
         }
-
-        //!
-        if (newInformationAdded) {
-            log.info("Agent {} acquired new knowledge from {}, triggering risk identification",
-                    this.nodeID, originId);
-
-            this.eventManager.emit(new IdentifyRiskEvent(NodeRegistry.getInstance().getAgentByNodeId(configuration.getNodeID())));
-        } else {
-            log.debug("Agent {} received knowledge from {}, but nothing new was added",
-                    this.nodeID, originId);
-        }
-
-        /*if (event.getDistance() > 1) {
-            ShareKnowledgeEvent next = event.reducedDistance(event);
-            this.messageBroker.broadcast(new EventMessage<>(next));
-            log.debug("Agent {} forwarded knowledge from {} (new distance={})",
-                    this.nodeID, originId, next.getDistance());
-        } else {
-            log.trace("Knowledge from {} not forwarded (distance limit reached)", originId);
-        } */
-    }
 
 
     private void processMessage(SendMessageEvent event) {
@@ -120,36 +113,45 @@ public class KnowledgeController extends AbstractController {
         var node = this.configuration.getParentNode();
         this.log.debug("Updating property {} from {} to {}", property.getName(),
                 this.knowledgeBase.findById(node.getID()).get().getProperty(property.getName()), property.getValue());
+        //adding changed property to knowledgeBase
         this.knowledgeBase.upsertNode(KnowledgeBaseNode.fromNode(node)
                 .setKnowledgeOrigin(KnowledgeOrigin.DIRECT));
 
+        //share updated property
         this.shareKnowledge();
 
         if (this.agentState.current().equals(AgentState.Idle))
             this.eventManager.emit(new IdentifyRiskEvent(NodeRegistry.getInstance().getAgentByNodeId(configuration.getNodeID())));
+
+        //debugging
         onNodePropertyChange++;
         System.out.println("On Node property change: " + onNodePropertyChange);
     }
 
     protected void onAssetPropertyChange(SoftwareAsset asset) {
+        //adding updated asset to knowledgeBase
         this.knowledgeBase.upsertNode(KnowledgeBaseSoftwareAsset.fromNode(asset)
                 .setKnowledgeOrigin(KnowledgeOrigin.DIRECT));
 
+        //share updated asset
         this.shareKnowledge();
 
         if (this.agentState.current().equals(AgentState.Idle))
             this.eventManager.emit(new IdentifyRiskEvent(NodeRegistry.getInstance().getAgentByNodeId(configuration.getNodeID())));
-        //
+
+        //debugging
         onAssetPropertyChange++;
         System.out.println("On asset property change: " + onAssetPropertyChange);
     }
 
     public void shareKnowledge() {
+        //creating new Event and adding it to globalQueue
         var event = new ShareKnowledgeEvent(
                 this.configuration.getParentNode(),
                 this.knowledgeBase,
                 1, NodeRegistry.getInstance().getAgentByNodeId(configuration.getNodeID()));
-        this.messageBroker.broadcast(new EventMessage<>(event));
+        GlobalQueue.getInstance().offer(event, event.getDuration());
+        //this.messageBroker.broadcast(new EventMessage<>(event));
     }
 
     private KnowledgeBase createKnowledgeBaseFromConfig(KnowledgeBase knowledgeBase,
@@ -161,21 +163,6 @@ public class KnowledgeController extends AbstractController {
         var originNode = KnowledgeBaseNode.fromNode(origin)
                 .setKnowledgeOrigin(KnowledgeOrigin.DIRECT);
         knowledgeBase.upsertNode(originNode);
-
-        assets.forEach(asset -> {
-            var assetNode = KnowledgeBaseSoftwareAsset.fromNode(asset);
-            knowledgeBase.upsertNode(assetNode);
-            knowledgeBase.addEdge(originNode, assetNode);
-            knowledgeBase.addEdge(assetNode, originNode);
-        });
-
-        links.forEach(neighborId -> {
-            var neighborNode = new KnowledgeBaseNode(neighborId)
-                    .setKnowledgeOrigin(KnowledgeOrigin.INFERRED);
-            knowledgeBase.upsertNode(neighborNode);
-            knowledgeBase.addEdge(originNode, neighborNode);
-            knowledgeBase.addEdge(neighborNode, originNode);
-        });
 
         var isExposed = (Boolean) origin.getProperty("exposed").orElse(false);
         if (isExposed)
@@ -195,12 +182,13 @@ public class KnowledgeController extends AbstractController {
             knowledgeBase.addEdge(neighbourNode, originNode);
         });
 
-        /* System.out.println("KnowledgeBase dump:");
+        //debugging to check which nodes are included in an agents' knowledgeBase
+        System.out.println("KnowledgeBase dump:");
         knowledgeBase.getNodes().forEach(n -> {
             var neighbours = knowledgeBase.getNeighbours(n);
             System.out.println("  " + n.getID() + " -> " +
                     neighbours.stream().map(x -> x.getID()).toList());
-        }); */
+        });
 
         return knowledgeBase;
     }
