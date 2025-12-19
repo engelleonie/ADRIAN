@@ -69,6 +69,7 @@ public class QueueExecutor {
 
             boolean handled = false;
 
+            //executing metric updates or end of simulation manually
             if (event instanceof MetricTickEvent || event instanceof FinishScenarioEvent) {
                 event.trigger();
             }
@@ -130,7 +131,7 @@ public class QueueExecutor {
                 }
 
                 //hard timeout for simulation
-                if (System.currentTimeMillis() - startTime >= 30000) {
+                if (System.currentTimeMillis() - startTime >= 90000) {
                     log.warn("Simulation timed out after 3 minutes");
                     onFinished.run();
                     break;

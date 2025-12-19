@@ -9,6 +9,7 @@ import tech.jorn.adrian.agent.events.SendMessageEvent;
 import tech.jorn.adrian.agent.events.ShareKnowledgeEvent;
 import tech.jorn.adrian.core.GlobalQueue;
 import tech.jorn.adrian.core.agents.AgentState;
+import tech.jorn.adrian.core.agents.IAgent;
 import tech.jorn.adrian.core.agents.IAgentConfiguration;
 import tech.jorn.adrian.core.controllers.AbstractController;
 import tech.jorn.adrian.core.events.EventManager;
@@ -54,8 +55,8 @@ public class KnowledgeController extends AbstractController {
                 configuration.getNeighbours(), configuration.getAssets());
 
         //calling processKnowledge() when executing ShareKnowledgeEvent
-        this.eventManager.registerEventHandler(ShareKnowledgeEvent.class, this::processKnowledge);
-        //this.eventManager.registerEventHandler(SendMessageEvent.class, this::processMessage);
+        //this.eventManager.registerEventHandler(ShareKnowledgeEvent.class, this::processKnowledge);
+        this.eventManager.registerEventHandler(SendMessageEvent.class, this::processMessage);
 
 
         //reacting to changed properties
@@ -66,12 +67,24 @@ public class KnowledgeController extends AbstractController {
     }
 
     protected void processKnowledge(ShareKnowledgeEvent event) {
+        //this.messageBroker.broadcast(new EventMessage<>(event));
+
+        if (knowledgeBase.findById(event.getOrigin().getID()).isEmpty() && event.getDistance() == 1) {
+            this.messageBroker.addRecipient(event.getOrigin());
+            this.log.info("Added a new neighbour {}", event.getOrigin().getID());
+        }
+        this.knowledgeBase.processNewInformation(event.getOrigin(), event.getKnowledgeBase());
+        if (event.getDistance() > 1) {
+            var next = ShareKnowledgeEvent.reducedDistance(event);
+            this.messageBroker.broadcast(new EventMessage<>(next));
+        }
+        this.messageBroker.broadcast(new EventMessage<>(event));
 
             /*if (event == null || event.getOrigin() == null || event.getKnowledgeBase() == null) {
                 System.out.println(667);
                 return;
             } */
-
+/*
             String originId = event.getOrigin().getID();
             boolean isDirectNeighbor = event.getDistance() == 1;
 
@@ -97,13 +110,22 @@ public class KnowledgeController extends AbstractController {
                 var next = ShareKnowledgeEvent.reducedDistance(event);
                 this.messageBroker.broadcast(new EventMessage<>(next));
             }
-
+*/
         }
 
 
     private void processMessage(SendMessageEvent event) {
+        log.error(
+                "processMessage on agent {}, sender={}, recipient={}",
+                this.configuration.getNodeID(),
+                event.getSender().getID(),
+                event.getRecipient().getID()
+        );
+
         this.messageBroker.deliver(event.getRecipient(), event.getMessage());
     }
+
+
 
     protected void debouncedPropertyChange(NodeProperty<?> property) {
             this.onNodePropertyChange(property);
@@ -149,9 +171,9 @@ public class KnowledgeController extends AbstractController {
         var event = new ShareKnowledgeEvent(
                 this.configuration.getParentNode(),
                 this.knowledgeBase,
-                1, NodeRegistry.getInstance().getAgentByNodeId(configuration.getNodeID()));
-        GlobalQueue.getInstance().offer(event, event.getDuration());
-        //this.messageBroker.broadcast(new EventMessage<>(event));
+                1, null);
+        //GlobalQueue.getInstance().offer(event, event.getDuration());
+        this.messageBroker.broadcast(new EventMessage<>(event));
     }
 
     private KnowledgeBase createKnowledgeBaseFromConfig(KnowledgeBase knowledgeBase,

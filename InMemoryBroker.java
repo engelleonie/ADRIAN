@@ -5,7 +5,9 @@ import org.apache.logging.log4j.Logger;
 import tech.jorn.adrian.agent.NodeRegistry;
 import tech.jorn.adrian.agent.events.BroadcastMessageEvent;
 import tech.jorn.adrian.agent.events.SendMessageEvent;
+import tech.jorn.adrian.agent.events.ShareKnowledgeEvent;
 import tech.jorn.adrian.core.GlobalQueue;
+import tech.jorn.adrian.core.agents.IAgent;
 import tech.jorn.adrian.core.graphs.base.INode;
 import tech.jorn.adrian.core.messages.EventMessage;
 import tech.jorn.adrian.core.messages.Message;
@@ -36,12 +38,15 @@ public class InMemoryBroker implements MessageBroker {
     @Override
     public void send(INode recipient, Message message) {
         this.log.debug("Send message to \033[4m{}\033[0m: \033[4m{}\033[0m ", recipient.getID(), ((EventMessage<?>) message).getEvent().getClass().getSimpleName());
-        this.messageDispatcher.dispatch(new Envelope(this.node, recipient.getID(), message));
+        //this.messageDispatcher.dispatch(new Envelope(this.node, recipient.getID(), message));
 
         messageCounter++;
+        IAgent recipientAgent =
+                NodeRegistry.getInstance().getAgentByNodeId(recipient.getID());
 
         //??
-        //GlobalQueue.getInstance().offer(new SendMessageEvent(this.node, recipient.getID(), message, ((EventMessage<?>) message).getEvent().getAgent()), 5);
+        this.log.debug("recipientSend: " + recipient.getID());
+        GlobalQueue.getInstance().offer(new SendMessageEvent(this.node, recipient, message, recipientAgent), 5);
 
     }
 
@@ -57,10 +62,40 @@ public class InMemoryBroker implements MessageBroker {
             messageCounter++;
             this.log.debug(" bSend message to \033[4m{}\033[0m: \033[4m{}\033[0m ", recipient, ((EventMessage<?>) message).getEvent().getClass().getSimpleName());
             //??
-            //GlobalQueue.getInstance().offer(new SendMessageEvent(this.node, recipient, message, ((EventMessage<?>) message).getEvent().getAgent()), 5);
-            this.messageDispatcher.dispatch(new Envelope(this.node, recipient, message));
+
+            INode runtimeNode = NodeRegistry.getInstance().getNodeById(recipient);
+
+            if (runtimeNode == null) {
+                log.debug(
+                        "Skip broadcast: no runtime node for {}",
+                        recipient
+                );
+                return;
+            }
+            IAgent recipientAgent =
+                    NodeRegistry.getInstance().getAgentByNodeId(recipient);
+
+            if (recipientAgent == null) {
+                log.error(
+                        "Infrastructure neighbour '{}' has no runtime node.",
+                        recipient
+                );
+                return;
+            }
+
+            log.debug(
+                    "Enqueue SendMessageEvent: senderNode={}, recipientNode={}, recipientAgent={}",
+                    this.node.getID(),
+                    recipient,
+                    recipientAgent.getID()
+            );
+            this.log.debug("recipientBroadcast: " + recipient);
+            GlobalQueue.getInstance().offer(new SendMessageEvent(this.node, recipient, message, recipientAgent), 5);
+            //this.messageDispatcher.dispatch(new Envelope(this.node, recipient, message));
         });
     }
+
+
 
     @Override
     public void addRecipient(INode recipient) {

@@ -57,7 +57,7 @@ public class ExperimentRunner {
         //input-parameters for each simulation-run
         String[] param = new String[3];
         //yml file containing network infrastructure
-        param[0] = "simple.yml";
+        param[0] = "complex-infra.yml";
         //scenario (options in getScenario() below)
         param[1] = "no-change";
         //featureSet: local, knowledge-sharing or auctioning
@@ -137,7 +137,12 @@ public class ExperimentRunner {
         var agents = agentFactory.fromInfrastructure(infrastructure);
         //additional lists containing all agents
         List<ExperimentalAgent> agentList = new ArrayList<>(agents);
-        agents.forEach(agent -> NodeRegistry.getInstance().registerAgent(agent));
+        agents.forEach(agent -> {
+            NodeRegistry.getInstance().registerAgent(agent);
+
+
+        });
+
 
         agents.forEach(metricCollector::listenToAgent);
         //adding agent to data structures in case one is created during simulation
@@ -187,10 +192,10 @@ public class ExperimentRunner {
 
         log.debug("Starting agents");
 
-        /*for (INode node : infrastructure.listNodes()) {
+        for (INode node : infrastructure.listNodes()) {
             NodeRegistry.getInstance().registerNode(node);
             System.out.println("Node registered: " + node.getID());
-        }*/
+        }
         //changes state of each agent to idle
         agents.forEach(AdrianAgent::startReady);
         agents.forEach(AdrianAgent::startIdle);
