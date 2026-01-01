@@ -74,6 +74,9 @@ public class QueueExecutor {
                 event.trigger();
             }
 
+
+
+
             else {
                 String agentId = null;
                 if (event instanceof IdentifyRiskEvent) {
@@ -131,7 +134,7 @@ public class QueueExecutor {
                 }
 
                 //hard timeout for simulation
-                if (System.currentTimeMillis() - startTime >= 90000) {
+                if (System.currentTimeMillis() - startTime >= 180000) {
                     log.warn("Simulation timed out after 3 minutes");
                     onFinished.run();
                     break;

@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import tech.jorn.adrian.core.EventNode;
 import tech.jorn.adrian.core.GlobalQueue;
 import tech.jorn.adrian.core.agents.AgentState;
+import tech.jorn.adrian.core.agents.IAgent;
 import tech.jorn.adrian.core.events.queue.IEventQueue;
 import tech.jorn.adrian.core.observables.SubscribableValueEvent;
 
@@ -20,6 +21,8 @@ public class EventManager {
     protected final Logger log = LogManager.getLogger(EventManager.class);
 
     private final IEventQueue queue;
+    private IAgent currentAgent;
+
     private final SubscribableValueEvent<AgentState> agentState;
     private final Map<Class<Event>, List<Consumer<Event>>> eventHandlers = new HashMap<>();
     //private final ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -98,6 +101,8 @@ public class EventManager {
     }
 
     public  <E extends Event> void processEvent(E event) {
+        this.currentAgent = event.getAgent();
+
 
         //var maxtime = new Date(System.currentTimeMillis() - 10 * 1000);
         //if (event.getTime().before(maxtime)) {
@@ -124,12 +129,19 @@ public class EventManager {
 
     }
 
+    public IAgent getCurrentAgent() {
+        return currentAgent;
+    }
+
+
     private <E extends Event> List<Consumer<Event>> getEventHandlers(Class<E> eventClass) {
         return this.eventHandlers.keySet().stream()
                 .filter(c -> c.equals(eventClass) || c.isAssignableFrom(eventClass))
                 .flatMap(c -> this.eventHandlers.get(c).stream())
                 .toList();
     }
+
+
 
     public IEventQueue getQueue() {
         return queue;

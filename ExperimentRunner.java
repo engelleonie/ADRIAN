@@ -139,8 +139,6 @@ public class ExperimentRunner {
         List<ExperimentalAgent> agentList = new ArrayList<>(agents);
         agents.forEach(agent -> {
             NodeRegistry.getInstance().registerAgent(agent);
-
-
         });
 
 
@@ -166,7 +164,7 @@ public class ExperimentRunner {
             }
 
             try {
-                //final update to metrics.csv containing all metrics of current simulation run
+                //final update to metrics.csv containing all metrics of the current simulation run
                 log.debug("Writing measures");
                 metricCollector.updateInterval(agents);
                 metricCollector.writeToCSV(agents, new Date().getTime() - startTime, config);
@@ -237,7 +235,8 @@ public class ExperimentRunner {
 
          //creates executor and starts simulation-loop
         QueueExecutor executor = new QueueExecutor(agentList, metricCollector, agents, onQueueEmpty, onFinished);
-         //calls Event-Loop, loop has while(true) condition, only stops once FinishScenarioEvent is executed
+         //calls Event-Loop, loop has while(true) condition, only stops once FinishScenarioEvent is executed which is triggered once a hard timeout
+         // is reached or when the globalQueue is empty
         executor.execute();
 
         renderInfrastructure(infrastructure);

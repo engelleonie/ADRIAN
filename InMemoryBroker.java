@@ -41,12 +41,13 @@ public class InMemoryBroker implements MessageBroker {
         //this.messageDispatcher.dispatch(new Envelope(this.node, recipient.getID(), message));
 
         messageCounter++;
-        IAgent recipientAgent =
-                NodeRegistry.getInstance().getAgentByNodeId(recipient.getID());
+        IAgent senderAgent =
+                NodeRegistry.getInstance().getAgentByNodeId(this.node.getID());
 
         //??
-        this.log.debug("recipientSend: " + recipient.getID());
-        GlobalQueue.getInstance().offer(new SendMessageEvent(this.node, recipient, message, recipientAgent), 5);
+        this.log.debug("recipientSend: " + this.node.getID());
+        GlobalQueue.getInstance().offer(new SendMessageEvent(this.node, recipient, message, senderAgent), 5);
+        this.log.debug("Node sender: " + this.node.getID() + ", recipient: " + recipient.getID() + ", message: " + message.getClass() + ", recipientAgent: " + senderAgent);
 
     }
 
@@ -72,13 +73,13 @@ public class InMemoryBroker implements MessageBroker {
                 );
                 return;
             }
-            IAgent recipientAgent =
-                    NodeRegistry.getInstance().getAgentByNodeId(recipient);
+            IAgent senderAgent =
+                    NodeRegistry.getInstance().getAgentByNodeId(this.node.getID());
 
-            if (recipientAgent == null) {
+            if (senderAgent == null) {
                 log.error(
                         "Infrastructure neighbour '{}' has no runtime node.",
-                        recipient
+                        this.node.getID()
                 );
                 return;
             }
@@ -87,10 +88,10 @@ public class InMemoryBroker implements MessageBroker {
                     "Enqueue SendMessageEvent: senderNode={}, recipientNode={}, recipientAgent={}",
                     this.node.getID(),
                     recipient,
-                    recipientAgent.getID()
+                    senderAgent.getID()
             );
             this.log.debug("recipientBroadcast: " + recipient);
-            GlobalQueue.getInstance().offer(new SendMessageEvent(this.node, recipient, message, recipientAgent), 5);
+            GlobalQueue.getInstance().offer(new SendMessageEvent(this.node, recipient, message, senderAgent), 5);
             //this.messageDispatcher.dispatch(new Envelope(this.node, recipient, message));
         });
     }
@@ -109,6 +110,13 @@ public class InMemoryBroker implements MessageBroker {
 
     protected void handleIncomingEnvelope(Envelope envelope) {
         if (envelope == null) return;
+        log.debug("Envelope recipient={}, myNode={}",
+                envelope.recipient(),
+                this.node.getID()
+        );
+        log.debug("Listeners count: {}", listeners.size());
+
+
         if (!envelope.recipient().equals(this.node.getID())) return;
         this.log.debug("Received message from \033[4m{}\033[0m: \033[4m{}\033[0m ", envelope.sender().getID(), ((EventMessage<?>) envelope.message()).getEvent().getClass().getSimpleName());
 
@@ -116,4 +124,8 @@ public class InMemoryBroker implements MessageBroker {
     }
 
     public static int getMessageCount() { return messageCounter; }
+
+    public INode getNode() {
+        return node;
+    }
 }
