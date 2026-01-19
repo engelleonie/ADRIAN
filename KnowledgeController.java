@@ -22,6 +22,7 @@ import tech.jorn.adrian.core.graphs.knowledgebase.KnowledgeBaseNode;
 import tech.jorn.adrian.core.graphs.knowledgebase.KnowledgeBaseSoftwareAsset;
 import tech.jorn.adrian.core.graphs.knowledgebase.KnowledgeOrigin;
 import tech.jorn.adrian.core.messages.EventMessage;
+import tech.jorn.adrian.core.messages.Message;
 import tech.jorn.adrian.core.messages.MessageBroker;
 import tech.jorn.adrian.core.observables.SubscribableValueEvent;
 import tech.jorn.adrian.core.properties.NodeProperty;
@@ -74,11 +75,36 @@ public class KnowledgeController extends AbstractController {
             this.log.info("Added a new neighbour {}", event.getOrigin().getID());
         }
         this.knowledgeBase.processNewInformation(event.getOrigin(), event.getKnowledgeBase());
+
         if (event.getDistance() > 1) {
-            var next = ShareKnowledgeEvent.reducedDistance(event);
-            this.messageBroker.broadcast(new EventMessage<>(next));
+
+            ShareKnowledgeEvent next =
+                    ShareKnowledgeEvent.reducedDistance(event);
+
+            for (String neighbourId : configuration.getNeighbours()) {
+
+                if (neighbourId.equals(event.getOrigin().getID())) {
+                    continue;
+                }
+
+                IAgent recipient =
+                        NodeRegistry.getInstance().getAgentByNodeId(neighbourId);
+                if (recipient == null) {
+                    continue;
+                }
+
+                GlobalQueue.getInstance().offer(
+                        new SendMessageEvent(
+                                configuration.getParentNode(),          // sender
+                                NodeRegistry.getInstance().getNodeById(neighbourId),
+                                new EventMessage<>(next),               // Payload!
+                                recipient
+                        ),
+                        5
+                );
+            }
         }
-        this.messageBroker.broadcast(new EventMessage<>(event));
+        //this.messageBroker.broadcast(new EventMessage<>(event));
 
             /*if (event == null || event.getOrigin() == null || event.getKnowledgeBase() == null) {
                 System.out.println(667);
@@ -115,15 +141,22 @@ public class KnowledgeController extends AbstractController {
 
 
     private void processMessage(SendMessageEvent event) {
-        log.error(
-                "processMessage on agent {}, sender={}, recipient={}",
-                this.configuration.getNodeID(),
-                event.getSender().getID(),
-                event.getRecipient().getID()
-        );
 
-        this.messageBroker.deliver(event.getRecipient(), event.getMessage());
+        if (!event.getRecipient().getID().equals(configuration.getNodeID())) {
+            return;
+        }
+        //correct spot?
+        //this.messageBroker.deliver(event.getRecipient(), event.getMessage());
+
+        Message msg = event.getMessage();
+
+        if (msg instanceof EventMessage<?> em &&
+                em.getEvent() instanceof ShareKnowledgeEvent ske) {
+
+            processKnowledge(ske);
+        }
     }
+
 
 
 
@@ -167,14 +200,35 @@ public class KnowledgeController extends AbstractController {
     }
 
     public void shareKnowledge() {
-        //creating new Event and adding it to globalQueue
-        var event = new ShareKnowledgeEvent(
-                this.configuration.getParentNode(),
-                this.knowledgeBase,
-                1, null);
-        //GlobalQueue.getInstance().offer(event, event.getDuration());
-        this.messageBroker.broadcast(new EventMessage<>(event));
+
+
+
+        for (String neighbourId : configuration.getNeighbours()) {
+
+            var event = new ShareKnowledgeEvent(
+                    this.configuration.getParentNode(),
+                    this.knowledgeBase,
+                    1
+            );
+
+            IAgent recipientAgent =
+                    NodeRegistry.getInstance().getAgentByNodeId(neighbourId);
+            INode recipientNode =
+                    NodeRegistry.getInstance().getNodeById(neighbourId);
+            if (recipientAgent == null) continue;
+
+            GlobalQueue.getInstance().offer(
+                    new SendMessageEvent(
+                            configuration.getParentNode(),
+                            recipientNode,
+                            new EventMessage<>(event),
+                            recipientAgent
+                    ),
+                    5
+            );
+        }
     }
+
 
     private KnowledgeBase createKnowledgeBaseFromConfig(KnowledgeBase knowledgeBase,
             AbstractDetailedNode<NodeProperty<?>> origin, List<String> links, List<SoftwareAsset> assets) {

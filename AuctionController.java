@@ -54,10 +54,12 @@ public class AuctionController extends AbstractController {
             return;
         }
         this.auctionManager.startAuction(event.getReport());
+        this.log.warn("starting auction");
     }
 
     private void joinAuctionRequest(JoinAuctionRequestEvent event) {
-        boolean canJoin = !this.auctionManager.isAuctioning() && (this.agentState.current() == AgentState.Idle || this.agentState.current() == AgentState.Ready);
+        boolean canJoin = !this.auctionManager.isAuctioning() && (this.agentState.current() == AgentState.Idle || this.agentState.current() == AgentState.Ready || this.agentState.current() == AgentState.Busy);
+        this.log.warn("can join: " + canJoin);
         if (canJoin) this.auctionManager.joinAuction(event.getAuction());
         else this.auctionManager.rejectAuction(event.getAuction());
     }

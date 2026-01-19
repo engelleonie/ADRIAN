@@ -2,6 +2,7 @@ package tech.jorn.adrian.agent.services;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import tech.jorn.adrian.agent.NodeRegistry;
 import tech.jorn.adrian.agent.events.*;
 import tech.jorn.adrian.core.agents.IAgentConfiguration;
 import tech.jorn.adrian.core.auction.Auction;
@@ -36,6 +37,7 @@ public class AuctionManager {
     private Map<INode, Optional<AuctionProposal>> proposals = new HashMap<>();
     private Set<INode> participants = new HashSet<>();
     private Set<INode> confirmed = new HashSet<>();
+    private final String agentId;
 
     public AuctionManager(MessageBroker messageBroker, EventManager eventManager, IProposalSelector proposalSelector,
             IAgentConfiguration configuration) {
@@ -43,6 +45,7 @@ public class AuctionManager {
         this.eventManager = eventManager;
         this.proposalSelector = proposalSelector;
         this.configuration = configuration;
+        this.agentId = configuration.getNodeID();
 
         this.log = LogManager
                 .getLogger(String.format("[%s] %s", configuration.getNodeID(), AuctionManager.class.getSimpleName()));
@@ -83,7 +86,7 @@ public class AuctionManager {
                 return;
             if (node.getID().equals(VoidNode.getIncoming().getID()))
                 return;
-            this.messageBroker.send(node, new EventMessage<>(new JoinAuctionRequestEvent(auction)));
+            this.messageBroker.send(node, new EventMessage<>(new JoinAuctionRequestEvent(auction, NodeRegistry.getInstance().getAgentByNodeId(configuration.getNodeID()))));
             this.participants.add(node);
         });
 
@@ -95,7 +98,7 @@ public class AuctionManager {
                 var tempNode = new AttackGraphNode(node);
                 if (this.participants.contains(tempNode)) return;
 
-                this.messageBroker.send(tempNode, new EventMessage<>(new JoinAuctionRequestEvent(auction)));
+                this.messageBroker.send(tempNode, new EventMessage<>(new JoinAuctionRequestEvent(auction, NodeRegistry.getInstance().getAgentByNodeId(configuration.getNodeID()))));
                 this.participants.add(tempNode);
                 additionalNodes.add(node);
             });
@@ -103,22 +106,23 @@ public class AuctionManager {
         }
 
         this.auction.setCurrent(auction);
-        this.eventManager.emit(new SearchForProposalEvent(auction));
+        this.eventManager.emit(new SearchForProposalEvent(auction, NodeRegistry.getInstance().getAgentByNodeId(configuration.getNodeID())));
         this.participants.add(this.configuration.getParentNode());
         this.confirmed.add(this.configuration.getParentNode());
         return auction;
     }
 
     public void joinAuction(Auction auction) {
-        var event = new JoinAuctionAcceptEvent(this.configuration.getParentNode(), auction);
+        this.log.warn("joinsauction");
+        var event = new JoinAuctionAcceptEvent(this.configuration.getParentNode(), auction, NodeRegistry.getInstance().getAgentByNodeId(configuration.getNodeID()));
         this.messageBroker.send(auction.getHost(), new EventMessage<>(event));
 
         this.auction.setCurrent(auction);
-        this.eventManager.emit(new SearchForProposalEvent(auction));
+        this.eventManager.emit(new SearchForProposalEvent(auction, NodeRegistry.getInstance().getAgentByNodeId(configuration.getNodeID())));
     }
 
     public void rejectAuction(Auction auction) {
-        var event = new JoinAuctionRejectEvent(this.configuration.getParentNode(), auction);
+        var event = new JoinAuctionRejectEvent(this.configuration.getParentNode(), auction, NodeRegistry.getInstance().getAgentByNodeId(configuration.getNodeID()));
         this.messageBroker.send(auction.getHost(), new EventMessage<>(event));
     }
 
@@ -170,13 +174,13 @@ public class AuctionManager {
     }
 
     public void bidProposal(AuctionProposal proposal) {
-        var event = new AuctionBidEvent(this.configuration.getParentNode(), proposal);
+        var event = new AuctionBidEvent(this.configuration.getParentNode(), proposal, NodeRegistry.getInstance().getAgentByNodeId(configuration.getNodeID()));
         this.messageBroker.send(proposal.auction().getHost(), new EventMessage<>(event));
     }
 
     public void cancelProposal(Auction auction) {
         var event = new AuctionBidEvent(this.configuration.getParentNode(), new AuctionProposal(
-                this.configuration.getParentNode(), auction, null, null));
+                this.configuration.getParentNode(), auction, null, null), NodeRegistry.getInstance().getAgentByNodeId(configuration.getNodeID()));
         this.messageBroker.send(auction.getHost(), new EventMessage<>(event));
     }
 
@@ -250,7 +254,7 @@ public class AuctionManager {
 
         if (proposal.isEmpty()) {
             this.participants.forEach(
-                    node -> this.messageBroker.send(node, new EventMessage<>(new AuctionCancelledEvent(auction))));
+                    node -> this.messageBroker.send(node, new EventMessage<>(new AuctionCancelledEvent(auction, NodeRegistry.getInstance().getAgentByNodeId(configuration.getNodeID())))));
             this.log.info("-- Auction Stopped!! {}", auction.getId());
             this.reset();
             return;
@@ -263,7 +267,7 @@ public class AuctionManager {
                 proposal.get().mutation().toString());
 
         // TODO: If no proposal was sent, we might not want to sent this event
-        var event = new AuctionFinalizedEvent(auction, proposal.get());
+        var event = new AuctionFinalizedEvent(auction, proposal.get(), NodeRegistry.getInstance().getAgentByNodeId(configuration.getNodeID()));
         this.participants.forEach(node -> {
             if (node.equals(this.configuration.getNodeID())) {
                 this.eventManager.emit(event);
