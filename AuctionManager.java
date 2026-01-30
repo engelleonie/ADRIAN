@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import tech.jorn.adrian.agent.NodeRegistry;
 import tech.jorn.adrian.agent.events.*;
+import tech.jorn.adrian.core.GlobalQueue;
 import tech.jorn.adrian.core.agents.IAgentConfiguration;
 import tech.jorn.adrian.core.auction.Auction;
 import tech.jorn.adrian.core.auction.AuctionProposal;
@@ -56,14 +57,19 @@ public class AuctionManager {
 
     public Auction startAuction(RiskReport riskReport) {
 
+        //checks if agent is ready for new auction
         if (this.auction.current() != null) {
             this.log.warn("Started or joined another auction while in a grace period");
             return null;
         }
 
+        // creates and starts new auction
         var auction = new Auction(new IDGenerator().getID(), this.configuration.getParentNode(), new ArrayList<>(),
                 riskReport);
         this.log.info("-- Auction Started!! {} damage {}", auction.getId(), auction.getRiskReport().damage());
+        // schedules auction timeout
+        // currently
+        GlobalQueue.getInstance().offer(new AuctionCancelledEvent(auction, NodeRegistry.getInstance().getAgentByNodeId(configuration.getNodeID())), 100);
 
         /* var timer = new Timer();
         var manager = this;

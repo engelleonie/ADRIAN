@@ -45,23 +45,25 @@ import tech.jorn.adrian.experiment.scenarios.MixedScenario;
 import tech.jorn.adrian.experiment.scenarios.NoChangeScenario;
 import tech.jorn.adrian.experiment.scenarios.Scenario;
 import tech.jorn.adrian.experiment.scenarios.UnstableInfrastructureScenario;
+import java.util.Random;
 
 public class ExperimentRunner {
     private static int tick = 0;
     public static long start = System.currentTimeMillis();
     private static final GlobalQueue globalQueue = GlobalQueue.getInstance();
     private static int knowledgeCount = 0;
+    private static Random rand = new Random();
 
     public static void main(String[] args) throws InterruptedException {
 
         //input-parameters for each simulation-run
         String[] param = new String[3];
         //yml file containing network infrastructure
-        param[0] = "complex-infra.yml";
+        param[0] = "simple.yml";
         //scenario (options in getScenario() below)
         param[1] = "no-change";
         //featureSet: local, knowledge-sharing or auctioning
-        param[2] = "knowledge-sharing";
+        param[2] = "auctioning";
 
 
 
@@ -218,6 +220,7 @@ public class ExperimentRunner {
                 if (controller instanceof KnowledgeController) {
                     //shareKnowledge creates new ShareKnowledgeEvent but also triggers immediate knowledge sharing, causing issues later on
                     // as knowledge is not updated properly by later ShareKnowledgeEvents
+                    // new logic does not create a ShareKnowledgeEvent, instead creates SendMessageEvents immediately
                     ((KnowledgeController) controller).shareKnowledge();
                     //debugging
                     knowledgeCount++;
@@ -230,7 +233,7 @@ public class ExperimentRunner {
          for (ExperimentalAgent agent : agents) {
              var event = new IdentifyRiskEvent(agent);
              log.debug("agent: {}, eventid: {}", agent.getID(), event.getAgentID());
-             GlobalQueue.getInstance().offer(event, 5);
+             GlobalQueue.getInstance().offer(event, rand.nextInt(20));
          }
 
          //creates executor and starts simulation-loop

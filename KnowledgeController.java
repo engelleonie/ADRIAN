@@ -39,8 +39,10 @@ public class KnowledgeController extends AbstractController {
     private final MessageBroker messageBroker;
     private final IAgentConfiguration configuration;
 
+    //counters for debugging purposes, no effect on simulation
     private int onAssetPropertyChange = 0;
     private  int onNodePropertyChange = 0;
+
 
     //created for each agent along with 3 other controllers
     public KnowledgeController(KnowledgeBase knowledgeBase, MessageBroker messageBroker, EventManager eventManager,
@@ -59,7 +61,6 @@ public class KnowledgeController extends AbstractController {
         //this.eventManager.registerEventHandler(ShareKnowledgeEvent.class, this::processKnowledge);
         this.eventManager.registerEventHandler(SendMessageEvent.class, this::processMessage);
 
-
         //reacting to changed properties
         this.configuration.getParentNode().onPropertyChange().subscribe(this::debouncedPropertyChange);
         //reacting to changed assets
@@ -70,17 +71,20 @@ public class KnowledgeController extends AbstractController {
     protected void processKnowledge(ShareKnowledgeEvent event) {
         //this.messageBroker.broadcast(new EventMessage<>(event));
 
+        //adding new node to neighbors if it's unknown
         if (knowledgeBase.findById(event.getOrigin().getID()).isEmpty() && event.getDistance() == 1) {
             this.messageBroker.addRecipient(event.getOrigin());
             this.log.info("Added a new neighbour {}", event.getOrigin().getID());
         }
         this.knowledgeBase.processNewInformation(event.getOrigin(), event.getKnowledgeBase());
 
+        // if the message needs to be propagated further, a new event with reducedDistance is created
         if (event.getDistance() > 1) {
 
             ShareKnowledgeEvent next =
                     ShareKnowledgeEvent.reducedDistance(event);
 
+            //only sharing knowledge with direct neighbors
             for (String neighbourId : configuration.getNeighbours()) {
 
                 if (neighbourId.equals(event.getOrigin().getID())) {
@@ -95,9 +99,9 @@ public class KnowledgeController extends AbstractController {
 
                 GlobalQueue.getInstance().offer(
                         new SendMessageEvent(
-                                configuration.getParentNode(),          // sender
+                                configuration.getParentNode(),
                                 NodeRegistry.getInstance().getNodeById(neighbourId),
-                                new EventMessage<>(next),               // Payload!
+                                new EventMessage<>(next),
                                 recipient
                         ),
                         5
@@ -142,14 +146,17 @@ public class KnowledgeController extends AbstractController {
 
     private void processMessage(SendMessageEvent event) {
 
+        // only processes message if message recipient matches current agent
         if (!event.getRecipient().getID().equals(configuration.getNodeID())) {
             return;
         }
+
         //correct spot?
         //this.messageBroker.deliver(event.getRecipient(), event.getMessage());
 
         Message msg = event.getMessage();
 
+        //calls process knowledge if it's a shareKnowledgeEvent
         if (msg instanceof EventMessage<?> em &&
                 em.getEvent() instanceof ShareKnowledgeEvent ske) {
 
@@ -168,6 +175,7 @@ public class KnowledgeController extends AbstractController {
         var node = this.configuration.getParentNode();
         this.log.debug("Updating property {} from {} to {}", property.getName(),
                 this.knowledgeBase.findById(node.getID()).get().getProperty(property.getName()), property.getValue());
+
         //adding changed property to knowledgeBase
         this.knowledgeBase.upsertNode(KnowledgeBaseNode.fromNode(node)
                 .setKnowledgeOrigin(KnowledgeOrigin.DIRECT));
@@ -175,6 +183,7 @@ public class KnowledgeController extends AbstractController {
         //share updated property
         this.shareKnowledge();
 
+        //triggers risk search if agent is idle, currently irrelevant because the agent is never idle here
         if (this.agentState.current().equals(AgentState.Idle))
             this.eventManager.emit(new IdentifyRiskEvent(NodeRegistry.getInstance().getAgentByNodeId(configuration.getNodeID())));
 
@@ -191,6 +200,7 @@ public class KnowledgeController extends AbstractController {
         //share updated asset
         this.shareKnowledge();
 
+        //triggers risk search if agent is idle, currently irrelevant because the agent is never idle here
         if (this.agentState.current().equals(AgentState.Idle))
             this.eventManager.emit(new IdentifyRiskEvent(NodeRegistry.getInstance().getAgentByNodeId(configuration.getNodeID())));
 
@@ -201,8 +211,7 @@ public class KnowledgeController extends AbstractController {
 
     public void shareKnowledge() {
 
-
-
+        //creates one shareKnowledgeEvent for each neighbor
         for (String neighbourId : configuration.getNeighbours()) {
 
             var event = new ShareKnowledgeEvent(
@@ -217,6 +226,8 @@ public class KnowledgeController extends AbstractController {
                     NodeRegistry.getInstance().getNodeById(neighbourId);
             if (recipientAgent == null) continue;
 
+            //creates a message for each neighbor containing shareKnowledgeEvent
+            //shareKnowledgeEvents are only added to the queue in messages, never by themselves
             GlobalQueue.getInstance().offer(
                     new SendMessageEvent(
                             configuration.getParentNode(),
@@ -232,6 +243,7 @@ public class KnowledgeController extends AbstractController {
 
     private KnowledgeBase createKnowledgeBaseFromConfig(KnowledgeBase knowledgeBase,
             AbstractDetailedNode<NodeProperty<?>> origin, List<String> links, List<SoftwareAsset> assets) {
+        //initializes knowledgebase from input yml, created for each agent individually
 
         var voidNode = VoidNode.forKnowledge();
         knowledgeBase.upsertNode(voidNode);

@@ -55,7 +55,7 @@ public class QueueExecutor {
                 onQueueEmpty.run();
                 finishEventTriggered = true;
             }
-            EventNode node = globalQueue.poll();
+            var node = globalQueue.poll();
 
             if (node == null) {
                 continue;
@@ -74,19 +74,17 @@ public class QueueExecutor {
                 event.trigger();
             }
 
-
-
-
             else {
                 String agentId = null;
+                // finding the correct agent for riskIdentification
                 if (event instanceof IdentifyRiskEvent) {
                     agentId = event.getAgent().getID();
-                    AdrianAgent agent = agentsById.get(agentId);
+                    /*AdrianAgent agent = agentsById.get(agentId);
                     log.debug("Agent {} agentstate: {}", agentId, agent);
                     if (agent.getState() == AgentState.Searching || agent.getState() == AgentState.Auctioning || agent.getState() == AgentState.Migrating) {
                         log.debug("Agent {} is currently handling a risk, skipping IdentifyRiskEvent", agentId);
                         continue;
-                    }
+                    }*/
 
                 } else {
                     for (String id : managersByAgentId.keySet()) {
@@ -106,11 +104,7 @@ public class QueueExecutor {
                     AdrianAgent agent = agentsById.get(agentId);
                     EventManager manager = managersByAgentId.get(agentId);
 
-                    if (agent == null || manager == null) {
-                        log.warn("Agent or manager not found for event {} of {}", event.getClass().getSimpleName(), agentId);
-                        continue;
-                    }
-
+                    //agent.setState(AgentState.Ready);
                     if (event instanceof IdentifyRiskEvent &&
                             (agent.getState() == AgentState.Searching ||
                                     agent.getState() == AgentState.Auctioning ||
@@ -122,7 +116,6 @@ public class QueueExecutor {
                     log.debug("Agent {} processes {} at simTime={}", agentId, event.getClass().getSimpleName(),
                             globalQueue.getSimulatedTime());
 
-                    System.out.println("Manager processing: " + manager.getClass());
                     manager.processEvent(event);
                     handled = true;
 
@@ -134,8 +127,9 @@ public class QueueExecutor {
                 }
 
                 //hard timeout for simulation
-                if (System.currentTimeMillis() - startTime >= 180000) {
-                    log.warn("Simulation timed out after 3 minutes");
+                int time = 30000;
+                if (System.currentTimeMillis() - startTime >= time) {
+                    log.warn("Simulation timed out after " + time/1000 + " seconds");
                     onFinished.run();
                     break;
                 }
